@@ -10,7 +10,7 @@ public class VuePlateau extends JPanel implements Observer
 {
 
 	private Modele modele;
-	private final static int P = 32; // pixels par case
+	private final static int P = 80; // pixels par case
 
 	public VuePlateau(Modele modele)
 	{
@@ -22,24 +22,24 @@ public class VuePlateau extends JPanel implements Observer
 	}
 
 	@Override
-	public void update() {super.repaint();}
+	public void update() {repaint();}
 
 	public void paintComponent(Graphics g)
 	{
 		super.repaint();
 
-		for(int x = 1; x <= Modele.LENGTH; x++)
-			for(int y = 1; y <= Modele.LENGTH; y++)
-				paint(g, modele.getCase(x, y), (x-1)* P, (y-1)* P);
+		for(int x = 0; x < Modele.LENGTH; x++)
+			for(int y = 0; y < Modele.LENGTH; y++)
+				paint(g, modele.getCase(x, y), x * P, y * P);
 	}
 
 	private void paint(Graphics g, Case c, int x, int y)
 	{
 		switch(c.etat)
 		{
-			case SECHE:   			 g.setColor(new Color(120, 100,   0));
-			case INONDEE: 			 g.setColor(new Color(100,  80,  20));
-			default: case SUBMERGEE: g.setColor(new Color(  0,   0, 255));
+			case SECHE:   	g.setColor(Color.ORANGE);
+			case INONDEE: 	g.setColor(Color.CYAN);
+			case SUBMERGEE: g.setColor(Color.BLUE);
 		}
 		g.fillRect(x, y, P, P);
 	}

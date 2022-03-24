@@ -1,6 +1,5 @@
 package fr.rui_tilmann.Controleur;
 
-import fr.rui_tilmann.Modele.Enums.Direction;
 import fr.rui_tilmann.Modele.Modele;
 
 import java.awt.event.ActionEvent;

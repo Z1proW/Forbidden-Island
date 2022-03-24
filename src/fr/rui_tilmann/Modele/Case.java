@@ -19,14 +19,14 @@ public class Case
 
 	public Case adjacente(Direction direction)
 	{
-		switch(direction)
+		return switch(direction)
 		{
-			default: case AUCUNE: return modele.getCase(x, y);
-			case NORD:			  return modele.getCase(x, y-1);
-			case SUD:			  return modele.getCase(x, y+1);
-			case OUEST:			  return modele.getCase(x-1, y);
-			case EST:			  return modele.getCase(x+1, y);
-		}
+			case AUCUNE -> modele.getCase(x, y);
+			case NORD 	-> modele.getCase(x, y - 1);
+			case SUD 	-> modele.getCase(x, y + 1);
+			case OUEST 	-> modele.getCase(x - 1, y);
+			case EST 	-> modele.getCase(x + 1, y);
+		};
 	}
 
 }

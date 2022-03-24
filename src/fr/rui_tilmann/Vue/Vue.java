@@ -4,7 +4,6 @@ import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class Vue
 {
@@ -16,16 +15,17 @@ public class Vue
 
 	public Vue(Modele modele)
 	{
-		plateau = new VuePlateau(modele);
-		commandes = new VueCommandes(modele);
-		joueurs = new VueJoueurs(modele);
-
 		f = new JFrame();
 		f.setTitle("Jeu de l'île Interdite");
 		f.setLayout(new FlowLayout());
+
+		plateau = new VuePlateau(modele);
 		f.add(plateau);
+		commandes = new VueCommandes(modele);
 		f.add(commandes);
+		joueurs = new VueJoueurs(modele);
 		f.add(joueurs);
+
 		f.pack();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
