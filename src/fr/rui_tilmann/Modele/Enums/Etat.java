@@ -1,4 +1,4 @@
-package fr.rui_tilmann.Enums;
+package fr.rui_tilmann.Modele.Enums;
 
 public enum Etat
 {

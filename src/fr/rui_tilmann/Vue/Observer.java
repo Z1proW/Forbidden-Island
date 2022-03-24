@@ -1,4 +1,4 @@
-package fr.rui_tilmann.MVC;
+package fr.rui_tilmann.Vue;
 
 public interface Observer
 {
