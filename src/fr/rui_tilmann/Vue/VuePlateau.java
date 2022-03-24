@@ -37,9 +37,9 @@ public class VuePlateau extends JPanel implements Observer
 	{
 		switch(c.etat)
 		{
-			case SECHE:   	g.setColor(Color.ORANGE);
-			case INONDEE: 	g.setColor(Color.CYAN);
-			case SUBMERGEE: g.setColor(Color.BLUE);
+			case SECHE:   	g.setColor(Color.ORANGE); break;
+			case INONDEE: 	g.setColor(Color.CYAN); break;
+			case SUBMERGEE: g.setColor(Color.BLUE); break;
 		}
 		g.fillRect(x, y, P, P);
 	}
