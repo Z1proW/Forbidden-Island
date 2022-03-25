@@ -11,9 +11,9 @@ public class Plongeur extends Joueur
 
 	public Color color;
 
-	public Plongeur(Modele modele, Role role, Case pos)
+	public Plongeur(Modele modele, Case pos)
 	{
-		super(modele, role, pos);
+		super(modele, pos);
 		this.color = Color.BLUE;
 	}
 

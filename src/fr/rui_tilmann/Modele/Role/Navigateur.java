@@ -11,9 +11,9 @@ public class Navigateur extends Joueur
 
 	public Color color;
 
-	public Navigateur(Modele modele, Role role, Case pos)
+	public Navigateur(Modele modele, Case pos)
 	{
-		super(modele, role, pos);
+		super(modele, pos);
 		this.color = Color.YELLOW;
 	}
 

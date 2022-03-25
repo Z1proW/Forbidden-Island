@@ -11,9 +11,9 @@ public class Ingenieur extends Joueur
 
 	public Color color;
 
-	public Ingenieur(Modele modele, Role role, Case pos)
+	public Ingenieur(Modele modele, Case pos)
 	{
-		super(modele, role, pos);
+		super(modele, pos);
 		this.color = Color.RED;
 	}
 

@@ -11,9 +11,9 @@ public class Messager extends Joueur
 
 	public Color color;
 
-	public Messager(Modele modele, Role role, Case pos)
+	public Messager(Modele modele, Case pos)
 	{
-		super(modele, role, pos);
+		super(modele, pos);
 		this.color = Color.LIGHT_GRAY;
 	}
 

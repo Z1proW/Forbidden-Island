@@ -11,9 +11,9 @@ public class Explorateur extends Joueur
 
 	public Color color;
 
-	public Explorateur(Modele modele, Role role, Case pos)
+	public Explorateur(Modele modele, Case pos)
 	{
-		super(modele, role, pos);
+		super(modele, pos);
 		this.color = Color.GREEN;
 	}
 

@@ -11,9 +11,9 @@ public class Pilote extends Joueur
 
 	public Color color;
 
-	public Pilote(Modele modele, Role role, Case pos)
+	public Pilote(Modele modele, Case pos)
 	{
-		super(modele, role, pos);
+		super(modele, pos);
 		this.color = Color.BLACK;
 	}
 
