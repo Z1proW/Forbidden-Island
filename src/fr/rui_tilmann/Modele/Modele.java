@@ -20,14 +20,15 @@ public class Modele extends Observable
 			for(int y = 0; y < LENGTH; y++)
 				cases[x][y] = new Case(this, x, y);
 
-		//ileRonde();
+		// formeIle();
 		inonderSixCases();
+		placerArtefacts();
 	}
 
-	private void ileRonde()
+	private void formeIle()
 	{
 		/* TODO
-		mettre les cases sur les bords en submergee
+		mettre les cases sur les bords en Etat.SUBMERGEE
 		      [] []
 		   [] [] [] []
 		[] [] [] [] [] []
@@ -40,25 +41,33 @@ public class Modele extends Observable
 	private void inonderSixCases()
 	{
 		for(int i = 0; i < 6; i++)
-		{
-			int x, y;
+			inonderCaseAleatoire();
+	}
 
-			do
-			{
-				x = new Random().nextInt(LENGTH);
-				y = new Random().nextInt(LENGTH);
-			}
-			while(cases[x][y].etat != Etat.SECHE);
-
-			cases[x][y].etat = Etat.INONDEE;
-		}
+	private void placerArtefacts()
+	{
+		// TODO
 	}
 
 	public Case getCase(int x, int y) {return cases[x][y];}
 
 	public void avance(Direction d)
 	{
-		// ...
+		// TODO
+	}
+
+	public void inonderCaseAleatoire()
+	{
+		int x, y;
+
+		do
+		{
+			x = new Random().nextInt(LENGTH);
+			y = new Random().nextInt(LENGTH);
+		}
+		while(cases[x][y].etat != Etat.SECHE);
+
+		cases[x][y].etat = Etat.INONDEE;
 	}
 
 }

@@ -1,5 +1,6 @@
 package fr.rui_tilmann;
 
+import fr.rui_tilmann.Controleur.ControleurClic;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.Vue;
 
