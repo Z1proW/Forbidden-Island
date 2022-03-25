@@ -58,7 +58,7 @@ public class Modele extends Observable
 
 	public void avance(Direction d)
 	{
-
+		// ...
 	}
 
 }
