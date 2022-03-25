@@ -9,7 +9,7 @@ import java.util.Random;
 public class Modele extends Observable
 {
 
-	public static final int LENGTH = 6;
+	public static final int LENGTH = 8;
 	private Case[][] cases;
 
 	public Modele()
@@ -20,7 +20,21 @@ public class Modele extends Observable
 			for(int y = 0; y < LENGTH; y++)
 				cases[x][y] = new Case(this, x, y);
 
+		//ileRonde();
 		inonderSixCases();
+	}
+
+	private void ileRonde()
+	{
+		/* TODO
+		mettre les cases sur les bords en submergee
+		      [] []
+		   [] [] [] []
+		[] [] [] [] [] []
+		[] [] [] [] [] []
+		   [] [] [] []
+		      [] []
+		 */
 	}
 
 	private void inonderSixCases()
@@ -44,7 +58,7 @@ public class Modele extends Observable
 
 	public void avance(Direction d)
 	{
-		// ...
+
 	}
 
 }
