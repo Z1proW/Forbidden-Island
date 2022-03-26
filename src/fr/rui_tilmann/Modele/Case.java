@@ -2,18 +2,21 @@ package fr.rui_tilmann.Modele;
 
 import fr.rui_tilmann.Modele.Enums.Direction;
 import fr.rui_tilmann.Modele.Enums.Etat;
+import fr.rui_tilmann.Modele.Enums.Zone;
 
 public class Case
 {
 
 	private final Modele modele;
-	private Etat etat;
+	public Etat etat;
+	public Zone type;
 	private final int x, y;
 
 	public Case(Modele modele, int x, int y)
 	{
 		this.modele = modele;
 		this.etat = Etat.SECHE;
+		this.type = Zone.AUCUNE;
 		this.x = x; this.y = y;
 	}
 
