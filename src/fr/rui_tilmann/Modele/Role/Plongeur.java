@@ -9,12 +9,14 @@ import java.awt.*;
 public class Plongeur extends Joueur
 {
 
-	public Color color;
+	private final Color color;
 
 	public Plongeur(Modele modele, Case pos)
 	{
 		super(modele, pos);
 		this.color = Color.BLUE;
 	}
+
+	public Color getColor() {return color;}
 
 }

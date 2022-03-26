@@ -9,12 +9,14 @@ import java.awt.*;
 public class Pilote extends Joueur
 {
 
-	public Color color;
+	private final Color color;
 
 	public Pilote(Modele modele, Case pos)
 	{
 		super(modele, pos);
 		this.color = Color.BLACK;
 	}
+
+	public Color getColor() {return color;}
 
 }

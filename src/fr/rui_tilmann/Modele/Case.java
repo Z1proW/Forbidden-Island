@@ -6,7 +6,7 @@ import fr.rui_tilmann.Modele.Enums.Etat;
 public class Case
 {
 
-	private Modele modele;
+	private final Modele modele;
 	private Etat etat;
 	private final int x, y;
 

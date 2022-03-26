@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class Controleur implements ActionListener
 {
-	private Modele modele;
+	private final Modele modele;
 
 	public Controleur(Modele modele) {this.modele = modele;}
 

@@ -9,12 +9,14 @@ import java.awt.*;
 public class Ingenieur extends Joueur
 {
 
-	public Color color;
+	private final Color color;
 
 	public Ingenieur(Modele modele, Case pos)
 	{
 		super(modele, pos);
 		this.color = Color.RED;
 	}
+
+	public Color getColor() {return color;}
 
 }

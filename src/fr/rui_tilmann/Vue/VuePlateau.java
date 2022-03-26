@@ -9,7 +9,7 @@ import java.awt.*;
 public class VuePlateau extends JPanel implements Observer
 {
 
-	private Modele modele;
+	private final Modele modele;
 	public final static int P = 80; // pixels par case
 
 	public VuePlateau(Modele modele)

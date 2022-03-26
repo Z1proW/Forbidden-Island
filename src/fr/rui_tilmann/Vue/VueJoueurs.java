@@ -10,7 +10,7 @@ import static fr.rui_tilmann.Vue.VuePlateau.P;
 public class VueJoueurs extends JPanel implements Observer
 {
 
-	private Modele modele;
+	private final Modele modele;
 
 	public VueJoueurs(Modele modele)
 	{

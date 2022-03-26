@@ -9,12 +9,14 @@ import java.awt.*;
 public class Messager extends Joueur
 {
 
-	public Color color;
+	private static Color color;
 
 	public Messager(Modele modele, Case pos)
 	{
 		super(modele, pos);
 		this.color = Color.LIGHT_GRAY;
 	}
+
+	public Color getColor() {return color;}
 
 }

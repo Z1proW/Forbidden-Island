@@ -10,7 +10,7 @@ import static fr.rui_tilmann.Vue.VuePlateau.P;
 public class ControleurClic implements MouseListener
 {
 
-	private Modele modele;
+	private final Modele modele;
 
 	public ControleurClic(Modele modele) {this.modele = modele;}
 

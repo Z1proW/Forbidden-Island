@@ -9,12 +9,14 @@ import java.awt.*;
 public class Navigateur extends Joueur
 {
 
-	public Color color;
+	private final Color color;
 
 	public Navigateur(Modele modele, Case pos)
 	{
 		super(modele, pos);
 		this.color = Color.YELLOW;
 	}
+
+	public Color getColor() {return color;}
 
 }
