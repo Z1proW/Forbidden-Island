@@ -13,7 +13,7 @@ public class Vue
 		JFrame f = new JFrame();
 		f.setTitle("Jeu de l'île Interdite");
 		f.setLayout(new FlowLayout());
-
+		// TODO la vue plateau s'affiche 2 fois
 		JPanel[] vues = new JPanel[] {new VuePlateau(modele), new VueJoueurs(modele)};
 
 		for(JPanel p: vues)

@@ -24,6 +24,9 @@ public class Case
 
 	public void setEtat(Etat etat) {this.etat = etat;}
 
+	public int getX() {return x;}
+	public int getY() {return y;}
+
 	public Case adjacente(Direction direction)
 	{
 		switch(direction)

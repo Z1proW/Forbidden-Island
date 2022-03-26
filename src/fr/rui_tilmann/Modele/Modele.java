@@ -1,10 +1,13 @@
 package fr.rui_tilmann.Modele;
 
-import fr.rui_tilmann.Modele.Enums.Direction;
 import fr.rui_tilmann.Modele.Enums.Etat;
+import fr.rui_tilmann.Modele.Enums.Role;
 import fr.rui_tilmann.Modele.Enums.Zone;
 import fr.rui_tilmann.Vue.Observable;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Modele extends Observable
@@ -12,6 +15,7 @@ public class Modele extends Observable
 
 	public static final int LENGTH = 8;
 	private Case[][] cases;
+	private Joueur[] joueurs;
 
 	public Modele()
 	{
@@ -22,21 +26,29 @@ public class Modele extends Observable
 				cases[x][y] = new Case(this, x, y);
 
 		formeIle();
-		inonderSixCases();
+
+		// inonder 6 cases
+		for(int i = 0; i < 6; i++)
+			inonderCaseAleatoire();
+
 		placerArtefacts();
+
+		// tirer 4 roles aleatoires parmi les 6
+		List<Role> roles = Arrays.asList(Role.values());
+		Collections.shuffle(roles);
+
+		joueurs = new Joueur[4];
+
+		for(int i = 0; i < 4; i++)
+			joueurs[i] = new Joueur(this, roles.get(i), caseAlea());
 	}
+
+	public Case getCase(int x, int y) {return cases[x][y];}
+
+	public Joueur[] getJoueurs() {return joueurs;}
 
 	private void formeIle()
 	{
-		/*
-		mettre les cases sur les bords en Etat.SUBMERGEE
-		      [] []
-		   [] [] [] []
-		[] [] [] [] [] []
-		[] [] [] [] [] []
-		   [] [] [] []
-		      [] []
-		 */
 		//Submerge autour de l'ile
 		for(int x = 0; x < LENGTH; x++){
 			cases[x][0].etat = Etat.SUBMERGEE;
@@ -60,28 +72,20 @@ public class Modele extends Observable
 		cases[LENGTH-2][LENGTH-2].etat = Etat.SUBMERGEE;
 		cases[LENGTH-2][LENGTH-3].etat = Etat.SUBMERGEE;
 		cases[LENGTH-3][LENGTH-2].etat = Etat.SUBMERGEE;
-
-	}
-
-	private void inonderSixCases()
-	{
-		for(int i = 0; i < 6; i++)
-			inonderCaseAleatoire();
 	}
 
 	private void placerArtefacts()
 	{
 		for(int i = 0; i < 2; i++) {
-			placerArtefactsAleatoire(Zone.AIR);
-			placerArtefactsAleatoire(Zone.EAU);
-			placerArtefactsAleatoire(Zone.FEU);
-			placerArtefactsAleatoire(Zone.TERRE);
+			placerZoneAleatoire(Zone.AIR);
+			placerZoneAleatoire(Zone.EAU);
+			placerZoneAleatoire(Zone.FEU);
+			placerZoneAleatoire(Zone.TERRE);
 		}
-		placerArtefactsAleatoire(Zone.HELIPORT);
-
+		placerZoneAleatoire(Zone.HELIPORT);
 	}
 
-	public void placerArtefactsAleatoire(Zone type)
+	public void placerZoneAleatoire(Zone type)
 	{
 		int x, y;
 
@@ -95,16 +99,12 @@ public class Modele extends Observable
 		cases[x][y].type = type;
 	}
 
-
-	public Case getCase(int x, int y) {return cases[x][y];}
-
-	public void avance(Direction d, Joueur j)
+	public void inonderCaseAleatoire()
 	{
-		j.deplace(d);
-
+		caseAlea().setEtat(Etat.INONDEE);
 	}
 
-	public void inonderCaseAleatoire()
+	public Case caseAlea()
 	{
 		int x, y;
 
@@ -115,7 +115,7 @@ public class Modele extends Observable
 		}
 		while(cases[x][y].getEtat() != Etat.SECHE);
 
-		cases[x][y].setEtat(Etat.INONDEE);
+		return getCase(x, y);
 	}
 
 }

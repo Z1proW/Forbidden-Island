@@ -1,5 +1,7 @@
 package fr.rui_tilmann.Vue;
 
+import fr.rui_tilmann.Modele.Case;
+import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
@@ -28,7 +30,15 @@ public class VueJoueurs extends JPanel implements Observer
 	{
 		super.repaint();
 
-		// TODO paint chaque joueur faudrai faire en fonction de leur pos
+		for(Joueur j : modele.getJoueurs())
+		{
+			g.setColor(j.getRole().getColor());
+			Case pos = j.getPosition();
+			g.fillRect(pos.getX()*P + P/4, pos.getY()*P + P/4, P/2, P/2);
+		}
+
+
+		/*
 		g.setColor(Color.RED);
 		g.fillRect(P * 2 +P/4, P * 2+P/4, P/2, P/2);
 		g.setColor(Color.GREEN);
@@ -36,7 +46,7 @@ public class VueJoueurs extends JPanel implements Observer
 		g.setColor(Color.MAGENTA);
 		g.fillRect(P * 2+P/4, P * (Modele.LENGTH - 3) +P/4, P/2, P/2);
 		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(P * (Modele.LENGTH - 3) +P/4, P * (Modele.LENGTH - 3) +P/4, P/2, P/2);
+		g.fillRect(P * (Modele.LENGTH - 3) +P/4, P * (Modele.LENGTH - 3) +P/4, P/2, P/2);*/
 	}
 
 }
