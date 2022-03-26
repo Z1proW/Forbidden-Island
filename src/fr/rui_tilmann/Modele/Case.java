@@ -7,7 +7,7 @@ public class Case
 {
 
 	private Modele modele;
-	public Etat etat;
+	private Etat etat;
 	private final int x, y;
 
 	public Case(Modele modele, int x, int y)
@@ -16,6 +16,10 @@ public class Case
 		this.etat = Etat.SECHE;
 		this.x = x; this.y = y;
 	}
+
+	public Etat getEtat() {return etat;}
+
+	public void setEtat(Etat etat) {this.etat = etat;}
 
 	public Case adjacente(Direction direction)
 	{

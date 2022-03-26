@@ -35,7 +35,7 @@ public class VuePlateau extends JPanel implements Observer
 
 	private void paint(Graphics g, Case c, int x, int y)
 	{
-		switch(c.etat)
+		switch(c.getEtat())
 		{
 			case SECHE:   	g.setColor(Color.ORANGE); break;
 			case INONDEE: 	g.setColor(Color.CYAN); break;

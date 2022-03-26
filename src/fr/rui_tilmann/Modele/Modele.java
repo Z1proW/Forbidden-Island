@@ -65,9 +65,9 @@ public class Modele extends Observable
 			x = new Random().nextInt(LENGTH);
 			y = new Random().nextInt(LENGTH);
 		}
-		while(cases[x][y].etat != Etat.SECHE);
+		while(cases[x][y].getEtat() != Etat.SECHE);
 
-		cases[x][y].etat = Etat.INONDEE;
+		cases[x][y].setEtat(Etat.INONDEE);
 	}
 
 }
