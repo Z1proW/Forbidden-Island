@@ -14,8 +14,8 @@ public class Modele extends Observable
 {
 
 	public static final int LENGTH = 8;
-	private Case[][] cases;
-	private Joueur[] joueurs;
+	private final Case[][] cases;
+	private final Joueur[] joueurs;
 
 	public Modele()
 	{
@@ -40,7 +40,10 @@ public class Modele extends Observable
 		joueurs = new Joueur[4];
 
 		for(int i = 0; i < 4; i++)
-			joueurs[i] = new Joueur(this, roles.get(i), caseAlea());
+		{
+			joueurs[i] = new Joueur(this, roles.get(i), caseAlea(Etat.SECHE, Etat.INONDEE));
+			System.out.println(joueurs[i]);
+		}
 	}
 
 	public Case getCase(int x, int y) {return cases[x][y];}
@@ -49,29 +52,30 @@ public class Modele extends Observable
 
 	private void formeIle()
 	{
+		Etat s = Etat.SUBMERGEE;
 		//Submerge autour de l'ile
 		for(int x = 0; x < LENGTH; x++){
-			cases[x][0].etat = Etat.SUBMERGEE;
-			cases[0][x].etat = Etat.SUBMERGEE;
-			cases[x][LENGTH-1].etat = Etat.SUBMERGEE;
-			cases[LENGTH-1][x].etat = Etat.SUBMERGEE;
+			cases[x][0].setEtat(s);
+			cases[0][x].setEtat(s);
+			cases[x][LENGTH-1].setEtat(s);
+			cases[LENGTH-1][x].setEtat(s);
 		}
 		//Submerge coin en haut a gauche
-		cases[1][1].etat = Etat.SUBMERGEE;
-		cases[1][2].etat = Etat.SUBMERGEE;
-		cases[2][1].etat = Etat.SUBMERGEE;
+		cases[1][1].setEtat(s);
+		cases[1][2].setEtat(s);
+		cases[2][1].setEtat(s);
 		//Submerge en bas a gauche
-		cases[1][LENGTH-3].etat = Etat.SUBMERGEE;
-		cases[1][LENGTH-2].etat = Etat.SUBMERGEE;
-		cases[2][LENGTH-2].etat = Etat.SUBMERGEE;
+		cases[1][LENGTH-3].setEtat(s);
+		cases[1][LENGTH-2].setEtat(s);
+		cases[2][LENGTH-2].setEtat(s);
 		//Submerge en haut a droite
-		cases[LENGTH-2][1].etat = Etat.SUBMERGEE;
-		cases[LENGTH-2][2].etat = Etat.SUBMERGEE;
-		cases[LENGTH-3][1].etat = Etat.SUBMERGEE;
+		cases[LENGTH-2][1].setEtat(s);
+		cases[LENGTH-2][2].setEtat(s);
+		cases[LENGTH-3][1].setEtat(s);
 		//Submerge en bas a droite
-		cases[LENGTH-2][LENGTH-2].etat = Etat.SUBMERGEE;
-		cases[LENGTH-2][LENGTH-3].etat = Etat.SUBMERGEE;
-		cases[LENGTH-3][LENGTH-2].etat = Etat.SUBMERGEE;
+		cases[LENGTH-2][LENGTH-2].setEtat(s);
+		cases[LENGTH-2][LENGTH-3].setEtat(s);
+		cases[LENGTH-3][LENGTH-2].setEtat(s);
 	}
 
 	private void placerArtefacts()
@@ -94,17 +98,17 @@ public class Modele extends Observable
 			x = new Random().nextInt(LENGTH);
 			y = new Random().nextInt(LENGTH);
 		}
-		while(cases[x][y].etat != Etat.INONDEE && cases[x][y].type != Zone.AUCUNE);
+		while(cases[x][y].getEtat() != Etat.INONDEE && cases[x][y].getType() != Zone.NORMALE);
 
-		cases[x][y].type = type;
+		cases[x][y].setType(type);
 	}
 
 	public void inonderCaseAleatoire()
 	{
-		caseAlea().setEtat(Etat.INONDEE);
+		caseAlea(Etat.SECHE).setEtat(Etat.INONDEE);
 	}
 
-	public Case caseAlea()
+	public Case caseAlea(Etat... etatsPossibles)
 	{
 		int x, y;
 
@@ -113,7 +117,7 @@ public class Modele extends Observable
 			x = new Random().nextInt(LENGTH);
 			y = new Random().nextInt(LENGTH);
 		}
-		while(cases[x][y].getEtat() != Etat.SECHE);
+		while(!List.of(etatsPossibles).contains(cases[x][y].getEtat()));
 
 		return getCase(x, y);
 	}

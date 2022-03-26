@@ -8,21 +8,23 @@ public class Case
 {
 
 	private final Modele modele;
-	public Etat etat;
-	public Zone type;
+	private Etat etat;
+	private Zone type;
 	private final int x, y;
 
 	public Case(Modele modele, int x, int y)
 	{
 		this.modele = modele;
 		this.etat = Etat.SECHE;
-		this.type = Zone.AUCUNE;
+		this.type = Zone.NORMALE;
 		this.x = x; this.y = y;
 	}
 
 	public Etat getEtat() {return etat;}
-
 	public void setEtat(Etat etat) {this.etat = etat;}
+
+	public Zone getType() {return type;}
+	public void setType(Zone type) {this.type = type;}
 
 	public int getX() {return x;}
 	public int getY() {return y;}
@@ -37,6 +39,11 @@ public class Case
 			case OUEST: return modele.getCase(x - 1, y);
 			case EST: 	return modele.getCase(x + 1, y);
 		}
+	}
+
+	public String toString()
+	{
+		return "case " + x + ", " + y + ", " + etat + ", " + type;
 	}
 
 }

@@ -24,9 +24,14 @@ public class Joueur
 
 	public void deplace(Direction d) {
 		Case newPos = getPosition().adjacente(d);
-		if(newPos.etat != Etat.SUBMERGEE) {
+		if(newPos.getEtat() != Etat.SUBMERGEE) {
 			pos = newPos;
 		}
+	}
+
+	public String toString()
+	{
+		return role + " est en " + pos;
 	}
 
 }

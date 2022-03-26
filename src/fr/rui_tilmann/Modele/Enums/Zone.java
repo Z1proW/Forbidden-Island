@@ -1,7 +1,7 @@
 package fr.rui_tilmann.Modele.Enums;
 
 public enum Zone {
-    AUCUNE,
+    NORMALE,
     AIR,
     EAU,
     TERRE,

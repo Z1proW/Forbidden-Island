@@ -35,18 +35,7 @@ public class VueJoueurs extends JPanel implements Observer
 			g.setColor(j.getRole().getColor());
 			Case pos = j.getPosition();
 			g.fillRect(pos.getX()*P + P/4, pos.getY()*P + P/4, P/2, P/2);
-		}
-
-
-		/*
-		g.setColor(Color.RED);
-		g.fillRect(P * 2 +P/4, P * 2+P/4, P/2, P/2);
-		g.setColor(Color.GREEN);
-		g.fillRect(P * (Modele.LENGTH - 3) +P/4, P * 2+P/4, P/2, P/2);
-		g.setColor(Color.MAGENTA);
-		g.fillRect(P * 2+P/4, P * (Modele.LENGTH - 3) +P/4, P/2, P/2);
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(P * (Modele.LENGTH - 3) +P/4, P * (Modele.LENGTH - 3) +P/4, P/2, P/2);*/
+		} // TODO fonctionne mais quand 2 joueurs sont sur la meme case on n'en voit qu'un
 	}
 
 }
