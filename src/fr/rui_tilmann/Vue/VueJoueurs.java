@@ -29,7 +29,7 @@ public class VueJoueurs extends JPanel implements Observer
 	public void paintComponent(Graphics g)
 	{
 		super.repaint();
-
+		Joueur[] a;
 		for(Joueur j : modele.getJoueurs())
 		{
 			g.setColor(j.getRole().getColor());
