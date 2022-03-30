@@ -10,18 +10,23 @@ public class Vue
 
 	public Vue(Modele modele)
 	{
-		JFrame f = new JFrame();
-		f.setTitle("Jeu de l'île Interdite");
-		f.setLayout(new FlowLayout());
-		// TODO la vue plateau s'affiche 2 fois
-		JPanel[] vues = new JPanel[] {new VuePlateau(modele), new VueJoueurs(modele)};
+		initFrame("Jeu de l'île Interdite", false, true, new VuePlateau(modele));
+	}
 
-		for(JPanel p: vues)
+	private JFrame initFrame(String title, boolean resizable, boolean centered, JPanel... panels)
+	{
+		JFrame f = new JFrame();
+
+		for(JPanel p : panels)
 			f.add(p);
 
+		f.setTitle(title);
+		f.setResizable(resizable);
 		f.pack();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		if(centered) f.setLocationRelativeTo(null);
 		f.setVisible(true);
+		return f;
 	}
 
 }

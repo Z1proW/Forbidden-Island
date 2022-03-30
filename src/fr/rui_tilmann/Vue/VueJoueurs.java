@@ -9,7 +9,7 @@ import java.awt.*;
 
 import static fr.rui_tilmann.Vue.VuePlateau.P;
 
-public class VueJoueurs extends JPanel implements Observer
+public class VueJoueurs
 {
 
 	private final Modele modele;
@@ -17,19 +17,12 @@ public class VueJoueurs extends JPanel implements Observer
 	public VueJoueurs(Modele modele)
 	{
 		this.modele = modele;
-		modele.addObserver(this);
 
-		int s = P * Modele.LENGTH;
-		this.setPreferredSize(new Dimension(s, s));
 	}
 
-	@Override
-	public void update() {repaint();}
-
-	public void paintComponent(Graphics g)
+	public void draw(Graphics g)
 	{
-		super.repaint();
-		Joueur[] a;
+		//Joueur[] a;
 		for(Joueur j : modele.getJoueurs())
 		{
 			g.setColor(j.getRole().getColor());
