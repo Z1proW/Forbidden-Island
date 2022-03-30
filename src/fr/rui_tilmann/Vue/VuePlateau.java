@@ -11,7 +11,7 @@ public class VuePlateau extends JPanel implements Observer
 
 	private final Modele modele;
 	public final static int P = 80; // pixels par case
-	private VueJoueurs vueJoueurs;
+	private final VueJoueurs vueJoueurs;
 
 	public VuePlateau(Modele modele)
 	{
@@ -48,6 +48,16 @@ public class VuePlateau extends JPanel implements Observer
 			case SUBMERGEE: g.setColor(new Color(50, 50, 200)); break;
 		}
 		g.fillRect(x, y, P, P);
+
+		switch(c.getType())
+		{
+			case HELIPORT: g.setColor(Color.BLACK); break;
+			case AIR:	   g.setColor(Color.WHITE); break;
+			case EAU:	   g.setColor(Color.BLUE); break;
+			case FEU:	   g.setColor(Color.RED); break;
+			case TERRE:	   g.setColor(Color.ORANGE); break;
+		}
+		g.drawRoundRect(x, y, P-1, P-1, P, P);
 	}
 
 }

@@ -56,7 +56,8 @@ public class Modele extends Observable
 
 	private void placerZones()
 	{
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 2; i++)
+		{
 			placerZoneAleatoire(Zone.AIR);
 			placerZoneAleatoire(Zone.EAU);
 			placerZoneAleatoire(Zone.FEU);
@@ -67,35 +68,17 @@ public class Modele extends Observable
 
 	private void placerZoneAleatoire(Zone type)
 	{
-		int x, y;
-
-		do
-		{
-			x = new Random().nextInt(LENGTH);
-			y = new Random().nextInt(LENGTH);
-		}
-		while(cases[x][y].getEtat() != Etat.INONDEE && cases[x][y].getType() != Zone.NORMALE);
-
-		cases[x][y].setType(type);
-	}
-
-	private Case caseAlea(Zone... typesPossibles)
-	{
 		Case c;
-
-		do c = caseAlea();
-		while(!List.of(typesPossibles).contains(c.getType()));
-
-		return c;
+		do c = caseAlea(Etat.SECHE, Etat.INONDEE);
+		while(c.getType() != Zone.NORMALE);
+		c.setType(type);
 	}
 
 	private Case caseAlea(Etat... etatsPossibles)
 	{
 		Case c;
-
 		do c = caseAlea();
 		while(!List.of(etatsPossibles).contains(c.getEtat()));
-
 		return c;
 	}
 

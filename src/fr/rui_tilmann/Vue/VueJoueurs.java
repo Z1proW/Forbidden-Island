@@ -4,7 +4,6 @@ import fr.rui_tilmann.Modele.Case;
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 
-import javax.swing.*;
 import java.awt.*;
 
 import static fr.rui_tilmann.Vue.VuePlateau.P;
