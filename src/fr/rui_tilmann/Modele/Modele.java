@@ -45,7 +45,8 @@ public class Modele extends Observable
 
 		for(int i = 0; i < 4; i++)
 		{
-			joueurs[i] = new Joueur(this, roles.get(i), caseAlea(Etat.SECHE, Etat.INONDEE));
+			//joueurs[i] = new Joueur(this, roles.get(i), caseAlea(Etat.SECHE, Etat.INONDEE));
+			joueurs[i] = new Joueur(this, roles.get(i), cases[4][4]);
 			System.out.println(joueurs[i]);
 		}
 	}
