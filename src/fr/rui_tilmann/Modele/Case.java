@@ -4,6 +4,10 @@ import fr.rui_tilmann.Modele.Enums.Direction;
 import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Enums.Zone;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Case
 {
 
@@ -28,6 +32,11 @@ public class Case
 
 	public int getX() {return x;}
 	public int getY() {return y;}
+
+	public List<Joueur> getJoueurs()
+	{
+		return modele.getJoueurs().stream().filter(j -> j.getPosition() == this).collect(Collectors.toList());
+	}
 
 	public Case adjacente(Direction direction)
 	{

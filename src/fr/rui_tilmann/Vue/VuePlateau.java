@@ -1,10 +1,12 @@
 package fr.rui_tilmann.Vue;
 
 import fr.rui_tilmann.Modele.Case;
+import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class VuePlateau extends JPanel implements Observer
 {
@@ -35,8 +37,6 @@ public class VuePlateau extends JPanel implements Observer
 		for(int x = 0; x < Modele.LENGTH; x++)
 			for(int y = 0; y < Modele.LENGTH; y++)
 				paint(g, modele.getCase(x, y), x * P, y * P);
-
-		vueJoueurs.draw(g);
 	}
 
 	private void paint(Graphics g, Case c, int x, int y)
@@ -58,6 +58,8 @@ public class VuePlateau extends JPanel implements Observer
 			case TERRE:	   g.setColor(Color.ORANGE); break;
 		}
 		g.drawRoundRect(x, y, P-1, P-1, P, P);
+
+		vueJoueurs.draw(g, c);
 	}
 
 }

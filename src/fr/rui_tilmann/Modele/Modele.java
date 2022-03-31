@@ -5,17 +5,14 @@ import fr.rui_tilmann.Modele.Enums.Role;
 import fr.rui_tilmann.Modele.Enums.Zone;
 import fr.rui_tilmann.Vue.Observable;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Modele extends Observable
 {
 
 	public static final int LENGTH = 8;
 	private final Case[][] cases;
-	private final Joueur[] joueurs;
+	private final List<Joueur> joueurs;
 
 	public Modele()
 	{
@@ -41,19 +38,24 @@ public class Modele extends Observable
 		List<Role> roles = Arrays.asList(Role.values());
 		Collections.shuffle(roles);
 
-		joueurs = new Joueur[4];
+		joueurs = new ArrayList<>();
 
 		for(int i = 0; i < 4; i++)
 		{
-			//joueurs[i] = new Joueur(this, roles.get(i), caseAlea(Etat.SECHE, Etat.INONDEE));
-			joueurs[i] = new Joueur(this, roles.get(i), cases[4][4]);
-			System.out.println(joueurs[i]);
+			joueurs.add(new Joueur(this, roles.get(i), caseAlea(Etat.SECHE, Etat.INONDEE)));
+			System.out.println(joueurs.get(i));
 		}
+
+		/*
+		for(int i = 0; i < 3; i++)
+			joueurs.add(new Joueur(this, roles.get(i), cases[4][4]));
+		joueurs.add(new Joueur(this, roles.get(4), cases[3][4]));
+		 */
 	}
 
 	public Case getCase(int x, int y) {return cases[x][y];}
 
-	public Joueur[] getJoueurs() {return joueurs;}
+	public List<Joueur> getJoueurs() {return joueurs;}
 
 	private void placerZones()
 	{
