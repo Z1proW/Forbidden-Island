@@ -1,12 +1,10 @@
 package fr.rui_tilmann.Vue;
 
 import fr.rui_tilmann.Modele.Case;
-import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class VuePlateau extends JPanel implements Observer
 {
@@ -23,7 +21,7 @@ public class VuePlateau extends JPanel implements Observer
 		this.vueJoueurs = new VueJoueurs(modele);
 
 		int s = P * Modele.LENGTH;
-		this.setPreferredSize(new Dimension(s + 20 * Modele.LENGTH, s));
+		this.setPreferredSize(new Dimension(s, s));
 		this.setBackground(new Color(0, 0, 0));
 	}
 
@@ -37,43 +35,29 @@ public class VuePlateau extends JPanel implements Observer
 		for(int x = 0; x < Modele.LENGTH; x++)
 			for(int y = 0; y < Modele.LENGTH; y++)
 				paint(g, modele.getCase(x, y), x * P, y * P);
-		paintEau(g);
 	}
 
 	private void paint(Graphics g, Case c, int x, int y)
 	{
 		switch(c.getEtat())
 		{
-			case SECHE:   	g.setColor(new Color(200, 100, 50)); break;
-			case INONDEE: 	g.setColor(new Color(0, 150, 200)); break;
-			case SUBMERGEE: g.setColor(new Color(50, 50, 200)); break;
+			case SECHE:   	g.setColor(new Color(200, 100, 50 )); break;
+			case INONDEE: 	g.setColor(new Color(0  , 150, 200)); break;
+			case SUBMERGEE: g.setColor(new Color(50 , 50 , 200)); break;
 		}
 		g.fillRect(x, y, P, P);
 
 		switch(c.getType())
 		{
-			case HELIPORT: g.setColor(Color.BLACK); break;
-			case AIR:	   g.setColor(Color.WHITE); break;
-			case EAU:	   g.setColor(Color.BLUE); break;
-			case FEU:	   g.setColor(Color.RED); break;
+			case HELIPORT: g.setColor(Color.BLACK ); break;
+			case AIR:	   g.setColor(Color.WHITE ); break;
+			case EAU:	   g.setColor(Color.BLUE  ); break;
+			case FEU:	   g.setColor(Color.RED   ); break;
 			case TERRE:	   g.setColor(Color.ORANGE); break;
 		}
 		g.drawRoundRect(x, y, P-1, P-1, P, P);
 
 		vueJoueurs.draw(g, c);
-	}
-
-	private void paintEau(Graphics g){
-		g.setColor(Color.BLACK);
-		g.drawString("Niveau des Eaux", (P + 1/4 )* Modele.LENGTH, 50 );
-		for(int i=0; i<10; i++){
-			g.setColor(Color.BLACK);
-			g.fillRect(P * Modele.LENGTH ,40 *(i+2), P, P/10 );
-			if(modele.getniveauEau() == i){
-				g.setColor(Color.RED);
-				g.fillRect( P * Modele.LENGTH + P,40 *(12 - (i+1)), P/2, P/5 );
-			}
-		}
 	}
 
 }

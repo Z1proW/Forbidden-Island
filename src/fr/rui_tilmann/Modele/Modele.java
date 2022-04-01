@@ -14,7 +14,7 @@ public class Modele extends Observable
 	public static final int LENGTH = 8;
 	private final Case[][] cases;
 	private final List<Joueur> joueurs;
-	private NiveauEau niveauEau;
+	private final NiveauEau niveauEau;
 
 	public Modele()
 	{
@@ -48,11 +48,6 @@ public class Modele extends Observable
 			System.out.println(joueurs.get(i));
 		}
 
-		/*
-		for(int i = 0; i < 3; i++)
-			joueurs.add(new Joueur(this, roles.get(i), cases[4][4]));
-		joueurs.add(new Joueur(this, roles.get(4), cases[3][4]));
-		 */
 		niveauEau = new NiveauEau(Difficulte.NOVICE);
 	}
 
@@ -61,7 +56,7 @@ public class Modele extends Observable
 	public List<Joueur> getJoueurs() {return joueurs;}
 
 	public int getniveauEau(){
-		return this.niveauEau.getCurrent();
+		return this.niveauEau.getNiveau();
 	}
 
 	private void placerZones()
@@ -97,14 +92,15 @@ public class Modele extends Observable
 		return getCase(new Random().nextInt(LENGTH), new Random().nextInt(LENGTH));
 	}
 
-	public void innodationIle(int n){
+	public void inonderCases(int n) {
 		Case c;
-		for(int i=0; i < n; i++){
+
+		for(int i = 0; i < n; i++) {
 			c = caseAlea(Etat.SECHE, Etat.INONDEE);
-			if(c.getEtat() == Etat.SECHE){
-				c.setEtat(Etat.INONDEE);
-			}else{
-				c.setEtat(Etat.SECHE);
+
+			switch(c.getEtat()) {
+				case SECHE:   c.setEtat(Etat.INONDEE);
+				case INONDEE: c.setEtat(Etat.SUBMERGEE);
 			}
 		}
 	}
