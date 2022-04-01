@@ -1,5 +1,6 @@
 package fr.rui_tilmann.Modele;
 
+import fr.rui_tilmann.Modele.Enums.Difficulte;
 import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Enums.Role;
 import fr.rui_tilmann.Modele.Enums.Zone;
@@ -13,6 +14,7 @@ public class Modele extends Observable
 	public static final int LENGTH = 8;
 	private final Case[][] cases;
 	private final List<Joueur> joueurs;
+	private NiveauEau niveauEau;
 
 	public Modele()
 	{
@@ -51,11 +53,16 @@ public class Modele extends Observable
 			joueurs.add(new Joueur(this, roles.get(i), cases[4][4]));
 		joueurs.add(new Joueur(this, roles.get(4), cases[3][4]));
 		 */
+		niveauEau = new NiveauEau(Difficulte.NOVICE);
 	}
 
 	public Case getCase(int x, int y) {return cases[x][y];}
 
 	public List<Joueur> getJoueurs() {return joueurs;}
+
+	public int getniveauEau(){
+		return this.niveauEau.getCurrent();
+	}
 
 	private void placerZones()
 	{
@@ -88,6 +95,18 @@ public class Modele extends Observable
 	private Case caseAlea()
 	{
 		return getCase(new Random().nextInt(LENGTH), new Random().nextInt(LENGTH));
+	}
+
+	public void innodationIle(int n){
+		Case c;
+		for(int i=0; i < n; i++){
+			c = caseAlea(Etat.SECHE, Etat.INONDEE);
+			if(c.getEtat() == Etat.SECHE){
+				c.setEtat(Etat.INONDEE);
+			}else{
+				c.setEtat(Etat.SECHE);
+			}
+		}
 	}
 
 }

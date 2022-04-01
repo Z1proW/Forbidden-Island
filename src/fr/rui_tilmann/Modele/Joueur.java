@@ -24,7 +24,7 @@ public class Joueur
 
 	public void deplace(Direction d) {
 		Case newPos = getPosition().adjacente(d);
-		if(newPos.getEtat() != Etat.SUBMERGEE) {
+		if(newPos.getEtat() != Etat.SUBMERGEE || this.getRole() == Role.PLONGEUR) {
 			pos = newPos;
 		}
 	}

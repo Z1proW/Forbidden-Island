@@ -23,7 +23,7 @@ public class VuePlateau extends JPanel implements Observer
 		this.vueJoueurs = new VueJoueurs(modele);
 
 		int s = P * Modele.LENGTH;
-		this.setPreferredSize(new Dimension(s, s));
+		this.setPreferredSize(new Dimension(s + 20 * Modele.LENGTH, s));
 		this.setBackground(new Color(0, 0, 0));
 	}
 
@@ -37,6 +37,7 @@ public class VuePlateau extends JPanel implements Observer
 		for(int x = 0; x < Modele.LENGTH; x++)
 			for(int y = 0; y < Modele.LENGTH; y++)
 				paint(g, modele.getCase(x, y), x * P, y * P);
+		paintEau(g);
 	}
 
 	private void paint(Graphics g, Case c, int x, int y)
@@ -60,6 +61,19 @@ public class VuePlateau extends JPanel implements Observer
 		g.drawRoundRect(x, y, P-1, P-1, P, P);
 
 		vueJoueurs.draw(g, c);
+	}
+
+	private void paintEau(Graphics g){
+		g.setColor(Color.BLACK);
+		g.drawString("Niveau des Eaux", (P + 1/4 )* Modele.LENGTH, 50 );
+		for(int i=0; i<10; i++){
+			g.setColor(Color.BLACK);
+			g.fillRect(P * Modele.LENGTH ,40 *(i+2), P, P/10 );
+			if(modele.getniveauEau() == i){
+				g.setColor(Color.RED);
+				g.fillRect( P * Modele.LENGTH + P,40 *(12 - (i+1)), P/2, P/5 );
+			}
+		}
 	}
 
 }
