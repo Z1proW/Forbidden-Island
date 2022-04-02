@@ -15,6 +15,7 @@ public class Modele extends Observable
 	private final Case[][] cases;
 	private final List<Joueur> joueurs;
 	private final NiveauEau niveauEau;
+	private final PileCartes pileCartes;
 
 	public Modele()
 	{
@@ -49,6 +50,7 @@ public class Modele extends Observable
 		}
 
 		niveauEau = new NiveauEau(Difficulte.NOVICE);
+		pileCartes = new PileCartes();
 	}
 
 	public Case getCase(int x, int y) {return cases[x][y];}
@@ -57,6 +59,10 @@ public class Modele extends Observable
 
 	public int getniveauEau(){
 		return this.niveauEau.getNiveau();
+	}
+
+	public PileCartes getPileCartes(){
+		return pileCartes;
 	}
 
 	private void placerZones()
