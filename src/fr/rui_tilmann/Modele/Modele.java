@@ -33,7 +33,7 @@ public class Modele extends Observable
 
 		// inonder 6 cases aleatoires
 		for(int i = 0; i < 6; i++)
-			caseAlea(Etat.SECHE).setEtat(Etat.INONDEE);
+			caseAleatoire(Etat.SECHE).setEtat(Etat.INONDEE);
 
 		placerZones();
 
@@ -45,7 +45,7 @@ public class Modele extends Observable
 
 		for(int i = 0; i < 4; i++)
 		{
-			joueurs.add(new Joueur(this, roles.get(i), caseAlea(Etat.SECHE, Etat.INONDEE)));
+			joueurs.add(new Joueur(this, roles.get(i), caseAleatoire(Etat.SECHE, Etat.INONDEE)));
 			System.out.println(joueurs.get(i));
 		}
 
@@ -57,13 +57,9 @@ public class Modele extends Observable
 
 	public List<Joueur> getJoueurs() {return joueurs;}
 
-	public int getniveauEau(){
-		return this.niveauEau.getNiveau();
-	}
+	public int getniveauEau() {return niveauEau.getNiveau();}
 
-	public PileCartes getPileCartes(){
-		return pileCartes;
-	}
+	public PileCartes getPileCartes() {return pileCartes;}
 
 	private void placerZones()
 	{
@@ -80,34 +76,52 @@ public class Modele extends Observable
 	private void placerZoneAleatoire(Zone type)
 	{
 		Case c;
-		do c = caseAlea(Etat.SECHE, Etat.INONDEE);
+		do c = caseAleatoire(Etat.SECHE, Etat.INONDEE);
 		while(c.getType() != Zone.NORMALE);
 		c.setType(type);
 	}
 
-	private Case caseAlea(Etat... etatsPossibles)
+	private Case caseAleatoire(Etat... etatsPossibles)
 	{
 		Case c;
-		do c = caseAlea();
+		do c = caseAleatoire();
 		while(!List.of(etatsPossibles).contains(c.getEtat()));
 		return c;
 	}
 
-	private Case caseAlea()
+	private Case caseAleatoire()
 	{
 		return getCase(new Random().nextInt(LENGTH), new Random().nextInt(LENGTH));
 	}
 
-	public void inonderCases(int n) {
-		Case c;
+	public void monteeEau()
+	{
+		niveauEau.monteeEau();
 
-		for(int i = 0; i < n; i++) {
-			c = caseAlea(Etat.SECHE, Etat.INONDEE);
+		if(niveauEau.getNombre() == -1)
+		{
+			// TODO perdu
+		}
 
-			switch(c.getEtat()) {
-				case SECHE:   c.setEtat(Etat.INONDEE);
-				case INONDEE: c.setEtat(Etat.SUBMERGEE);
-			}
+		for(int i = 0; i < niveauEau.getNombre(); i++)
+			monteeEauCase(caseAleatoire(Etat.SECHE, Etat.INONDEE));
+	}
+
+	private void monteeEauCase(Case c)
+	{
+		switch(c.getEtat())
+		{
+			case SECHE:
+				c.setEtat(Etat.INONDEE);
+				break;
+
+			case INONDEE:
+				c.setEtat(Etat.SUBMERGEE);
+				// TODO enlever carte du paquet
+				// TODO perdu si un joueur est sur la case et il n'y a pas de case adjacente pas submergee
+				// TODO perdu si c'est l'heliport
+				// TODO perdu si il les 2 tuiles d'un tresor sont submergees sauf si le tresor est deja pris
+				break;
 		}
 	}
 

@@ -29,16 +29,18 @@ public class VueEau extends JPanel implements Observer
 		paint(g);
 	}
 
-	public void paint(Graphics g) {
-
+	public void paint(Graphics g)
+	{
 		g.setColor(Color.BLACK);
 		g.drawString("Niveau des Eaux", 4*P/10, P/4);
+
+		// TODO draw tete de mort
 
 		g.setColor(Color.BLUE);
 		g.fillRect(0, (10 - (modele.getniveauEau() + 1)) * P/2 + P, 2*P, P * Modele.LENGTH);
 
-		for(int i = 0; i < 10; i++) {
-
+		for(int i = 0; i < 10; i++)
+		{
 			g.setColor(Color.BLACK);
 			g.fillRect(0 ,i * P/2 + P, P, P/16);
 		}

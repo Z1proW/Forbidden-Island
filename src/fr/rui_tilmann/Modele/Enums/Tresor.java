@@ -5,7 +5,7 @@ public enum Tresor {
     EAU,
     TERRE,
     FEU,
-    HELICOT,
-    BACDESABLE,
-    MONTEEDESEAUX;
+    HELICOPTERE,
+    SAC_DE_SABLE,
+    MONTEE_DES_EAUX;
 }

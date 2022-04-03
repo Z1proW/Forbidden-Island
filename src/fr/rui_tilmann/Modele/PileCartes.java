@@ -2,43 +2,51 @@ package fr.rui_tilmann.Modele;
 
 import fr.rui_tilmann.Modele.Enums.Tresor;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class PileCartes {
-    private ArrayList<Tresor> tresors;
-    private ArrayList<Tresor> defausse;
-    PileCartes(){
+
+    private List<Tresor> tresors;
+    private Set<Tresor> defausse;
+
+    PileCartes() {
         tresors = new ArrayList<>();
-        defausse = new ArrayList<>();
-        for(int i=0; i<4; i++){
+        defausse = new HashSet<>();
+
+        for(int i = 0; i < 5; i++) {
             tresors.add(Tresor.TERRE);
             tresors.add(Tresor.AIR);
             tresors.add(Tresor.FEU);
             tresors.add(Tresor.EAU);
         }
-        for(int i=0; i<3; i++){
-            tresors.add(Tresor.HELICOT);
-            tresors.add(Tresor.MONTEEDESEAUX);
+
+        for(int i = 0; i < 3; i++) {
+            tresors.add(Tresor.HELICOPTERE);
+            tresors.add(Tresor.MONTEE_DES_EAUX);
         }
-        tresors.add(Tresor.BACDESABLE);
-        tresors.add(Tresor.BACDESABLE);
+
+        for(int i = 0; i < 2; i++)
+            tresors.add(Tresor.SAC_DE_SABLE);
+
         Collections.shuffle(tresors);
     }
 
-    public Tresor getTresor(){
-        Tresor tresor = tresors.remove(tresors.size()-1);
-        if(tresor == Tresor.MONTEEDESEAUX)
+    public Tresor getTresor() {
+        Tresor tresor = tresors.remove(0);
+
+        if(tresor == Tresor.MONTEE_DES_EAUX)
             defausse.add(tresor);
+
         return tresor;
     }
 
-    public void reset(){
-        if(tresors.isEmpty()){
-            Collections.shuffle(defausse);
-            tresors = defausse;
-            defausse = new ArrayList<>();
-        }
+    // si cette methode est inutile => defausse est inutile
+    public void reset() {
+        if(!tresors.isEmpty()) return;
+
+        tresors = new ArrayList<>(defausse);
+        Collections.shuffle(tresors);
+        defausse.clear();
     }
 
 }

@@ -14,4 +14,12 @@ public class NiveauEau {
 
     public int getNiveau() {return this.niveau;}
 
+    public int getNombre()
+    {
+        if(niveau < 2) return 2;
+        if(niveau < 5) return 3;
+        if(niveau < 7) return 4;
+        if(niveau < 9) return 5;
+        return -1;
+    }
 }
