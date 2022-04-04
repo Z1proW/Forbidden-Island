@@ -16,6 +16,7 @@ public class Modele extends Observable
 	private final List<Joueur> joueurs;
 	private final NiveauEau niveauEau;
 	private final PileCartes pileCartes;
+	private int perdu = 0;
 
 	public Modele()
 	{
@@ -100,7 +101,7 @@ public class Modele extends Observable
 
 		if(niveauEau.getNombre() == -1)
 		{
-			// TODO perdu
+			perdu = 1;
 		}
 
 		for(int i = 0; i < niveauEau.getNombre(); i++)

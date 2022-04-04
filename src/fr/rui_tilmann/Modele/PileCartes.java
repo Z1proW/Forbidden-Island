@@ -31,6 +31,11 @@ public class PileCartes {
         Collections.shuffle(tresors);
     }
 
+    public void defausser(Tresor t)
+    {
+        defausse.add(t);
+    }
+
     public Tresor getTresor() {
         Tresor tresor = tresors.remove(0);
 

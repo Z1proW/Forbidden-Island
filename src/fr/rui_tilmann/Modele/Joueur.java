@@ -47,7 +47,10 @@ public class Joueur
 	}
 
 	public Tresor utiliseTresor(int n) {
-		try {return cartes.remove(n);}
+		try {
+			modele.getPileCartes().defausser(cartes.get(n));
+			return cartes.remove(n);
+		}
 		catch(Exception e) {
 			System.out.println("Pas de carte à cette emplacement");
 			return null;
