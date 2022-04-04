@@ -1,5 +1,6 @@
 package fr.rui_tilmann.Controleur;
 
+import fr.rui_tilmann.Modele.Case;
 import fr.rui_tilmann.Modele.Modele;
 
 import java.awt.event.MouseEvent;
@@ -17,9 +18,9 @@ public class ControleurClic implements MouseListener
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		modele.getCase(e.getX()/P, e.getY()/P);
-		modele.notifyObservers();
 		System.out.println("clic");
+		Case c = modele.getCase(e.getX()/P, e.getY()/P);
+		// TODO fix modele.notifyObservers();
 	}
 
 	@Override

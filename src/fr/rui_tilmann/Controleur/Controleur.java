@@ -9,7 +9,9 @@ public class Controleur implements ActionListener
 {
 	private final Modele modele;
 
-	public Controleur(Modele modele) {this.modele = modele;}
+	public Controleur(Modele modele) {
+		this.modele = modele;
+	}
 
 	public void actionPerformed(ActionEvent e) {}
 }

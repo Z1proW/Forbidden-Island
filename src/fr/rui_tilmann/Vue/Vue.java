@@ -1,5 +1,6 @@
 package fr.rui_tilmann.Vue;
 
+import fr.rui_tilmann.Controleur.ControleurClic;
 import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
@@ -12,6 +13,8 @@ public class Vue
 	{
 		JFrame f = new JFrame();
 		f.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+
+		f.addMouseListener(new ControleurClic(modele));
 
 		f.add(new VuePlateau(modele));
 		f.add(new VueEau(modele));
