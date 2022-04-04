@@ -1,9 +1,6 @@
 package fr.rui_tilmann.Modele;
 
-import fr.rui_tilmann.Modele.Enums.Difficulte;
-import fr.rui_tilmann.Modele.Enums.Etat;
-import fr.rui_tilmann.Modele.Enums.Role;
-import fr.rui_tilmann.Modele.Enums.Zone;
+import fr.rui_tilmann.Modele.Enums.*;
 import fr.rui_tilmann.Vue.Observable;
 
 import java.util.*;
@@ -16,7 +13,7 @@ public class Modele extends Observable
 	private final List<Joueur> joueurs;
 	private final NiveauEau niveauEau;
 	private final PileCartes pileCartes;
-	private int perdu = 0;
+	private GameState state = GameState.PLAYING;
 
 	public Modele()
 	{
@@ -101,7 +98,7 @@ public class Modele extends Observable
 
 		if(niveauEau.getNombre() == -1)
 		{
-			perdu = 1;
+			state = GameState.NIVEAU_EAU_TROP_HAUT;
 		}
 
 		for(int i = 0; i < niveauEau.getNombre(); i++)
@@ -118,10 +115,15 @@ public class Modele extends Observable
 
 			case INONDEE:
 				c.setEtat(Etat.SUBMERGEE);
-				// TODO enlever carte du paquet
 				// TODO perdu si un joueur est sur la case et il n'y a pas de case adjacente pas submergee
+				state = GameState.NOYADE;
+
 				// TODO perdu si c'est l'heliport
+				state = GameState.HELIPORT_SUBMERGE;
+
 				// TODO perdu si il les 2 tuiles d'un tresor sont submergees sauf si le tresor est deja pris
+				state = GameState.TRESOR_IRRECUPERABLE;
+
 				break;
 		}
 	}
