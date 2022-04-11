@@ -14,6 +14,7 @@ public class Modele extends Observable
 	private final NiveauEau niveauEau;
 	private final PileCartes pileCartes;
 	private GameState state = GameState.EN_JEU;
+	public int joueur;
 
 	public Modele()
 	{
@@ -46,9 +47,13 @@ public class Modele extends Observable
 			joueurs.add(new Joueur(this, roles.get(i), caseAleatoire(Etat.SECHE, Etat.INONDEE)));
 			System.out.println(joueurs.get(i));
 		}
+		joueur = 0;
 
 		niveauEau = new NiveauEau(Difficulte.NOVICE);
 		pileCartes = new PileCartes();
+
+		for(int i = 0; i < 12; i++)
+			joueurs.get(new Random().nextInt(4)).piocheTresor();
 	}
 
 	public Case getCase(int x, int y) {return cases[x][y];}

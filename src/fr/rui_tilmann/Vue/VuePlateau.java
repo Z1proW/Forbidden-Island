@@ -13,12 +13,11 @@ public class VuePlateau extends JPanel implements Observer
 	public final static int P = 80; // pixels par case
 	private final VueJoueurs vueJoueurs;
 
-	public VuePlateau(Modele modele)
+	public VuePlateau(Modele modele, VueJoueurs vueJoueurs)
 	{
 		this.modele = modele;
+		this.vueJoueurs = vueJoueurs;
 		modele.addObserver(this);
-
-		this.vueJoueurs = new VueJoueurs(modele);
 
 		int s = P * Modele.LENGTH;
 		this.setPreferredSize(new Dimension(s, s));

@@ -5,7 +5,6 @@ import fr.rui_tilmann.Controleur.ControleurFenetre;
 import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
@@ -19,18 +18,21 @@ public class Vue
 		f.setUndecorated(true);
 		f.setBackground(new Color(255, 255, 255, 100));
 
-		VuePlateau vuePlateau = new VuePlateau(modele);
-		f.add(vuePlateau, BorderLayout.WEST);
-		f.add(new VueEau(modele));
-
-		f.addMouseListener(new ControleurClic(modele, vuePlateau));
-
 		TitleBar titleBar = new TitleBar();
 		f.add(titleBar, BorderLayout.NORTH);
-
 		ControleurFenetre c = new ControleurFenetre(f, titleBar);
 		f.addMouseListener(c);
 		f.addMouseMotionListener(c);
+
+		VueJoueurs vueJoueurs = new VueJoueurs(modele, titleBar);
+
+		VuePlateau vuePlateau = new VuePlateau(modele, vueJoueurs);
+		f.add(vuePlateau, BorderLayout.WEST);
+		f.addMouseListener(new ControleurClic(modele, vuePlateau));
+
+		f.add(new VueEau(modele), BorderLayout.CENTER);
+
+		f.add(new VueCartes(modele), BorderLayout.EAST);
 
 		f.setTitle("Jeu de l'île Interdite");
 		f.setResizable(false);

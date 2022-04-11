@@ -2,22 +2,14 @@ package fr.rui_tilmann.Vue;
 
 import fr.rui_tilmann.Modele.Modele;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.TimerTask;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class VueEau extends JPanel implements Observer
 {
 
 	private final Modele modele;
-	private final int P = VuePlateau.P;
+	public static final int P = VuePlateau.P;
 	private boolean b = true;
 
 	public VueEau(Modele modele)
@@ -55,20 +47,17 @@ public class VueEau extends JPanel implements Observer
 		}
 
 		g.setColor(Color.BLACK);
+		g.setFont(new Font("Calibri", Font.BOLD, 20));
 		// dessine 2
-		g.setFont(new Font("", Font.BOLD, 20));
 		g.drawString("2", P + 20, 8 * P/2 + P + 10);
 
 		// 3
-		g.setFont(new Font("", Font.BOLD, 20));
 		g.drawString("3", P + 20, 5 * P/2 + P + 10);
 
 		// 4
-		g.setFont(new Font("", Font.BOLD, 20));
 		g.drawString("4", P + 20, 3 * P/2 + P + 10);
 
 		// 5
-		g.setFont(new Font("", Font.BOLD, 20));
 		g.drawString("5", P + 20, 1 * P/2 + P + 10);
 
 		// dessine tete de mort

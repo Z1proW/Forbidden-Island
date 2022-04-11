@@ -35,15 +35,16 @@ public class Joueur
 		}
 	}
 
-	public void piocheTresor() throws Exception
+	public List<Tresor> getCartes() {return cartes;}
+
+	// TODO gérer 5 cartes max
+	public void piocheTresor()
 	{
 		Tresor tresor = modele.getPileCartes().getTresor();
 
 		if(tresor == Tresor.MONTEE_DES_EAUX)
 			modele.monteeEau();
 		else cartes.add(tresor);
-
-		if(cartes.size() > 5) throw new Exception(role + " a plus de 5 cartes en main !");
 	}
 
 	public Tresor utiliseTresor(int n) {

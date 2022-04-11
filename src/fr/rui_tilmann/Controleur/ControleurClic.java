@@ -3,6 +3,7 @@ package fr.rui_tilmann.Controleur;
 import fr.rui_tilmann.Modele.Case;
 import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Modele;
+import fr.rui_tilmann.Vue.VueCartes;
 import fr.rui_tilmann.Vue.VuePlateau;
 
 import javax.swing.*;
@@ -16,7 +17,6 @@ public class ControleurClic implements MouseListener
 
 	private final Modele modele;
 	private final VuePlateau vuePlateau;
-	private JFrame f;
 
 	public ControleurClic(Modele modele, VuePlateau vuePlateau)
 	{

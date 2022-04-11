@@ -13,14 +13,18 @@ public class VueJoueurs
 {
 
 	private final Modele modele;
+	private final TitleBar titleBar;
 
-	public VueJoueurs(Modele modele)
+	public VueJoueurs(Modele modele, TitleBar titleBar)
 	{
-		this.modele = modele;
+		this.modele = modele; this.titleBar = titleBar;
 	}
 
 	public void draw(Graphics g, Case c)
 	{
+		Joueur joueur = modele.getJoueurs().get(modele.joueur);
+		titleBar.setTitle(joueur.getRole().toString(), joueur.getRole().getColor());
+
 		List<Joueur> js = c.getJoueurs();
 
 		if(js.size() == 1)
