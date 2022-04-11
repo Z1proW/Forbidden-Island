@@ -17,7 +17,13 @@ public class Vue
 		JFrame f = new JFrame();
 		f.setLayout(new BorderLayout());
 		f.setUndecorated(true);
-		f.setBackground(new Color(20, 200, 255, 100));
+		f.setBackground(new Color(255, 255, 255, 100));
+
+		VuePlateau vuePlateau = new VuePlateau(modele);
+		f.add(vuePlateau, BorderLayout.WEST);
+		f.add(new VueEau(modele));
+
+		f.addMouseListener(new ControleurClic(modele, vuePlateau));
 
 		TitleBar titleBar = new TitleBar();
 		f.add(titleBar, BorderLayout.NORTH);
@@ -25,11 +31,6 @@ public class Vue
 		ControleurFenetre c = new ControleurFenetre(f, titleBar);
 		f.addMouseListener(c);
 		f.addMouseMotionListener(c);
-
-		f.addMouseListener(new ControleurClic(modele));
-
-		f.add(new VuePlateau(modele), BorderLayout.WEST);
-		f.add(new VueEau(modele));
 
 		f.setTitle("Jeu de l'île Interdite");
 		f.setResizable(false);

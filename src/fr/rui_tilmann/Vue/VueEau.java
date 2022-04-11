@@ -41,9 +41,6 @@ public class VueEau extends JPanel implements Observer
 
 	public void paint(Graphics g)
 	{
-		// background
-		//g.setColor(Color.WHITE);
-		//g.fillRect(0, 0, 2*P, P * Modele.LENGTH);
 
 		// eau
 		ImageIcon water = new ImageIcon("src/fr/rui_tilmann/images/water.png");

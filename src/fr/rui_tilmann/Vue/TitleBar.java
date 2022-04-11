@@ -32,7 +32,7 @@ public class TitleBar extends JPanel
 	public void paint(Graphics g)
 	{
 		if(hovered) g.setColor(Color.RED);
-		else g.setColor(Color.WHITE);
+		else g.setColor(Color.BLACK);
 
 		g.fillPolygon(new int[] {left+5, right-7, right-5, left+7}, new int[] {top+7, bottom-5, bottom-7, top+5}, 4);
 		g.fillPolygon(new int[] {right-5, left+7, left+5, right-7}, new int[] {top+7, bottom-5, bottom-7, top+5}, 4);

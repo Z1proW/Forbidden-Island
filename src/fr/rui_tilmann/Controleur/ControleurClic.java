@@ -3,6 +3,7 @@ package fr.rui_tilmann.Controleur;
 import fr.rui_tilmann.Modele.Case;
 import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Modele;
+import fr.rui_tilmann.Vue.VuePlateau;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -14,17 +15,19 @@ public class ControleurClic implements MouseListener
 {
 
 	private final Modele modele;
+	private final VuePlateau vuePlateau;
 	private JFrame f;
 
-	public ControleurClic(Modele modele)
+	public ControleurClic(Modele modele, VuePlateau vuePlateau)
 	{
 		this.modele = modele;
+		this.vuePlateau = vuePlateau;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		int x = (e.getX()-8); int y = (e.getY()-31);
+		int x = (e.getX()-vuePlateau.getX()); int y = (e.getY()-vuePlateau.getY());
 
 		if(x >= 8*P || y >= 8*P) return;
 
@@ -39,13 +42,9 @@ public class ControleurClic implements MouseListener
 		modele.notifyObservers();
 	}
 
-	@Override
 	public void mouseClicked(MouseEvent e) {}
-	@Override
 	public void mousePressed(MouseEvent e) {}
-	@Override
 	public void mouseEntered(MouseEvent e) {}
-	@Override
 	public void mouseExited(MouseEvent e) {}
 
 }
