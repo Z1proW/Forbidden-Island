@@ -2,14 +2,23 @@ package fr.rui_tilmann.Vue;
 
 import fr.rui_tilmann.Modele.Modele;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.TimerTask;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class VueEau extends JPanel implements Observer
 {
 
 	private final Modele modele;
 	private final int P = VuePlateau.P;
+	private boolean b = true;
 
 	public VueEau(Modele modele)
 	{
@@ -17,7 +26,8 @@ public class VueEau extends JPanel implements Observer
 		modele.addObserver(this);
 
 		this.setPreferredSize(new Dimension(2*P, P * Modele.LENGTH));
-		this.setBackground(new Color(0, 0, 0));
+
+		//this.setBackground(Color.WHITE);
 	}
 
 	@Override
@@ -31,19 +41,42 @@ public class VueEau extends JPanel implements Observer
 
 	public void paint(Graphics g)
 	{
-		g.setColor(Color.BLACK);
-		g.drawString("Niveau des Eaux", 4*P/10, P/4);
+		// background
+		//g.setColor(Color.WHITE);
+		//g.fillRect(0, 0, 2*P, P * Modele.LENGTH);
 
-		// TODO draw tete de mort
+		// eau
+		ImageIcon water = new ImageIcon("src/fr/rui_tilmann/images/water.png");
+		g.drawImage(water.getImage(), 0, (10 - (modele.getniveauEau() + 1)) * P/2 + P - 9, null);
 
-		g.setColor(Color.BLUE);
-		g.fillRect(0, (10 - (modele.getniveauEau() + 1)) * P/2 + P, 2*P, P * Modele.LENGTH);
-
+		// lignes
 		for(int i = 0; i < 10; i++)
 		{
-			g.setColor(Color.BLACK);
+			if(i == 0) g.setColor(Color.RED);
+			else g.setColor(Color.BLACK);
 			g.fillRect(0 ,i * P/2 + P, P, P/16);
 		}
+
+		g.setColor(Color.BLACK);
+		// dessine 2
+		g.setFont(new Font("", Font.BOLD, 20));
+		g.drawString("2", P + 20, 8 * P/2 + P + 10);
+
+		// 3
+		g.setFont(new Font("", Font.BOLD, 20));
+		g.drawString("3", P + 20, 5 * P/2 + P + 10);
+
+		// 4
+		g.setFont(new Font("", Font.BOLD, 20));
+		g.drawString("4", P + 20, 3 * P/2 + P + 10);
+
+		// 5
+		g.setFont(new Font("", Font.BOLD, 20));
+		g.drawString("5", P + 20, 1 * P/2 + P + 10);
+
+		// dessine tete de mort
+		ImageIcon skull = new ImageIcon("src/fr/rui_tilmann/images/skull.png");
+		g.drawImage(skull.getImage(), P + 10, P - 13, null);
 	}
 
 }

@@ -13,7 +13,7 @@ public class Modele extends Observable
 	private final List<Joueur> joueurs;
 	private final NiveauEau niveauEau;
 	private final PileCartes pileCartes;
-	private GameState state = GameState.PLAYING;
+	private GameState state = GameState.EN_JEU;
 
 	public Modele()
 	{
@@ -115,11 +115,22 @@ public class Modele extends Observable
 
 			case INONDEE:
 				c.setEtat(Etat.SUBMERGEE);
-				// TODO perdu si un joueur est sur la case et il n'y a pas de case adjacente pas submergee
-				state = GameState.NOYADE;
 
-				// TODO perdu si c'est l'heliport
-				state = GameState.HELIPORT_SUBMERGE;
+				// perdu si un joueur est sur la case et il n'y a pas de case adjacente pas submergee
+				if(!c.getJoueurs().isEmpty())
+				{
+					boolean adjSub = true;
+
+					for(Direction d : Direction.values())
+						if(c.adjacente(d).getEtat() != Etat.SUBMERGEE)
+							adjSub = false;
+
+					if(adjSub) state = GameState.NOYADE;
+				}
+
+				// perdu si c'est l'heliport
+				if(c.getType() == Zone.HELIPORT)
+					state = GameState.HELIPORT_SUBMERGE;
 
 				// TODO perdu si il les 2 tuiles d'un tresor sont submergees sauf si le tresor est deja pris
 				state = GameState.TRESOR_IRRECUPERABLE;

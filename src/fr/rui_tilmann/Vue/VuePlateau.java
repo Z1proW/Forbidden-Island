@@ -22,7 +22,6 @@ public class VuePlateau extends JPanel implements Observer
 
 		int s = P * Modele.LENGTH;
 		this.setPreferredSize(new Dimension(s, s));
-		this.setBackground(new Color(0, 0, 0));
 	}
 
 	@Override
@@ -55,7 +54,8 @@ public class VuePlateau extends JPanel implements Observer
 			case FEU:	   g.setColor(Color.RED   ); break;
 			case TERRE:	   g.setColor(Color.ORANGE); break;
 		}
-		g.drawRoundRect(x, y, P-1, P-1, P, P);
+
+		g.drawRect(x+5, y+5, P-11, P-11);
 
 		vueJoueurs.draw(g, c);
 	}
