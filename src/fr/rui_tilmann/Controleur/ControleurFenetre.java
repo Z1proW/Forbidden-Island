@@ -29,6 +29,12 @@ public class ControleurFenetre extends MouseAdapter
 	}
 
 	@Override
+	public void mouseExited(MouseEvent e)
+	{
+		titleBar.setHovered(false);
+	}
+
+	@Override
 	public void mousePressed(MouseEvent e)
 	{
 		if(titleBar(e))

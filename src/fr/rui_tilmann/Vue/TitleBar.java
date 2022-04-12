@@ -42,8 +42,13 @@ public class TitleBar extends JPanel
 		if(hovered) g.setColor(Color.RED);
 		else g.setColor(Color.BLACK);
 
-		g.fillPolygon(new int[] {left+5, right-7, right-5, left+7}, new int[] {top+7, bottom-5, bottom-7, top+5}, 4);
-		g.fillPolygon(new int[] {right-5, left+7, left+5, right-7}, new int[] {top+7, bottom-5, bottom-7, top+5}, 4);
+		g.fillPolygon(new int[] {left + 10 - 1, 	right - 10 - 1, 	right - 10, 		left + 10},
+					  new int[] {top + 10, 			bottom - 10, 		bottom - 10 - 1, 	top + 10 - 1},
+					  4);
+
+		g.fillPolygon(new int[] {right - 10, 	left + 10, 		left + 10 - 1, 		right - 10 - 1},
+					  new int[] {top + 10, 		bottom - 10, 	bottom - 10 - 1, 	top + 10 - 1},
+					  4);
 	}
 
 	public void setHovered(boolean hovered)

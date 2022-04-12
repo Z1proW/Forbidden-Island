@@ -1,6 +1,7 @@
 package fr.rui_tilmann.Vue;
 
 import fr.rui_tilmann.Modele.Case;
+import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
@@ -37,24 +38,9 @@ public class VuePlateau extends JPanel implements Observer
 
 	private void paint(Graphics g, Case c, int x, int y)
 	{
-		switch(c.getEtat())
-		{
-			case SECHE:   	g.setColor(new Color(200, 100, 50 )); break;
-			case INONDEE: 	g.setColor(new Color(0  , 150, 200)); break;
-			case SUBMERGEE: g.setColor(new Color(50 , 50 , 200)); break;
-		}
-		g.fillRect(x, y, P, P);
+		g.drawImage(c.getEtat().getImage(), x, y, null);
 
-		switch(c.getType())
-		{
-			case HELIPORT: g.setColor(Color.BLACK ); break;
-			case AIR:	   g.setColor(Color.WHITE ); break;
-			case EAU:	   g.setColor(Color.BLUE  ); break;
-			case FEU:	   g.setColor(Color.RED   ); break;
-			case TERRE:	   g.setColor(Color.ORANGE); break;
-		}
-
-		g.drawRect(x+5, y+5, P-11, P-11);
+		g.drawImage(c.getType().getImage(), x + 5, y + 5, null);
 
 		vueJoueurs.draw(g, c);
 	}

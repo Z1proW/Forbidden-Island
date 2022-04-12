@@ -33,7 +33,6 @@ public class VueEau extends JPanel implements Observer
 
 	public void paint(Graphics g)
 	{
-
 		// eau
 		ImageIcon water = new ImageIcon("src/fr/rui_tilmann/images/water.png");
 		g.drawImage(water.getImage(), 0, (10 - (modele.getniveauEau() + 1)) * P/2 + P - 9, null);
