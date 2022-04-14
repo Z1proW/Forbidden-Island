@@ -42,27 +42,26 @@ public class Case
 
 	public Case adjacente(Direction direction)
 	{
+		int x = this.x;
+		int y = this.y;
+
 		switch(direction)
 		{
-			default: case AUCUNE: return modele.getPlateau().getCase(x, y);
-			case NORD : return modele.getPlateau().getCase(x, y - 1);
-			case SUD: 	return modele.getPlateau().getCase(x, y + 1);
-			case OUEST: return modele.getPlateau().getCase(x - 1, y);
-			case EST: 	return modele.getPlateau().getCase(x + 1, y);
+			case NORD : y--; break;
+			case SUD: 	y++; break;
+			case OUEST: x--; break;
+			case EST: 	x++; break;
 		}
+		return modele.getPlateau().getCase(x, y);
 	}
 
-	public boolean estAdjacente(Case c, boolean diagonales)
+	public boolean estAdjacente(Case c, boolean diago)
 	{
-		List<Direction> directions = Arrays.asList(Direction.NORD, Direction.EST, Direction.SUD, Direction.OUEST);
+		int x = c.getX(); int y = c.getY();
 
-		//if(diagonales) directions.add();
-
-
-		for(Direction direction : directions)
-			if(adjacente(direction) == c)
-				return true;
-		return false;
+		return (this.x == x || this.x == x-1 || this.x == x+1)
+			&& (this.y == y || this.y == y-1 || this.y == y+1)
+			&& (diago || this.x == x || this.y == y);
 	}
 
 	public String toString()

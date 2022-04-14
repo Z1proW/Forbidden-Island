@@ -28,7 +28,10 @@ public class Vue
 
 		VuePlateau vuePlateau = new VuePlateau(modele, vueJoueurs);
 		f.add(vuePlateau, BorderLayout.WEST);
-		f.addMouseListener(new ControleurJoueur(modele, vuePlateau));
+
+		ControleurJoueur controleurJoueur = new ControleurJoueur(modele, vuePlateau);
+		f.addMouseListener(controleurJoueur);
+		f.addKeyListener(controleurJoueur);
 
 		f.add(new VueEau(modele), BorderLayout.CENTER);
 

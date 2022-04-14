@@ -1,9 +1,6 @@
 package fr.rui_tilmann.Modele;
 
-import fr.rui_tilmann.Modele.Enums.Direction;
-import fr.rui_tilmann.Modele.Enums.Etat;
-import fr.rui_tilmann.Modele.Enums.Role;
-import fr.rui_tilmann.Modele.Enums.Tresor;
+import fr.rui_tilmann.Modele.Enums.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +25,15 @@ public class Joueur
 
 	public Case getPosition() {return this.position;}
 
-	public boolean deplace(Case c) {
+	public void deplace(Case c)
+	{
 		if(c.getEtat() != Etat.SUBMERGEE
 		|| role == Role.PLONGEUR)
 		{
 			position = c;
-			return true;
+			modele.useAction(Action.DEPLACER);
+			modele.notifyObservers();
 		}
-		return false;
 	}
 
 	public void deplace(Direction d) {
