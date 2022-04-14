@@ -16,6 +16,7 @@ public class Modele extends Observable
 	private GameState state = GameState.EN_JEU;
 	private int joueur = 0;
 	private int nbActions = 3;
+	private HashMap<Tresor,Boolean> TresorPris = new HashMap<>(4);
 
 	public Modele()
 	{
@@ -138,6 +139,7 @@ public class Modele extends Observable
 					state = GameState.HELIPORT_SUBMERGE;
 
 				// TODO perdu si il les 2 tuiles d'un tresor sont submergees sauf si le tresor est deja pris
+
 				state = GameState.TRESOR_IRRECUPERABLE;
 
 				break;

@@ -28,6 +28,10 @@ public class Joueur
 
 	public Case getPosition() {return this.position;}
 
+	public  void  deplace(Case c){
+		position = c;
+	}
+
 	public void deplace(Direction d) {
 		Case newPos = getPosition().adjacente(d);
 		if(newPos.getEtat() != Etat.SUBMERGEE || this.getRole() == Role.PLONGEUR) {

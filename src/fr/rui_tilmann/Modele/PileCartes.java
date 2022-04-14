@@ -7,6 +7,8 @@ import java.util.*;
 public class PileCartes {
 
     private List<Tresor> tresors;
+    private  List<Case> CartesInnodations;
+    private  List<Case> CarteDejaInnonde;
     private List<Tresor> defausse;
 
     PileCartes() {
@@ -39,8 +41,8 @@ public class PileCartes {
     public Tresor getTresor() {
         Tresor tresor = tresors.remove(0);
 
-        if(tresor == Tresor.MONTEE_DES_EAUX)
-            defausse.add(tresor);
+        //if(tresor == Tresor.MONTEE_DES_EAUX)
+            //defausse.add(tresor);
 
         return tresor;
     }
