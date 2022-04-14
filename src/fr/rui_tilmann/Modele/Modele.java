@@ -136,6 +136,8 @@ public class Modele extends Observable
 	{
 		joueur = (joueur + 1) % 4;
 		resetActions();
+		piocheCartes(joueurs.get(joueur));
+		monteeEau();
 	}
 
 	public void piocheCartes(Joueur j){

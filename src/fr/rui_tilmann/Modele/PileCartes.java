@@ -46,7 +46,7 @@ public class PileCartes {
 
     public Tresor getTresor() {
         Tresor tresor = tresors.remove(0);
-
+        reset();
         return tresor;
     }
 
