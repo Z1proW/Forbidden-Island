@@ -44,12 +44,24 @@ public class Case
 	{
 		switch(direction)
 		{
-			default: case AUCUNE: return modele.getCase(x, y);
-			case NORD : return modele.getCase(x, y - 1);
-			case SUD: 	return modele.getCase(x, y + 1);
-			case OUEST: return modele.getCase(x - 1, y);
-			case EST: 	return modele.getCase(x + 1, y);
+			default: case AUCUNE: return modele.getPlateau().getCase(x, y);
+			case NORD : return modele.getPlateau().getCase(x, y - 1);
+			case SUD: 	return modele.getPlateau().getCase(x, y + 1);
+			case OUEST: return modele.getPlateau().getCase(x - 1, y);
+			case EST: 	return modele.getPlateau().getCase(x + 1, y);
 		}
+	}
+
+	public boolean estAdjacente(Case c, boolean diagonales)
+	{
+		List<Direction> directions = Arrays.asList(Direction.NORD, Direction.EST, Direction.SUD, Direction.OUEST);
+
+		//if(diagonales) directions.add();
+
+		for(Direction direction : directions)
+			if(adjacente(direction) == c)
+				return true;
+		return false;
 	}
 
 	public String toString()

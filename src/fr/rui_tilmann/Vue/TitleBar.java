@@ -2,6 +2,7 @@ package fr.rui_tilmann.Vue;
 
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
+import fr.rui_tilmann.Modele.Plateau;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ public class TitleBar extends JPanel
 
 	private boolean hovered = false;
 
-	public static int width = Modele.LENGTH * VuePlateau.P + 2*VueEau.P + 6*VueCartes.WIDTH;
+	public static int width = Plateau.LENGTH * VuePlateau.P + 2*VueEau.P + 6*VueCartes.WIDTH;
 	public static int height = 30;
 
 	public static int left = width - height;
@@ -35,6 +36,9 @@ public class TitleBar extends JPanel
 
 	public void paint(Graphics g)
 	{
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, width, height);
+
 		g.setColor(titleColor);
 		g.setFont(new Font("Calibri", Font.BOLD, 16));
 		g.drawString(title, 10, height/2 + 6);

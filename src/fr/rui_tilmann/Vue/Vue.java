@@ -1,6 +1,6 @@
 package fr.rui_tilmann.Vue;
 
-import fr.rui_tilmann.Controleur.ControleurClic;
+import fr.rui_tilmann.Controleur.ControleurJoueur;
 import fr.rui_tilmann.Controleur.ControleurFenetre;
 import fr.rui_tilmann.Modele.Modele;
 
@@ -28,7 +28,7 @@ public class Vue
 
 		VuePlateau vuePlateau = new VuePlateau(modele, vueJoueurs);
 		f.add(vuePlateau, BorderLayout.WEST);
-		f.addMouseListener(new ControleurClic(modele, vuePlateau));
+		f.addMouseListener(new ControleurJoueur(modele, vuePlateau));
 
 		f.add(new VueEau(modele), BorderLayout.CENTER);
 

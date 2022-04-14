@@ -3,6 +3,7 @@ package fr.rui_tilmann.Vue;
 import fr.rui_tilmann.Modele.Case;
 import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Modele;
+import fr.rui_tilmann.Modele.Plateau;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class VuePlateau extends JPanel implements Observer
 		this.vueJoueurs = vueJoueurs;
 		modele.addObserver(this);
 
-		int s = P * Modele.LENGTH;
+		int s = P * Plateau.LENGTH;
 		this.setPreferredSize(new Dimension(s, s));
 	}
 
@@ -31,9 +32,9 @@ public class VuePlateau extends JPanel implements Observer
 	{
 		super.repaint();
 
-		for(int x = 0; x < Modele.LENGTH; x++)
-			for(int y = 0; y < Modele.LENGTH; y++)
-				paint(g, modele.getCase(x, y), x * P, y * P);
+		for(int x = 0; x < Plateau.LENGTH; x++)
+			for(int y = 0; y < Plateau.LENGTH; y++)
+				paint(g, modele.getPlateau().getCase(x, y), x * P, y * P);
 	}
 
 	private void paint(Graphics g, Case c, int x, int y)

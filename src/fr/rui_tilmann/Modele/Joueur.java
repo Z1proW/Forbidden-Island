@@ -28,15 +28,18 @@ public class Joueur
 
 	public Case getPosition() {return this.position;}
 
-	public  void  deplace(Case c){
-		position = c;
+	public boolean deplace(Case c) {
+		if(c.getEtat() != Etat.SUBMERGEE
+		|| role == Role.PLONGEUR)
+		{
+			position = c;
+			return true;
+		}
+		return false;
 	}
 
 	public void deplace(Direction d) {
-		Case newPos = getPosition().adjacente(d);
-		if(newPos.getEtat() != Etat.SUBMERGEE || this.getRole() == Role.PLONGEUR) {
-			position = newPos;
-		}
+		deplace(getPosition().adjacente(d));
 	}
 
 	public List<Tresor> getCartes() {return cartes;}

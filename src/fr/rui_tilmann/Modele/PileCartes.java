@@ -7,8 +7,8 @@ import java.util.*;
 public class PileCartes {
 
     private List<Tresor> tresors;
-    private  List<Case> CartesInnodations;
-    private  List<Case> CarteDejaInnonde;
+    private  List<Case> CartesInondation;
+    private  List<Case> CartesInondees;
     private List<Tresor> defausse;
 
     PileCartes() {

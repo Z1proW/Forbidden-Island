@@ -1,6 +1,7 @@
 package fr.rui_tilmann.Vue;
 
 import fr.rui_tilmann.Modele.Modele;
+import fr.rui_tilmann.Modele.Plateau;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class VueEau extends JPanel implements Observer
 		this.modele = modele;
 		modele.addObserver(this);
 
-		this.setPreferredSize(new Dimension(2*P, P * Modele.LENGTH));
+		this.setPreferredSize(new Dimension(2*P, P * Plateau.LENGTH));
 
 		//this.setBackground(Color.WHITE);
 	}

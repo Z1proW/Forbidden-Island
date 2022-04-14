@@ -8,8 +8,7 @@ import java.util.*;
 public class Modele extends Observable
 {
 
-	public static final int LENGTH = 8;
-	private final Case[][] cases;
+	private final Plateau plateau;
 	private final List<Joueur> joueurs;
 	private final NiveauEau niveauEau;
 	private final PileCartes pileCartes;
@@ -20,23 +19,7 @@ public class Modele extends Observable
 
 	public Modele()
 	{
-		cases = new Case[LENGTH][LENGTH];
-
-		for(int x = 0; x < LENGTH; x++)
-			for(int y = 0; y < LENGTH; y++)
-			{
-				cases[x][y] = new Case(this, x, y);
-
-				// rend l'ile circulaire
-				if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) > 8)
-					cases[x][y].setEtat(Etat.SUBMERGEE);
-			}
-
-		// inonder 6 cases aleatoires
-		for(int i = 0; i < 6; i++)
-			caseAleatoire(Etat.SECHE).setEtat(Etat.INONDEE);
-
-		placerZones();
+		plateau = new Plateau(this);
 
 		// tirer 4 roles aleatoires parmi les 6
 		List<Role> roles = Arrays.asList(Role.values());
@@ -46,7 +29,7 @@ public class Modele extends Observable
 
 		for(int i = 0; i < 4; i++)
 		{
-			joueurs.add(new Joueur(this, roles.get(i), caseAleatoire(Etat.SECHE, Etat.INONDEE)));
+			joueurs.add(new Joueur(this, roles.get(i), plateau.caseAleatoire(Etat.SECHE, Etat.INONDEE)));
 			System.out.println(joueurs.get(i));
 		}
 
@@ -57,45 +40,24 @@ public class Modele extends Observable
 		pileCartes.ajoutCarteMDE();
 	}
 
-	public Case getCase(int x, int y) {return cases[x][y];}
-
-	public List<Joueur> getJoueurs() {return joueurs;}
-
-	public int getniveauEau() {return niveauEau.getNiveau();}
-
-	public PileCartes getPileCartes() {return pileCartes;}
-
-	private void placerZones()
+	public Plateau getPlateau()
 	{
-		for(int i = 0; i < 2; i++)
-		{
-			placerZoneAleatoire(Zone.AIR);
-			placerZoneAleatoire(Zone.EAU);
-			placerZoneAleatoire(Zone.FEU);
-			placerZoneAleatoire(Zone.TERRE);
-		}
-		placerZoneAleatoire(Zone.HELIPORT);
+		return plateau;
 	}
 
-	private void placerZoneAleatoire(Zone type)
+	public List<Joueur> getJoueurs()
 	{
-		Case c;
-		do c = caseAleatoire(Etat.SECHE, Etat.INONDEE);
-		while(c.getType() != Zone.NORMALE);
-		c.setType(type);
+		return joueurs;
 	}
 
-	private Case caseAleatoire(Etat... etatsPossibles)
+	public int getniveauEau()
 	{
-		Case c;
-		do c = caseAleatoire();
-		while(!List.of(etatsPossibles).contains(c.getEtat()));
-		return c;
+		return niveauEau.getNiveau();
 	}
 
-	private Case caseAleatoire()
+	public PileCartes getPileCartes()
 	{
-		return getCase(new Random().nextInt(LENGTH), new Random().nextInt(LENGTH));
+		return pileCartes;
 	}
 
 	public void monteeEau()
@@ -108,7 +70,7 @@ public class Modele extends Observable
 		}
 
 		for(int i = 0; i < niveauEau.getNombreCartes(); i++)
-			monteeEauCase(caseAleatoire(Etat.SECHE, Etat.INONDEE));
+			monteeEauCase(plateau.caseAleatoire(Etat.SECHE, Etat.INONDEE));
 	}
 
 	private void monteeEauCase(Case c)
@@ -146,15 +108,17 @@ public class Modele extends Observable
 		}
 	}
 
-	public void finDeTour()
-	{
-		joueur = (joueur + 1) % 4;
-		nbActions = 3;
-	}
-
 	public Joueur getJoueur()
 	{
 		return joueurs.get(joueur);
+	}
+
+	public void useAction(Action action)
+	{
+		nbActions--;
+
+		if(!actionsRestantes())
+			finDeTour();
 	}
 
 	public boolean actionsRestantes()
@@ -162,9 +126,15 @@ public class Modele extends Observable
 		return nbActions != 0;
 	}
 
-	public void useAction()
+	private void resetActions()
 	{
-		nbActions--;
+		nbActions = 3;
+	}
+
+	public void finDeTour()
+	{
+		joueur = (joueur + 1) % 4;
+		resetActions();
 	}
 
 	public void piocheCartes(Joueur j){

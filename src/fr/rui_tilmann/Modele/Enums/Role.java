@@ -4,6 +4,7 @@ import java.awt.*;
 
 public enum Role
 {
+
 	EXPLORATEUR(Color.GREEN),
 	INGENIEUR(Color.RED),
 	MESSAGER(Color.LIGHT_GRAY),
@@ -13,7 +14,13 @@ public enum Role
 
 	private final Color color;
 
-	Role(Color color) {this.color = color;}
+	Role(Color color)
+	{
+		this.color = color;
+	}
 
-	public Color getColor() {return color;}
+	public Color getColor() {
+		return color;
+	}
+
 }
