@@ -53,8 +53,7 @@ public class Modele extends Observable
 		niveauEau = new NiveauEau(Difficulte.NOVICE);
 		pileCartes = new PileCartes();
 
-		for(int i = 0; i < 2; i++)
-			joueurs.forEach(j -> j.piocheTresor());
+		joueurs.forEach(j -> j.piocheTresor(piocheCartes()));
 	}
 
 	public Case getCase(int x, int y) {return cases[x][y];}
@@ -102,12 +101,12 @@ public class Modele extends Observable
 	{
 		niveauEau.monteeEau();
 
-		if(niveauEau.getNombre() == -1)
+		if(niveauEau.getNombreCartes() == -1)
 		{
 			state = GameState.NIVEAU_EAU_TROP_HAUT;
 		}
 
-		for(int i = 0; i < niveauEau.getNombre(); i++)
+		for(int i = 0; i < niveauEau.getNombreCartes(); i++)
 			monteeEauCase(caseAleatoire(Etat.SECHE, Etat.INONDEE));
 	}
 
@@ -165,6 +164,23 @@ public class Modele extends Observable
 	public void useAction()
 	{
 		nbActions--;
+	}
+
+	public ArrayList<Tresor> piocheCartes(){
+		ArrayList<Tresor> CartePioche = new ArrayList<>();
+		for(int a=0; a < niveauEau.getNombreCartes(); a++){
+			Tresor t = pileCartes.getTresor();
+			CartePioche.add(t);
+		}
+		int NbCartesInnodation = Collections.frequency( CartePioche, Tresor.MONTEE_DES_EAUX);
+		if(NbCartesInnodation == 1){
+			niveauEau.monteeEau();
+		}else if(NbCartesInnodation > 1){
+			niveauEau.monteeEau();
+			//TODO Rajouter une defausse pour les cartes à inonder
+		}
+		CartePioche.removeIf( j -> (j == Tresor.MONTEE_DES_EAUX));
+		return CartePioche;
 	}
 
 }

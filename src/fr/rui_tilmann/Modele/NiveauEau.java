@@ -14,7 +14,7 @@ public class NiveauEau {
 
     public int getNiveau() {return this.niveau;}
 
-    public int getNombre()
+    public int getNombreCartes()
     {
         if(niveau < 2) return 2;
         if(niveau < 5) return 3;
@@ -22,4 +22,6 @@ public class NiveauEau {
         if(niveau < 9) return 5;
         return -1;
     }
+
+
 }

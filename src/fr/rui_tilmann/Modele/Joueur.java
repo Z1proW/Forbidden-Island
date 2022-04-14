@@ -42,13 +42,13 @@ public class Joueur
 	public List<Tresor> getCartes() {return cartes;}
 
 	// TODO gérer 5 cartes max
-	public void piocheTresor()
+	public void piocheTresor(ArrayList<Tresor> t)
 	{
-		Tresor tresor = modele.getPileCartes().getTresor();
+		for(Tresor tresor: t ) {
+			if (cartes.size() < 5)
+				cartes.add(tresor);
 
-		if(tresor == Tresor.MONTEE_DES_EAUX)
-			modele.monteeEau();
-		else cartes.add(tresor);
+		}
 	}
 
 	public Tresor utiliseTresor(int n) {
