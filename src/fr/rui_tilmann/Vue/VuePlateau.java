@@ -40,7 +40,8 @@ public class VuePlateau extends JPanel implements Observer
 	{
 		g.drawImage(c.getEtat().getImage(), x, y, null);
 
-		g.drawImage(c.getType().getImage(), x + 5, y + 5, null);
+		if(c.getEtat() != Etat.SUBMERGEE)
+			g.drawImage(c.getType().getImage(), x + 5, y + 5, null);
 
 		vueJoueurs.draw(g, c);
 	}

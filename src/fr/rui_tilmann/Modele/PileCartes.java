@@ -7,11 +7,11 @@ import java.util.*;
 public class PileCartes {
 
     private List<Tresor> tresors;
-    private Set<Tresor> defausse;
+    private List<Tresor> defausse;
 
     PileCartes() {
         tresors = new ArrayList<>();
-        defausse = new HashSet<>();
+        defausse = new ArrayList<>();
 
         for(int i = 0; i < 5; i++) {
             tresors.add(Tresor.TERRE);

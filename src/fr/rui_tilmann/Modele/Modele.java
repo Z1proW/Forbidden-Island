@@ -14,7 +14,8 @@ public class Modele extends Observable
 	private final NiveauEau niveauEau;
 	private final PileCartes pileCartes;
 	private GameState state = GameState.EN_JEU;
-	public int joueur;
+	private int joueur = 0;
+	private int nbActions = 3;
 
 	public Modele()
 	{
@@ -47,13 +48,12 @@ public class Modele extends Observable
 			joueurs.add(new Joueur(this, roles.get(i), caseAleatoire(Etat.SECHE, Etat.INONDEE)));
 			System.out.println(joueurs.get(i));
 		}
-		joueur = 0;
 
 		niveauEau = new NiveauEau(Difficulte.NOVICE);
 		pileCartes = new PileCartes();
 
-		for(int i = 0; i < 12; i++)
-			joueurs.get(new Random().nextInt(4)).piocheTresor();
+		for(int i = 0; i < 2; i++)
+			joueurs.forEach(j -> j.piocheTresor());
 	}
 
 	public Case getCase(int x, int y) {return cases[x][y];}
@@ -142,6 +142,27 @@ public class Modele extends Observable
 
 				break;
 		}
+	}
+
+	public void finDeTour()
+	{
+		joueur = (joueur + 1) % 4;
+		nbActions = 3;
+	}
+
+	public Joueur getJoueur()
+	{
+		return joueurs.get(joueur);
+	}
+
+	public boolean actionsRestantes()
+	{
+		return nbActions != 0;
+	}
+
+	public void useAction()
+	{
+		nbActions--;
 	}
 
 }
