@@ -38,6 +38,7 @@ public class Modele extends Observable
 
 		joueurs.forEach(j -> piocheCartes(j));
 		pileCartes.ajoutCarteMDE();
+
 	}
 
 	public Plateau getPlateau()
@@ -62,8 +63,6 @@ public class Modele extends Observable
 
 	public void monteeEau()
 	{
-		niveauEau.monteeEau();
-
 		if(niveauEau.getNombreCartes() == -1)
 		{
 			state = GameState.NIVEAU_EAU_TROP_HAUT;
