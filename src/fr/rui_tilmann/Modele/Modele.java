@@ -34,7 +34,7 @@ public class Modele extends Observable
 		}
 
 		niveauEau = new NiveauEau(Difficulte.NOVICE);
-		pileCartes = new PileCartes();
+		pileCartes = new PileCartes(this);
 
 		joueurs.forEach(j -> piocheCartes(j));
 		pileCartes.ajoutCarteMDE();
@@ -70,7 +70,8 @@ public class Modele extends Observable
 		}
 
 		for(int i = 0; i < niveauEau.getNombreCartes(); i++)
-			monteeEauCase(plateau.caseAleatoire(Etat.SECHE, Etat.INONDEE));
+			monteeEauCase(pileCartes.CaseAInonder());
+
 	}
 
 	private void monteeEauCase(Case c)
@@ -83,7 +84,7 @@ public class Modele extends Observable
 
 			case INONDEE:
 				c.setEtat(Etat.SUBMERGEE);
-
+				pileCartes.removeCaseAInonder(c);
 				// perdu si un joueur est sur la case et il n'y a pas de case adjacente pas submergee
 				if(!c.getJoueurs().isEmpty())
 				{
@@ -148,7 +149,7 @@ public class Modele extends Observable
 			niveauEau.monteeEau();
 		}else if(NbCartesInnodation > 1){
 			niveauEau.monteeEau();
-			//TODO Rajouter une defausse pour les cartes à inonder
+			pileCartes.grandeInondation();
 		}
 		for(int i = 0; i <  NbCartesInnodation; i++){
 			pileCartes.defausser(Tresor.MONTEE_DES_EAUX);

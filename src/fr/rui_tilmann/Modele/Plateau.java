@@ -3,6 +3,7 @@ package fr.rui_tilmann.Modele;
 import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Enums.Zone;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -79,4 +80,12 @@ public class Plateau
 		return getCase(new Random().nextInt(LENGTH), new Random().nextInt(LENGTH));
 	}
 
+	public ArrayList<Case> getCartesCase(){
+		ArrayList<Case> CarteAInonder = new ArrayList<>();
+		for(int x = 0; x < LENGTH; x++)
+			for(int y = 0; y < LENGTH; y++)
+				if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) > 8)
+					CarteAInonder.add(getCase(x, y));
+		return CarteAInonder;
+	}
 }
