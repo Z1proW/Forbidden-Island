@@ -58,6 +58,7 @@ public class Case
 
 		//if(diagonales) directions.add();
 
+
 		for(Direction direction : directions)
 			if(adjacente(direction) == c)
 				return true;
