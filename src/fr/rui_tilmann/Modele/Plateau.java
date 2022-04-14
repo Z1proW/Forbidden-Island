@@ -84,7 +84,7 @@ public class Plateau
 		ArrayList<Case> CarteAInonder = new ArrayList<>();
 		for(int x = 0; x < LENGTH; x++)
 			for(int y = 0; y < LENGTH; y++)
-				if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) > 8)
+				if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) < 8)
 					CarteAInonder.add(getCase(x, y));
 		return CarteAInonder;
 	}

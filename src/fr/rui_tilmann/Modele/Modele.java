@@ -38,6 +38,7 @@ public class Modele extends Observable
 
 		joueurs.forEach(j -> piocheCartes(j));
 		pileCartes.ajoutCarteMDE();
+		monteeEau();
 
 	}
 
