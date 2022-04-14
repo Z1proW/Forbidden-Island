@@ -53,7 +53,8 @@ public class Modele extends Observable
 		niveauEau = new NiveauEau(Difficulte.NOVICE);
 		pileCartes = new PileCartes();
 
-		joueurs.forEach(j -> j.piocheTresor(piocheCartes()));
+		joueurs.forEach(j -> piocheCartes(j));
+		pileCartes.ajoutCarteMDE();
 	}
 
 	public Case getCase(int x, int y) {return cases[x][y];}
@@ -166,7 +167,7 @@ public class Modele extends Observable
 		nbActions--;
 	}
 
-	public ArrayList<Tresor> piocheCartes(){
+	public void piocheCartes(Joueur j){
 		ArrayList<Tresor> CartePioche = new ArrayList<>();
 		for(int a=0; a < niveauEau.getNombreCartes(); a++){
 			Tresor t = pileCartes.getTresor();
@@ -179,8 +180,14 @@ public class Modele extends Observable
 			niveauEau.monteeEau();
 			//TODO Rajouter une defausse pour les cartes à inonder
 		}
-		CartePioche.removeIf( j -> (j == Tresor.MONTEE_DES_EAUX));
-		return CartePioche;
+		for(int i = 0; i <  NbCartesInnodation; i++){
+			pileCartes.defausser(Tresor.MONTEE_DES_EAUX);
+		}
+		CartePioche.removeIf( a -> (a == Tresor.MONTEE_DES_EAUX));
+		while( j.getCartes().size() + CartePioche.size() > 5 ){
+			pileCartes.defausser(CartePioche.remove(0));
+		}
+		j.piocheTresor(CartePioche);
 	}
 
 }

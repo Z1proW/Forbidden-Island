@@ -24,7 +24,6 @@ public class PileCartes {
 
         for(int i = 0; i < 3; i++) {
             tresors.add(Tresor.HELICOPTERE);
-            tresors.add(Tresor.MONTEE_DES_EAUX);
         }
 
         for(int i = 0; i < 2; i++)
@@ -54,6 +53,12 @@ public class PileCartes {
         tresors = new ArrayList<>(defausse);
         Collections.shuffle(tresors);
         defausse.clear();
+    }
+    public void ajoutCarteMDE(){
+        for(int i = 0; i < 3; i++) {
+            tresors.add(Tresor.MONTEE_DES_EAUX);
+        }
+        Collections.shuffle(tresors);
     }
 
 }
