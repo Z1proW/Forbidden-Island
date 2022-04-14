@@ -4,6 +4,7 @@ import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Enums.Zone;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -13,6 +14,7 @@ public class Plateau
 	private final Modele modele;
 	public static final int LENGTH = 8;
 	private final Case[][] cases = new Case[LENGTH][LENGTH];
+	private HashMap<Case, Zone> PlaceImportant = new HashMap<>();
 
 	public Plateau(Modele modele)
 	{
@@ -65,6 +67,7 @@ public class Plateau
 		do c = caseAleatoire(Etat.SECHE, Etat.INONDEE);
 		while(c.getType() != Zone.NORMALE);
 		c.setType(type);
+		PlaceImportant.put(c, type);
 	}
 
 	protected Case caseAleatoire(Etat... etatsPossibles)
@@ -87,5 +90,15 @@ public class Plateau
 				if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) < 8)
 					CarteAInonder.add(getCase(x, y));
 		return CarteAInonder;
+	}
+	public void removePlaceImportant(Case c){
+		PlaceImportant.remove(c);
+	}
+	public int placeImportantPasSubmerge(Zone Type){
+		int nbType = 0;
+		for(Zone z:PlaceImportant.values()){
+			if(Type == z)nbType++;
+		}
+		return  nbType;
 	}
 }

@@ -15,7 +15,7 @@ public class Modele extends Observable
 	private GameState state = GameState.EN_JEU;
 	private int joueur = 0;
 	private int nbActions = 3;
-	private HashMap<Tresor,Boolean> TresorPris = new HashMap<>(4);
+	private HashMap<Zone,Boolean> TresorPris = new HashMap<>(4);
 
 	public Modele()
 	{
@@ -101,9 +101,13 @@ public class Modele extends Observable
 				if(c.getType() == Zone.HELIPORT)
 					state = GameState.HELIPORT_SUBMERGE;
 
-				// TODO perdu si il les 2 tuiles d'un tresor sont submergees sauf si le tresor est deja pris
+				//Perdu si 2 zone du meme type tombe
+				if(c.getType() != Zone.NORMALE){
+					plateau.removePlaceImportant(c);
+					if(plateau.placeImportantPasSubmerge(c.getType()) == 0 && !TresorPris.getOrDefault(c.getType(), false))
+						state = GameState.TRESOR_IRRECUPERABLE;
+				}
 
-				state = GameState.TRESOR_IRRECUPERABLE;
 
 				break;
 		}
@@ -163,4 +167,7 @@ public class Modele extends Observable
 		j.piocheTresor(CartePioche);
 	}
 
+	void recupereArtefact(Zone Type){
+		TresorPris.put(Type, true);
+	}
 }
