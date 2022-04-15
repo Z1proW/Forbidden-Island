@@ -14,7 +14,7 @@ public class Plateau
 	private final Modele modele;
 	public static final int LENGTH = 8;
 	private final Case[][] cases = new Case[LENGTH][LENGTH];
-	private HashMap<Case, Zone> PlaceImportant = new HashMap<>();
+	private HashMap<Case, Zone> ZoneImportante = new HashMap<>();
 
 	public Plateau(Modele modele)
 	{
@@ -67,7 +67,7 @@ public class Plateau
 		do c = caseAleatoire(Etat.SECHE, Etat.INONDEE);
 		while(c.getType() != Zone.NORMALE);
 		c.setType(type);
-		PlaceImportant.put(c, type);
+		ZoneImportante.put(c, type);
 	}
 
 	protected Case caseAleatoire(Etat... etatsPossibles)
@@ -91,14 +91,16 @@ public class Plateau
 					CarteAInonder.add(getCase(x, y));
 		return CarteAInonder;
 	}
-	public void removePlaceImportant(Case c){
-		PlaceImportant.remove(c);
+
+	public void removeZoneImportante(Case c) {
+		ZoneImportante.remove(c);
 	}
-	public int placeImportantPasSubmerge(Zone Type){
+
+	public int zoneImportantePasSubmergee(Zone zone) {
 		int nbType = 0;
-		for(Zone z:PlaceImportant.values()){
-			if(Type == z)nbType++;
-		}
-		return  nbType;
+
+		for(Zone z : ZoneImportante.values())
+			if(zone == z) nbType++;
+		return nbType;
 	}
 }

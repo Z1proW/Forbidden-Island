@@ -15,7 +15,7 @@ public class Modele extends Observable
 	private GameState state = GameState.EN_JEU;
 	private int joueur = 0;
 	private int nbActions = 3;
-	private HashMap<Zone,Boolean> TresorPris = new HashMap<>(4);
+	private HashMap<Zone, Boolean> TresorPris = new HashMap<>(4);
 
 	public Modele()
 	{
@@ -85,6 +85,7 @@ public class Modele extends Observable
 			case INONDEE:
 				c.setEtat(Etat.SUBMERGEE);
 				pileCartes.removeCaseAInonder(c);
+
 				// perdu si un joueur est sur la case et il n'y a pas de case adjacente pas submergee
 				if(!c.getJoueurs().isEmpty())
 				{
@@ -103,8 +104,8 @@ public class Modele extends Observable
 
 				//Perdu si 2 zone du meme type tombe
 				if(c.getType() != Zone.NORMALE){
-					plateau.removePlaceImportant(c);
-					if(plateau.placeImportantPasSubmerge(c.getType()) == 0 && !TresorPris.getOrDefault(c.getType(), false))
+					plateau.removeZoneImportante(c);
+					if(plateau.zoneImportantePasSubmergee(c.getType()) == 0 && !TresorPris.getOrDefault(c.getType(), false))
 						state = GameState.TRESOR_IRRECUPERABLE;
 				}
 
