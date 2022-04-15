@@ -1,21 +1,16 @@
 package fr.rui_tilmann.Controleur;
 
 import fr.rui_tilmann.Modele.Case;
-import fr.rui_tilmann.Modele.Enums.Action;
 import fr.rui_tilmann.Modele.Enums.Direction;
 import fr.rui_tilmann.Modele.Enums.Role;
-import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VuePlateau;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 import static fr.rui_tilmann.Vue.VuePlateau.P;
 
-public class ControleurJoueur implements MouseListener, KeyListener
+public class ControleurJoueur extends MouseAdapter implements KeyListener
 {
 
 	private final Modele modele;
@@ -30,12 +25,12 @@ public class ControleurJoueur implements MouseListener, KeyListener
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		int x = (e.getX() - vuePlateau.getX());
-		int y = (e.getY() - vuePlateau.getY());
+		int x = (e.getX() - vuePlateau.getX())/P;
+		int y = (e.getY() - vuePlateau.getY())/P;
 
-		if(0 <= x  && x <= 8*P && 0 <= y && y <= 8*P)
+		if(0 <= x  && x < 8 && 0 <= y && y < 8)
 		{
-			Case c = modele.getPlateau().getCase(x/P, y/P);
+			Case c = modele.getPlateau().getCase(x, y);
 			boolean diago = modele.getJoueur().getRole() == Role.EXPLORATEUR;
 
 			if(c.estAdjacente(modele.getJoueur().getPosition(), diago))
@@ -60,10 +55,25 @@ public class ControleurJoueur implements MouseListener, KeyListener
 			modele.getJoueur().deplace(d);
 	}
 
-	public void mousePressed(MouseEvent e) {}
-	public void mouseClicked(MouseEvent e) {}
-	public void mouseEntered(MouseEvent e) {}
-	public void mouseExited(MouseEvent e) {}
+	@Override
+	public void mouseMoved(MouseEvent e)
+	{
+		int x = (e.getX() - vuePlateau.getX())/P;
+		int y = (e.getY() - vuePlateau.getY())/P;
+
+		if(0 <= x && x < 8
+		&& 0 <= y && y < 8)
+		{
+			vuePlateau.hoveredCase = modele.getPlateau().getCase(x, y);
+			vuePlateau.repaint();
+		}
+		else
+		{
+			vuePlateau.hoveredCase = null;
+			vuePlateau.repaint();
+		}
+	}
+
 	public void keyPressed(KeyEvent e) {}
 	public void keyTyped(KeyEvent e) {}
 

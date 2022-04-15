@@ -34,6 +34,7 @@ public class Vue
 		ControleurJoueur controleurJoueur = new ControleurJoueur(modele, vuePlateau);
 		f.addMouseListener(controleurJoueur);
 		f.addKeyListener(controleurJoueur);
+		f.addMouseMotionListener(controleurJoueur);
 
 		f.add(new VueEau(modele), BorderLayout.CENTER);
 

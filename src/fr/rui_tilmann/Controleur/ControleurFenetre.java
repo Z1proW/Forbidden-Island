@@ -3,7 +3,6 @@ package fr.rui_tilmann.Controleur;
 import fr.rui_tilmann.Vue.TitleBar;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 

@@ -14,6 +14,7 @@ public class VuePlateau extends JPanel implements Observer
 	private final Modele modele;
 	public final static int P = 80; // pixels par case
 	private final VueJoueurs vueJoueurs;
+	public Case hoveredCase;
 
 	public VuePlateau(Modele modele, VueJoueurs vueJoueurs)
 	{
@@ -43,6 +44,12 @@ public class VuePlateau extends JPanel implements Observer
 
 		if(c.getEtat() != Etat.SUBMERGEE)
 			g.drawImage(c.getType().getImage(), x + 5, y + 5, null);
+
+		if(c == hoveredCase)
+		{
+			g.setColor(new Color(255, 255, 255, 100));
+			g.fillRect(x, y, P, P);
+		}
 
 		vueJoueurs.draw(g, c);
 	}
