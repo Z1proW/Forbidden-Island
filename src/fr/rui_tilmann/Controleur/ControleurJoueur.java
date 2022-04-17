@@ -34,9 +34,12 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		{
 			Case c = modele.getPlateau().getCase(x, y);
 			boolean diago = modele.getJoueur().getRole() == Role.EXPLORATEUR;
-
-			if(c.estAdjacente(modele.getJoueur().getPosition(), diago))
-				modele.getJoueur().deplace(c);
+			if(c.estAdjacente(modele.getJoueur().getPosition(), diago)) {
+				if(e.getButton() == MouseEvent.BUTTON1)
+					modele.getJoueur().deplace(c);
+				if(e.getButton() == MouseEvent.BUTTON2)
+					modele.getJoueur().assecherCase(c);
+			}
 		}
 	}
 
