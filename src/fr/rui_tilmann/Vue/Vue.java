@@ -43,6 +43,7 @@ public class Vue
 
 		ControleurCartes controleurCartes = new ControleurCartes(modele, vueCartes);
 		f.addMouseMotionListener(controleurCartes);
+		f.addMouseListener(controleurCartes);
 
 		f.setTitle("Jeu de l'île Interdite");
 		f.setResizable(false);

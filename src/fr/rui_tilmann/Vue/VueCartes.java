@@ -7,6 +7,7 @@ import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class VueCartes extends JPanel implements Observer
@@ -19,6 +20,9 @@ public class VueCartes extends JPanel implements Observer
 
 	public int hoveredJoueur;
 	public int hoveredCard;
+
+	public int chosenJouer;
+	public int chosenCard;
 
 	public VueCartes(Modele modele)
 	{
@@ -56,9 +60,24 @@ public class VueCartes extends JPanel implements Observer
 
 	private void paint(Graphics g, Tresor tresor, int x, int y)
 	{
+		Image image = tresor.getImage();
+		BufferedImage img = new BufferedImage(image.getWidth(null), image.getHeight(null) , Image.SCALE_DEFAULT);
+		img.getGraphics().drawImage(tresor.getImage(), 0, 0 , null);
+		int PIXEL;
+		int ToAlpha;
+		// TODO peut mieux faire
+		if( chosenJouer == y && chosenCard == x)
+			for(int i = 0;i< image.getWidth(null); i++) {
+				for (int j = 0; j < image.getHeight(null); j++) {
+					PIXEL = img.getRGB(i, j);
+					ToAlpha = (80) | (PIXEL & 0xFFFFFF);
+					img.setRGB(i, j, ToAlpha);
+				}
+			}
 		if(hoveredJoueur == y && hoveredCard == x)
-			g.drawImage(tresor.getImage(), x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);
-		else g.drawImage(tresor.getImage(), x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);
+			g.drawImage(img, x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);
+		else g.drawImage(img, x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);
+
 	}
 
 }

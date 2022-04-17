@@ -29,7 +29,6 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	{
 		int x = (e.getX() - vuePlateau.getX())/P;
 		int y = (e.getY() - vuePlateau.getY())/P;
-
 		if(0 <= x  && x < 8 && 0 <= y && y < 8)
 		{
 			Case c = modele.getPlateau().getCase(x, y);
@@ -37,7 +36,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			if(c.estAdjacente(modele.getJoueur().getPosition(), diago)) {
 				if(e.getButton() == MouseEvent.BUTTON1)
 					modele.getJoueur().deplace(c);
-				if(e.getButton() == MouseEvent.BUTTON2)
+				if(e.getButton() == MouseEvent.BUTTON3)
 					modele.getJoueur().assecherCase(c);
 			}
 		}
@@ -85,7 +84,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	}
 
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == 32){
+		if(e.getKeyCode() == KeyEvent.VK_SPACE){
 			Assecher = !Assecher;
 		}
 	}
