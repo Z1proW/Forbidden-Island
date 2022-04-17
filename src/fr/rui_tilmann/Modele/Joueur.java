@@ -40,6 +40,22 @@ public class Joueur
 		deplace(getPosition().adjacente(d));
 	}
 
+	public void assecherCase(Case c){
+		if(c.getEtat() == Etat.INONDEE){
+			c.setEtat(Etat.SECHE);
+			modele.useAction(Action.ASSECHER);
+			modele.notifyObservers();
+		}
+	}
+
+	public void assecherCase(Direction d){
+		assecherCase(getPosition().adjacente(d));
+	}
+
+	public void  assecherCase(){
+		assecherCase(getPosition());
+	}
+
 	public List<Tresor> getCartes() {return cartes;}
 
 	// TODO gérer 5 cartes max

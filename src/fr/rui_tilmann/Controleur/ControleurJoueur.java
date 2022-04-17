@@ -7,6 +7,7 @@ import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VuePlateau;
 
 import java.awt.event.*;
+import java.security.Key;
 
 import static fr.rui_tilmann.Vue.VuePlateau.P;
 
@@ -15,6 +16,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 	private final Modele modele;
 	private final VuePlateau vuePlateau;
+	private boolean Assecher = false;
 
 	public ControleurJoueur(Modele modele, VuePlateau vuePlateau)
 	{
@@ -51,8 +53,13 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			case KeyEvent.VK_LEFT: d = Direction.OUEST; break;
 		}
 
-		if(d != Direction.AUCUNE)
-			modele.getJoueur().deplace(d);
+		if(d != Direction.AUCUNE) {
+			if(Assecher) {
+				modele.getJoueur().assecherCase(d);
+			}else{
+				modele.getJoueur().deplace(d);
+			}
+		}
 	}
 
 	@Override
@@ -74,7 +81,11 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		}
 	}
 
-	public void keyPressed(KeyEvent e) {}
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == 32){
+			Assecher = !Assecher;
+		}
+	}
 	public void keyTyped(KeyEvent e) {}
 
 }
