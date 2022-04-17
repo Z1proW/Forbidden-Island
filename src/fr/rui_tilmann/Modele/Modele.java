@@ -16,6 +16,7 @@ public class Modele extends Observable
 	private int joueur = 0;
 	private int nbActions = 3;
 	private HashMap<Zone, Boolean> TresorPris = new HashMap<>(4);
+	private boolean endTour = true;
 
 	public Modele()
 	{
@@ -60,6 +61,10 @@ public class Modele extends Observable
 	public PileCartes getPileCartes()
 	{
 		return pileCartes;
+	}
+
+	public int getNbActions() {
+		return nbActions;
 	}
 
 	public void monteeEau()
@@ -129,7 +134,7 @@ public class Modele extends Observable
 
 	public boolean actionsRestantes()
 	{
-		return nbActions != 0;
+		return nbActions > 0;
 	}
 
 	private void resetActions()
@@ -139,10 +144,16 @@ public class Modele extends Observable
 
 	public void finDeTour()
 	{
-		piocheCartes(joueurs.get(joueur));
-		joueur = (joueur + 1) % 4;
-		resetActions();
-		monteeEau();
+		if(endTour) {
+			piocheCartes(getJoueur());
+			endTour = !endTour;
+		}
+		if(joueurs.stream().allMatch(j -> j.getCartes().size() <= 5)) {
+			joueur = (joueur + 1) % 4;
+			resetActions();
+			monteeEau();
+			endTour = true;
+		}
 	}
 
 	public void piocheCartes(Joueur j){

@@ -45,6 +45,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
+		//TODO regler le pb ou le plongeur peut sortir de la map
 		Direction d = Direction.AUCUNE;
 
 		switch(e.getKeyCode())

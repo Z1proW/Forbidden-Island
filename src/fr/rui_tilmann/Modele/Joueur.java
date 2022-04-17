@@ -27,12 +27,13 @@ public class Joueur
 
 	public void deplace(Case c)
 	{
-		if(c.getEtat() != Etat.SUBMERGEE
-		|| role == Role.PLONGEUR)
-		{
-			position = c;
-			modele.useAction(Action.DEPLACER);
-			modele.notifyObservers();
+		if(modele.actionsRestantes()) {
+			if (c.getEtat() != Etat.SUBMERGEE
+					|| role == Role.PLONGEUR) {
+				position = c;
+				modele.useAction(Action.DEPLACER);
+				modele.notifyObservers();
+			}
 		}
 	}
 
@@ -41,10 +42,12 @@ public class Joueur
 	}
 
 	public void assecherCase(Case c){
-		if(c.getEtat() == Etat.INONDEE){
-			c.setEtat(Etat.SECHE);
-			modele.useAction(Action.ASSECHER);
-			modele.notifyObservers();
+		if(modele.actionsRestantes()) {
+			if (c.getEtat() == Etat.INONDEE) {
+				c.setEtat(Etat.SECHE);
+				modele.useAction(Action.ASSECHER);
+				modele.notifyObservers();
+			}
 		}
 	}
 
@@ -58,7 +61,6 @@ public class Joueur
 
 	public List<Tresor> getCartes() {return cartes;}
 
-	// TODO gérer 5 cartes max
 	public void piocheTresor(ArrayList<Tresor> t)
 	{
 		for(Tresor tresor: t ) {
@@ -82,6 +84,8 @@ public class Joueur
 	public void discardTresor(int n){
 		if(n >= 0 && n < cartes.size())
 			modele.getPileCartes().defausser(cartes.remove(n));
+		if(!modele.actionsRestantes())
+			modele.finDeTour();
 
 	}
 	public String toString()

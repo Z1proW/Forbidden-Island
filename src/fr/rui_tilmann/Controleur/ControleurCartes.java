@@ -48,6 +48,7 @@ public class ControleurCartes extends MouseAdapter implements MouseMotionListene
 				vueCartes.repaint();
 			}
 		}
+		System.out.println(modele.getNbActions());
 
 
 
