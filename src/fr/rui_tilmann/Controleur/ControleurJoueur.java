@@ -88,6 +88,9 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		if(e.getKeyCode() == KeyEvent.VK_SPACE){
 			Assecher = !Assecher;
 		}
+		if(e.getKeyCode() == KeyEvent.VK_T){
+			modele.getJoueur().gainTresor();
+		}
 	}
 	public void keyTyped(KeyEvent e) {}
 

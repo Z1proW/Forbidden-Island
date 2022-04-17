@@ -10,7 +10,7 @@ import java.awt.event.*;
 
 import static fr.rui_tilmann.Vue.VuePlateau.P;
 
-public class ControleurCartes extends MouseAdapter implements MouseMotionListener
+public class ControleurCartes extends MouseAdapter implements MouseMotionListener,KeyListener
 {
 
 	private Modele modele;
@@ -48,9 +48,6 @@ public class ControleurCartes extends MouseAdapter implements MouseMotionListene
 				vueCartes.repaint();
 			}
 		}
-		System.out.println(modele.getNbActions());
-
-
 
 	}
 	@Override
@@ -81,5 +78,10 @@ public class ControleurCartes extends MouseAdapter implements MouseMotionListene
 			utiliserCartes = !utiliserCartes;
 		}
 	}
+	public void keyTyped(KeyEvent e) {}
 
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+	}
 }

@@ -3,7 +3,10 @@ package fr.rui_tilmann.Modele;
 import fr.rui_tilmann.Modele.Enums.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static fr.rui_tilmann.Modele.Enums.Zone.*;
 
 public class Joueur
 {
@@ -88,6 +91,38 @@ public class Joueur
 			modele.finDeTour();
 
 	}
+
+	public void giveCarte(int n, Joueur j){
+		if(getCartes().get(n) != Tresor.HELICOPTERE || getCartes().get(n) != Tresor.SAC_DE_SABLE) {
+			j.getCartes().add(getCartes().remove(n));
+			modele.useAction(Action.DONNER_CARTE);
+			modele.notifyObservers();
+		}
+	}
+
+	public void gainTresor(){
+		int occurences = Collections.frequency(cartes, ZoneToTresor());
+		if( occurences > 3){
+			modele.recupereArtefact(getPosition().getType());
+			for(int i =0 ; i < occurences; i++){
+				cartes.remove(ZoneToTresor());
+				modele.getPileCartes().defausser(ZoneToTresor());
+			}
+			modele.useAction(Action.GAGNER_TRESOR);
+			modele.notifyObservers();
+		}
+
+	}
+	Tresor ZoneToTresor(){
+		switch (getPosition().getType()){
+			case AIR: return Tresor.AIR;
+			case FEU: return Tresor.FEU;
+			case EAU: return Tresor.EAU;
+			case TERRE: return  Tresor.TERRE;
+		}
+		return null;
+	}
+
 	public String toString()
 	{
 		return role + " est en " + position;

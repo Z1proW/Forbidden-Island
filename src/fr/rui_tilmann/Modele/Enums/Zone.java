@@ -19,4 +19,5 @@ public enum Zone {
     }
 
     public Image getImage() {return img.getImage();}
+
 }
