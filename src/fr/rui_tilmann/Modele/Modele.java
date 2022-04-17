@@ -139,9 +139,9 @@ public class Modele extends Observable
 
 	public void finDeTour()
 	{
+		piocheCartes(joueurs.get(joueur));
 		joueur = (joueur + 1) % 4;
 		resetActions();
-		piocheCartes(joueurs.get(joueur));
 		monteeEau();
 	}
 
@@ -162,7 +162,7 @@ public class Modele extends Observable
 			pileCartes.defausser(Tresor.MONTEE_DES_EAUX);
 		}
 		CartePioche.removeIf( a -> (a == Tresor.MONTEE_DES_EAUX));
-		while( j.getCartes().size() + CartePioche.size() > 5 ){
+		while( j.getCartes().size() + CartePioche.size() > 10 ){
 			pileCartes.defausser(CartePioche.remove(0));
 		}
 		j.piocheTresor(CartePioche);

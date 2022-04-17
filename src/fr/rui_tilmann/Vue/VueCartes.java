@@ -29,7 +29,7 @@ public class VueCartes extends JPanel implements Observer
 		this.modele = modele;
 		modele.addObserver(this);
 
-		this.setPreferredSize(new Dimension(6*WIDTH, 4*HEIGHT));
+		this.setPreferredSize(new Dimension(10*WIDTH, 4*HEIGHT));
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class VueCartes extends JPanel implements Observer
 			for(int i = 0;i< image.getWidth(null); i++) {
 				for (int j = 0; j < image.getHeight(null); j++) {
 					PIXEL = img.getRGB(i, j);
-					ToAlpha = (80) | (PIXEL & 0xFFFFFF);
+					ToAlpha = (160) | (PIXEL & 0xFFFFFF);
 					img.setRGB(i, j, ToAlpha);
 				}
 			}

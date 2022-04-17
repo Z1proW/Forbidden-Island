@@ -18,7 +18,7 @@ public class Joueur
 		this.modele = modele;
 		this.role = role;
 		this.position = pos;
-		this.cartes = new ArrayList<>(5);
+		this.cartes = new ArrayList<>(10);
 	}
 
 	public Role getRole() {return role;}
@@ -62,7 +62,7 @@ public class Joueur
 	public void piocheTresor(ArrayList<Tresor> t)
 	{
 		for(Tresor tresor: t ) {
-			if (cartes.size() < 5)
+			if (cartes.size() < 10)
 				cartes.add(tresor);
 
 		}
@@ -79,6 +79,11 @@ public class Joueur
 		}
 	}
 
+	public void discardTresor(int n){
+		if(n >= 0 && n < cartes.size())
+			modele.getPileCartes().defausser(cartes.remove(n));
+
+	}
 	public String toString()
 	{
 		return role + " est en " + position;
