@@ -43,9 +43,9 @@ public class VuePlateau extends JPanel implements Observer
 		g.drawImage(c.getEtat().getImage(), x, y, null);
 
 		if(c.getEtat() != Etat.SUBMERGEE)
-			g.drawImage(c.getType().getImage(), x + 5, y + 5, null);
+			g.drawImage(c.getType().getImage(), x, y, null);
 
-		if(c == hoveredCase)
+		if(c == hoveredCase || c == modele.getJoueur().getPosition())
 		{
 			g.setColor(new Color(255, 255, 255, 100));
 			g.fillRect(x, y, P, P);

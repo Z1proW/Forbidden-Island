@@ -2,12 +2,12 @@ package fr.rui_tilmann.Controleur;
 
 import fr.rui_tilmann.Modele.Case;
 import fr.rui_tilmann.Modele.Enums.Direction;
+import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Enums.Role;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VuePlateau;
 
 import java.awt.event.*;
-import java.security.Key;
 
 import static fr.rui_tilmann.Vue.VuePlateau.P;
 
@@ -16,7 +16,6 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 	private final Modele modele;
 	private final VuePlateau vuePlateau;
-	private boolean Assecher = false;
 
 	public ControleurJoueur(Modele modele, VuePlateau vuePlateau)
 	{
@@ -27,25 +26,24 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		int x = (e.getX() - vuePlateau.getX())/P;
-		int y = (e.getY() - vuePlateau.getY())/P;
-		if(0 <= x  && x < 8 && 0 <= y && y < 8)
+		Case c = getCase(e);
+
+		if(c == null) return;
+
+		boolean diago = modele.getJoueur().getRole() == Role.EXPLORATEUR;
+
+		if(c.estAdjacente(modele.getJoueur().getPosition(), diago))
 		{
-			Case c = modele.getPlateau().getCase(x, y);
-			boolean diago = modele.getJoueur().getRole() == Role.EXPLORATEUR;
-			if(c.estAdjacente(modele.getJoueur().getPosition(), diago)) {
-				if(e.getButton() == MouseEvent.BUTTON1)
-					modele.getJoueur().deplace(c);
-				if(e.getButton() == MouseEvent.BUTTON3)
-					modele.getJoueur().assecherCase(c);
-			}
+			if(e.getButton() == MouseEvent.BUTTON1)
+				modele.getJoueur().deplace(c);
+			else if(e.getButton() == MouseEvent.BUTTON3)
+				modele.getJoueur().asseche(c);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
-		//TODO regler le pb ou le plongeur peut sortir de la map
 		Direction d = Direction.AUCUNE;
 
 		switch(e.getKeyCode())
@@ -56,42 +54,41 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			case KeyEvent.VK_LEFT: d = Direction.OUEST; break;
 		}
 
-		if(d != Direction.AUCUNE) {
-			if(Assecher) {
-				modele.getJoueur().assecherCase(d);
-			}else{
-				modele.getJoueur().deplace(d);
-			}
-		}
+		modele.getJoueur().deplace(d);
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e)
 	{
-		int x = (e.getX() - vuePlateau.getX())/P;
-		int y = (e.getY() - vuePlateau.getY())/P;
+		Case c = getCase(e);
 
-		if(0 <= x && x < 8
-		&& 0 <= y && y < 8)
+		if(c != null)
 		{
-			vuePlateau.hoveredCase = modele.getPlateau().getCase(x, y);
+			vuePlateau.hoveredCase = c;
 			vuePlateau.repaint();
 		}
-		else
-		{
-			vuePlateau.hoveredCase = null;
-			vuePlateau.repaint();
-		}
+		else mouseExited(e);
 	}
 
-	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_SPACE){
-			Assecher = !Assecher;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_T){
-			modele.getJoueur().gainTresor();
-		}
+	@Override
+	public void mouseExited(MouseEvent e)
+	{
+		vuePlateau.hoveredCase = null;
+		vuePlateau.repaint();
 	}
+
+	private Case getCase(MouseEvent e)
+	{
+		int x = (e.getX() - vuePlateau.getX());
+		int y = (e.getY() - vuePlateau.getY());
+
+		if(0 <= x && x < vuePlateau.getWidth()
+		&& 0 <= y && y < vuePlateau.getHeight())
+			return modele.getPlateau().getCase(x/P, y/P);
+		return null;
+	}
+
+	public void keyPressed(KeyEvent e) {}
 	public void keyTyped(KeyEvent e) {}
 
 }

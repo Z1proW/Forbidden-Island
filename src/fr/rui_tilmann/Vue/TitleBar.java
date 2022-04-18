@@ -12,7 +12,7 @@ public class TitleBar extends JPanel
 
 	private boolean hovered = false;
 
-	public static int width = Plateau.LENGTH * VuePlateau.P + 2*VueEau.P + 6*VueCartes.WIDTH;
+	public static int width = Plateau.LENGTH * VuePlateau.P + 2*VueEau.P + 5*VueCartes.WIDTH;
 	public static int height = 30;
 
 	public static int left = width - height;
@@ -36,13 +36,23 @@ public class TitleBar extends JPanel
 
 	public void paint(Graphics g)
 	{
+		// arrière plan blanc
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, width, height);
 
-		g.setColor(titleColor);
+
+
+		// ombre titre
 		g.setFont(new Font("Calibri", Font.BOLD, 16));
+		g.setColor(Color.BLACK);
+		g.drawString(title, 10 + 1, height/2 + 6 + 1);
+
+		// titre
+		g.setColor(titleColor);
 		g.drawString(title, 10, height/2 + 6);
 
+
+		// croix
 		if(hovered) g.setColor(Color.RED);
 		else g.setColor(Color.BLACK);
 

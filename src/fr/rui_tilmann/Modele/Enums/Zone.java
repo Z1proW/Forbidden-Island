@@ -3,7 +3,9 @@ package fr.rui_tilmann.Modele.Enums;
 import javax.swing.*;
 import java.awt.*;
 
-public enum Zone {
+public enum Zone
+{
+
     NORMALE(""),
     AIR("air.png"),
     EAU("eau.png"),
@@ -19,5 +21,19 @@ public enum Zone {
     }
 
     public Image getImage() {return img.getImage();}
+
+    public Artefact toArtefact()
+    {
+        Artefact artefact = null;
+
+        switch(this)
+        {
+            case FEU:   artefact = Artefact.FEU;   break;
+            case TERRE: artefact = Artefact.TERRE; break;
+            case EAU:   artefact = Artefact.EAU;   break;
+            case AIR:   artefact = Artefact.AIR;   break;
+        }
+        return artefact;
+    }
 
 }

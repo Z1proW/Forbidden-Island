@@ -6,22 +6,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static fr.rui_tilmann.Modele.Enums.Zone.*;
-
 public class Joueur
 {
 
 	private final Modele modele;
 	private final Role role;
 	private Case position;
-	private List<Tresor> cartes;
+	private final List<Carte> cartes;
 
 	public Joueur(Modele modele, Role role, Case pos)
 	{
 		this.modele = modele;
 		this.role = role;
 		this.position = pos;
-		this.cartes = new ArrayList<>(10);
+		this.cartes = new ArrayList<>(5);
 	}
 
 	public Role getRole() {return role;}
@@ -30,49 +28,46 @@ public class Joueur
 
 	public void deplace(Case c)
 	{
-		if(modele.actionsRestantes()) {
-			if (c.getEtat() != Etat.SUBMERGEE
-					|| role == Role.PLONGEUR) {
-				position = c;
-				modele.useAction(Action.DEPLACER);
-				modele.notifyObservers();
-			}
+		if(c != getPosition()
+		&& c.getEtat() != Etat.SUBMERGEE)
+		{
+			position = c;
+			modele.useAction();
+			modele.notifyObservers();
 		}
 	}
 
 	public void deplace(Direction d) {
-		deplace(getPosition().adjacente(d));
+		Case adjacente = getPosition().adjacente(d);
+
+		if(adjacente.getEtat() == Etat.SUBMERGEE && getRole() == Role.PLONGEUR)
+			deplace(adjacente.adjacente(d));
+		else deplace(adjacente);
 	}
 
-	public void assecherCase(Case c){
-		if(modele.actionsRestantes()) {
-			if (c.getEtat() == Etat.INONDEE) {
-				c.setEtat(Etat.SECHE);
-				modele.useAction(Action.ASSECHER);
-				modele.notifyObservers();
-			}
+	public void asseche(Case c) {
+		if(c.getEtat() == Etat.INONDEE) {
+			c.setEtat(Etat.SECHE);
+			modele.useAction();
+			modele.notifyObservers();
 		}
 	}
 
-	public void assecherCase(Direction d){
-		assecherCase(getPosition().adjacente(d));
+	public void asseche(Direction d) {
+		asseche(getPosition().adjacente(d));
 	}
 
-	public void  assecherCase(){
-		assecherCase(getPosition());
-	}
+	public List<Carte> getCartes() {return cartes;}
 
-	public List<Tresor> getCartes() {return cartes;}
-
-	public void piocheTresor(ArrayList<Tresor> t)
+	public void piocheCarte(ArrayList<Carte> tresors)
 	{
-		for(Tresor tresor: t ) {
-			if (cartes.size() < 10)
+		for(Carte tresor : tresors) {
+			if(cartes.size() < 5)
 				cartes.add(tresor);
 
 		}
 	}
-
+	/*
 	public Tresor utiliseTresor(int n) {
 		try {
 			modele.getPileCartes().defausser(cartes.get(n));
@@ -112,16 +107,7 @@ public class Joueur
 			modele.notifyObservers();
 		}
 
-	}
-	Tresor ZoneToTresor(){
-		switch (getPosition().getType()){
-			case AIR: return Tresor.AIR;
-			case FEU: return Tresor.FEU;
-			case EAU: return Tresor.EAU;
-			case TERRE: return  Tresor.TERRE;
-		}
-		return null;
-	}
+	}*/
 
 	public String toString()
 	{

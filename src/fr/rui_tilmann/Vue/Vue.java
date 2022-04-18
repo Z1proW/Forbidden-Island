@@ -5,7 +5,6 @@ import fr.rui_tilmann.Controleur.ControleurJoueur;
 import fr.rui_tilmann.Controleur.ControleurFenetre;
 import fr.rui_tilmann.Modele.Modele;
 
-import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
@@ -38,12 +37,21 @@ public class Vue
 
 		f.add(new VueEau(modele), BorderLayout.CENTER);
 
+		JPanel eastPanel = new JPanel();
+		eastPanel.setLayout(new BorderLayout());
+		eastPanel.setBackground(new Color(0, 0, 0, 0));
+
 		VueCartes vueCartes = new VueCartes(modele);
-		f.add(vueCartes, BorderLayout.EAST);
+		eastPanel.add(vueCartes, BorderLayout.NORTH);
 
 		ControleurCartes controleurCartes = new ControleurCartes(modele, vueCartes);
-		f.addMouseMotionListener(controleurCartes);
-		f.addMouseListener(controleurCartes);
+		eastPanel.addMouseListener(controleurCartes);
+		eastPanel.addMouseMotionListener(controleurCartes);
+
+		VueArtefact vueArtefact = new VueArtefact(modele);
+		eastPanel.add(vueArtefact, BorderLayout.SOUTH);
+
+		f.add(eastPanel, BorderLayout.EAST);
 
 		f.setTitle("Jeu de l'île Interdite");
 		f.setResizable(false);

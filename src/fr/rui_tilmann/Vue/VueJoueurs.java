@@ -32,7 +32,7 @@ public class VueJoueurs
 			Joueur j = js.get(0);
 			g.setColor(j.getRole().getColor());
 			Case pos = j.getPosition();
-			g.fillRect(pos.getX()*P + P/4, pos.getY()*P + P/4, P/2, P/2);
+			g.fillRect(pos.getX()*P + P/2 - P/8, pos.getY()*P + P/2 - P/8, P/4, P/4);
 		}
 		else if(js.size() > 1)
 		{

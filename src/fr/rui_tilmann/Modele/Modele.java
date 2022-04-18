@@ -9,38 +9,46 @@ public class Modele extends Observable
 {
 
 	private final Plateau plateau;
-	private final List<Joueur> joueurs;
+	private final List<Joueur> joueurs = new ArrayList<>();
 	private final NiveauEau niveauEau;
 	private final PileCartes pileCartes;
+
 	private GameState state = GameState.EN_JEU;
+
 	private int joueur = 0;
 	private int nbActions = 3;
-	private HashMap<Zone, Boolean> TresorPris = new HashMap<>(4);
+
+	private final HashMap<Artefact, Boolean> tresorPris = new HashMap<>(4);
 	private boolean endTour = true;
 
 	public Modele()
 	{
 		plateau = new Plateau(this);
 
+		initJoueurs();
+
+		niveauEau = new NiveauEau(Difficulte.NOVICE);
+		pileCartes = new PileCartes(this);
+
+		joueurs.forEach(this::piocheCartes);
+
+		joueurs.get(0).getCartes().clear();
+		for(int i = 0; i < 5; i++)
+			joueurs.get(0).getCartes().add(Carte.TERRE);
+
+	}
+
+	private void initJoueurs()
+	{
 		// tirer 4 roles aleatoires parmi les 6
 		List<Role> roles = Arrays.asList(Role.values());
 		Collections.shuffle(roles);
-
-		joueurs = new ArrayList<>();
 
 		for(int i = 0; i < 4; i++)
 		{
 			joueurs.add(new Joueur(this, roles.get(i), plateau.caseAleatoire(Etat.SECHE, Etat.INONDEE)));
 			System.out.println(joueurs.get(i));
 		}
-
-		niveauEau = new NiveauEau(Difficulte.NOVICE);
-		pileCartes = new PileCartes(this);
-
-		joueurs.forEach(j -> piocheCartes(j));
-		pileCartes.ajoutCarteMDE();
-		monteeEau();
-
 	}
 
 	public Plateau getPlateau()
@@ -51,6 +59,11 @@ public class Modele extends Observable
 	public List<Joueur> getJoueurs()
 	{
 		return joueurs;
+	}
+
+	public Joueur getJoueur()
+	{
+		return joueurs.get(joueur);
 	}
 
 	public int getniveauEau()
@@ -67,16 +80,26 @@ public class Modele extends Observable
 		return nbActions;
 	}
 
+	private void resetActions()
+	{
+		nbActions = 3;
+	}
+
+	// TODO méthode à appeler quand on pioche une Carte MONTEE_DES_EAUX
 	public void monteeEau()
 	{
+		niveauEau.monteeEau();
+
 		if(niveauEau.getNombreCartes() == -1)
-		{
 			state = GameState.NIVEAU_EAU_TROP_HAUT;
-		}
 
+		getPileCartes().melangerCartesInondation();
+	}
+
+	public void inonderCases()
+	{
 		for(int i = 0; i < niveauEau.getNombreCartes(); i++)
-			monteeEauCase(pileCartes.CaseAInonder());
-
+			monteeEauCase(pileCartes.caseAInonder());
 	}
 
 	private void monteeEauCase(Case c)
@@ -110,36 +133,17 @@ public class Modele extends Observable
 				//Perdu si 2 zone du meme type tombe
 				if(c.getType() != Zone.NORMALE){
 					plateau.removeZoneImportante(c);
-					if(plateau.zoneImportantePasSubmergee(c.getType()) == 0 && !TresorPris.getOrDefault(c.getType(), false))
+					if(plateau.zoneImportantePasSubmergee(c.getType()) == 0 && !tresorPris.getOrDefault(c.getType().toArtefact(), false))
 						state = GameState.TRESOR_IRRECUPERABLE;
 				}
-
-
 				break;
 		}
 	}
 
-	public Joueur getJoueur()
-	{
-		return joueurs.get(joueur);
-	}
-
-	public void useAction(Action action)
+	public void useAction()
 	{
 		nbActions--;
-
-		if(!actionsRestantes())
-			finDeTour();
-	}
-
-	public boolean actionsRestantes()
-	{
-		return nbActions > 0;
-	}
-
-	private void resetActions()
-	{
-		nbActions = 3;
+		if(nbActions == 0) finDeTour();
 	}
 
 	public void finDeTour()
@@ -151,35 +155,48 @@ public class Modele extends Observable
 		if(joueurs.stream().allMatch(j -> j.getCartes().size() <= 5)) {
 			joueur = (joueur + 1) % 4;
 			resetActions();
-			monteeEau();
+			inonderCases();
 			endTour = true;
 		}
 	}
 
-	public void piocheCartes(Joueur j){
-		ArrayList<Tresor> CartePioche = new ArrayList<>();
-		for(int a=0; a < niveauEau.getNombreCartes(); a++){
-			Tresor t = pileCartes.getTresor();
-			CartePioche.add(t);
+	// TODO je ne crois pas que ça soit bon
+	public void piocheCartes(Joueur j) {
+		ArrayList<Carte> cartePioche = new ArrayList<>();
+
+		for(int a = 0; a < niveauEau.getNombreCartes(); a++) {
+			Carte t = pileCartes.getTresor();
+			cartePioche.add(t);
 		}
-		int NbCartesInnodation = Collections.frequency( CartePioche, Tresor.MONTEE_DES_EAUX);
-		if(NbCartesInnodation == 1){
+
+		int nbCartesInondation = Collections.frequency(cartePioche, Carte.MONTEE_DES_EAUX);
+
+		if(nbCartesInondation == 1)
 			niveauEau.monteeEau();
-		}else if(NbCartesInnodation > 1){
+		else if(nbCartesInondation > 1) {
 			niveauEau.monteeEau();
-			pileCartes.grandeInondation();
+			pileCartes.melangerCartesInondation();
 		}
-		for(int i = 0; i <  NbCartesInnodation; i++){
-			pileCartes.defausser(Tresor.MONTEE_DES_EAUX);
-		}
-		CartePioche.removeIf( a -> (a == Tresor.MONTEE_DES_EAUX));
-		while( j.getCartes().size() + CartePioche.size() > 10 ){
-			pileCartes.defausser(CartePioche.remove(0));
-		}
-		j.piocheTresor(CartePioche);
+
+		for(int i = 0; i <  nbCartesInondation; i++)
+			pileCartes.defausser(Carte.MONTEE_DES_EAUX);
+
+		cartePioche.removeIf(a -> (a == Carte.MONTEE_DES_EAUX));
+
+		while(j.getCartes().size() + cartePioche.size() > 10)
+			pileCartes.defausser(cartePioche.remove(0));
+
+		j.piocheCarte(cartePioche);
 	}
 
-	void recupereArtefact(Zone Type){
-		TresorPris.put(Type, true);
+	public void recupereArtefact(Artefact artefact) {
+		tresorPris.put(artefact, true);
+		useAction();
 	}
+
+	public boolean hasArtefact(Artefact artefact)
+	{
+		return tresorPris.getOrDefault(artefact, false);
+	}
+
 }
