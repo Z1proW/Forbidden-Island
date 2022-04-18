@@ -3,9 +3,11 @@ package fr.rui_tilmann.Controleur;
 import fr.rui_tilmann.Modele.Case;
 import fr.rui_tilmann.Modele.Enums.Direction;
 import fr.rui_tilmann.Modele.Enums.Role;
+import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VuePlateau;
 
+import javax.print.event.PrintJobEvent;
 import java.awt.event.*;
 
 import static fr.rui_tilmann.Vue.VuePlateau.P;
@@ -37,6 +39,21 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 				modele.getIdJoueur().deplace(c);
 			else if(e.getButton() == MouseEvent.BUTTON3)
 				modele.getIdJoueur().asseche(c);
+		}
+		if(c == modele.getIdJoueur().getPosition()){
+			if(e.getButton() == MouseEvent.BUTTON1){
+				Joueur j = modele.getIdJoueur();
+				long occurence = j.getCartes().stream()
+						.filter(carte -> carte.toArtefact() == c.getType().toArtefact()).count();
+				if(occurence > 3){
+					for(int i=0 ; i< j.getCartes().size(); i++) {
+						if (j.getCartes().get(i).toArtefact() == c.getType().toArtefact()){
+							modele.getIdJoueur().recupereArtefact(j.getCartes().get(i));
+							break;
+						}
+					}
+				}
+			}
 		}
 	}
 

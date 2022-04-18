@@ -11,13 +11,14 @@ public class Joueur
 	private final Role role;
 	private Case position;
 	private final List<Carte> cartes;
+	private int count = 0;
 
 	public Joueur(Modele modele, Role role, Case pos)
 	{
 		this.modele = modele;
 		this.role = role;
 		this.position = pos;
-		this.cartes = new ArrayList<>(5);
+		this.cartes = new ArrayList<>(10);
 	}
 
 	public Role getRole() {return role;}
@@ -59,6 +60,7 @@ public class Joueur
 
 	public void piocheCartes(boolean monteeEaux)
 	{
+		count = 0;
 		new Timer().schedule(new TimerTask()
 		{
 			int i = 0;
@@ -68,9 +70,13 @@ public class Joueur
 			{
 				piocheCarte(monteeEaux);
 				i++;
-				if(i >= 2) cancel();
+				if(i >= modele.nbCartes()) cancel();
 			}
 		}, 500, 500);
+
+		if(count>1){
+			modele.getPileCartes().melangerCartesInondation();
+		}
 	}
 
 	public void piocheCartes()
@@ -80,26 +86,23 @@ public class Joueur
 
 	private void piocheCarte(boolean monteeEaux)
 	{
-		if(cartes.size() >= 5) return;
 
 		Carte carte = modele.getPileCartes().getTresor(monteeEaux);
 		cartes.add(carte);
+		if(carte == Carte.MONTEE_DES_EAUX){
+			count++;
 
-		if(carte == Carte.MONTEE_DES_EAUX)
-		{
 			new Timer().schedule(new TimerTask()
 			{
 				@Override
 				public void run()
 				{
 					modele.monteeEau();
-					modele.getPileCartes().melangerCartesInondation();
-
 					modele.getPileCartes().defausser(Carte.MONTEE_DES_EAUX);
 					cartes.remove(Carte.MONTEE_DES_EAUX);
-
 					cancel();
 				}}, 500);
+
 		}
 	}
 
@@ -145,6 +148,11 @@ public class Joueur
 		modele.notifyObservers();
 	}
 
+
+	public void enleveArtefact(int n){
+		modele.getPileCartes().defausser(cartes.remove(n));
+		modele.finDeTour();
+	}
 
 	public String toString()
 	{
