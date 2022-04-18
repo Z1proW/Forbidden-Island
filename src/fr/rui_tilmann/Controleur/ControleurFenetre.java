@@ -48,7 +48,7 @@ public class ControleurFenetre extends MouseAdapter
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		if(cross(e)) f.dispose();
+		if(cross(e)) System.exit(0);
 	}
 
 	@Override

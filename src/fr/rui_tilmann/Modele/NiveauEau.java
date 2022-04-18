@@ -18,23 +18,20 @@ public class NiveauEau {
 
     public void monteeEau()
     {
-        monteeEau((int)(niveau + 1));
-    }
-
-    private void monteeEau(int i)
-    {
-        if(niveau >= i) return;
-
         new Timer().schedule(new TimerTask()
         {
+            int i = 0;
+
             @Override
             public void run()
             {
-                niveau += 0.05;
+                niveau += 0.1;
                 modele.notifyObservers();
-                monteeEau(i);
+
+                i++;
+                if(i >= 10) cancel();
             }
-        }, 50);
+        }, 0, 50);
     }
 
     public float getNiveau() {return this.niveau;}

@@ -50,15 +50,24 @@ public class PileCartes {
 		defausse.add(t);
 	}
 
-	public Carte getTresor() {
+	public Carte getTresor(boolean monteeEaux) {
 		Carte tresor = tresors.remove(0);
-		reset();
+
+		if(!monteeEaux)
+		{
+			while(tresor == Carte.MONTEE_DES_EAUX)
+			{
+				tresors.add(tresor);
+				Collections.shuffle(tresors);
+				tresor = tresors.remove(0);
+			}
+		}
+
+		if(tresors.isEmpty()) reset();
 		return tresor;
 	}
 
 	public void reset() {
-		if(!tresors.isEmpty()) return;
-
 		tresors = new ArrayList<>(defausse);
 		Collections.shuffle(tresors);
 		defausse.clear();

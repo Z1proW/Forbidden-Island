@@ -1,14 +1,8 @@
 package fr.rui_tilmann.Modele;
 
-import fr.rui_tilmann.Modele.Enums.Carte;
-import fr.rui_tilmann.Modele.Enums.Direction;
-import fr.rui_tilmann.Modele.Enums.Etat;
-import fr.rui_tilmann.Modele.Enums.Role;
+import fr.rui_tilmann.Modele.Enums.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class Joueur
 {
@@ -63,105 +57,94 @@ public class Joueur
 
 	public List<Carte> getCartes() {return cartes;}
 
-	public void piocheCartes(boolean firstTime)
+	public void piocheCartes(boolean monteeEaux)
 	{
 		new Timer().schedule(new TimerTask()
 		{
+			int i = 0;
+
 			@Override
 			public void run()
 			{
-				piocheCarte(firstTime);
-
-				new Timer().schedule(new TimerTask()
-				{
-					@Override
-					public void run()
-					{
-						piocheCarte(firstTime);
-						cancel();
-					}
-				}, 500);
-				cancel();
+				piocheCarte(monteeEaux);
+				i++;
+				if(i >= 2) cancel();
 			}
-		}, 500);
+		}, 500, 500);
 	}
 
-	private void piocheCarte(boolean firstTime)
+	public void piocheCartes()
+	{
+		piocheCartes(true);
+	}
+
+	private void piocheCarte(boolean monteeEaux)
 	{
 		if(cartes.size() >= 5) return;
 
-		Carte carte;
+		Carte carte = modele.getPileCartes().getTresor(monteeEaux);
+		cartes.add(carte);
 
-		if(firstTime)
+		if(carte == Carte.MONTEE_DES_EAUX)
 		{
-			do {carte = modele.getPileCartes().getTresor();}
-			while(carte == Carte.MONTEE_DES_EAUX);
-
-			cartes.add(carte);
-		}
-		else
-		{
-			carte = modele.getPileCartes().getTresor();
-			cartes.add(carte);
-
-			if(carte == Carte.MONTEE_DES_EAUX)
+			new Timer().schedule(new TimerTask()
 			{
-				new Timer().schedule(new TimerTask()
+				@Override
+				public void run()
 				{
-					@Override
-					public void run()
-					{
-						modele.getPileCartes().defausser(Carte.MONTEE_DES_EAUX);
-						cartes.remove(Carte.MONTEE_DES_EAUX);
-						modele.monteeEau();
-						cancel();
-					}
-				}, 500);
-			}
+					modele.monteeEau();
+					modele.getPileCartes().melangerCartesInondation();
+
+					modele.getPileCartes().defausser(Carte.MONTEE_DES_EAUX);
+					cartes.remove(Carte.MONTEE_DES_EAUX);
+
+					cancel();
+				}}, 500);
 		}
 	}
 
-	/*
-	public Tresor utiliseTresor(int n) {
+	// TODO c'est peut être mieux de ne pas catch l'erreur car c'est pas censé arriver
+	// et si ça arrive on veut le savoir
+	// de toute façon on test si c'est dans les bounds 0 - 5 dans le controlleur
+	public Carte utiliseCarte(int n) {
 		try {
 			modele.getPileCartes().defausser(cartes.get(n));
+			modele.useAction();
 			return cartes.remove(n);
 		}
-		catch(Exception e) {
-			System.out.println("Pas de carte à cette emplacement");
+		catch(IndexOutOfBoundsException e) {
+			System.out.println("Pas de carte à cet emplacement");
 			return null;
 		}
 	}
 
-	public void discardTresor(int n){
-		if(n >= 0 && n < cartes.size())
+	public void defausseCarte(int n) {
+		if(0 <= n && n < cartes.size())
 			modele.getPileCartes().defausser(cartes.remove(n));
-		if(!modele.actionsRestantes())
-			modele.finDeTour();
-
 	}
 
-	public void giveCarte(int n, Joueur j){
-		if(getCartes().get(n) != Tresor.HELICOPTERE || getCartes().get(n) != Tresor.SAC_DE_SABLE) {
-			j.getCartes().add(getCartes().remove(n));
-			modele.useAction(Action.DONNER_CARTE);
+	public void donneCarte(int n, Joueur j) {
+		Carte carte = cartes.get(n);
+
+		if(carte.toArtefact() != null) {
+			j.getCartes().add(cartes.remove(n));
+			modele.useAction();
 			modele.notifyObservers();
 		}
 	}
 
-	public void gainTresor(){
-		int occurences = Collections.frequency(cartes, ZoneToTresor());
-		if( occurences > 3){
-			modele.recupereArtefact(getPosition().getType());
-			for(int i =0 ; i < occurences; i++){
-				cartes.remove(ZoneToTresor());
-				modele.getPileCartes().defausser(ZoneToTresor());
-			}
-			modele.useAction(Action.GAGNER_TRESOR);
-			modele.notifyObservers();
+	public void recupereArtefact(Carte carte) {
+		modele.recupereArtefact(carte.toArtefact());
+
+		for(int i = 0; i < 4; i++)
+		{
+			modele.getPileCartes().defausser(carte);
+			cartes.remove(carte);
 		}
 
-	}*/
+		modele.notifyObservers();
+	}
+
 
 	public String toString()
 	{

@@ -29,7 +29,7 @@ public class Modele extends Observable
 		niveauEau = new NiveauEau(this, Difficulte.NOVICE);
 		pileCartes = new PileCartes(this);
 
-		joueurs.forEach(j -> j.piocheCartes(true));
+		joueurs.forEach(j -> j.piocheCartes(false));
 		/* test recup artefact
 		joueurs.get(0).getCartes().clear();
 		for(int i = 0; i < 5; i++)
@@ -148,7 +148,7 @@ public class Modele extends Observable
 
 	public void finDeTour()
 	{
-		joueurs.get(idJoueur).piocheCartes(false);
+		joueurs.get(idJoueur).piocheCartes();
 
 		new Timer().schedule(new TimerTask()
 		{
@@ -162,35 +162,6 @@ public class Modele extends Observable
 			}
 		}, 2000);
 	}
-
-	/*
-	public void piocheCartes(Joueur j) {
-		ArrayList<Carte> cartePioche = new ArrayList<>();
-
-		for(int a = 0; a < niveauEau.getNombreCartes(); a++) {
-			Carte t = pileCartes.getTresor();
-			cartePioche.add(t);
-		}
-
-		int nbCartesInondation = Collections.frequency(cartePioche, Carte.MONTEE_DES_EAUX);
-
-		if(nbCartesInondation == 1)
-			niveauEau.monteeEau();
-		else if(nbCartesInondation > 1) {
-			niveauEau.monteeEau();
-			pileCartes.melangerCartesInondation();
-		}
-
-		for(int i = 0; i <  nbCartesInondation; i++)
-			pileCartes.defausser(Carte.MONTEE_DES_EAUX);
-
-		cartePioche.removeIf(a -> (a == Carte.MONTEE_DES_EAUX));
-
-		while(j.getCartes().size() + cartePioche.size() > 10)
-			pileCartes.defausser(cartePioche.remove(0));
-
-		j.piocheCarte(cartePioche);
-	}*/
 
 	public void recupereArtefact(Artefact artefact) {
 		tresorPris.put(artefact, true);

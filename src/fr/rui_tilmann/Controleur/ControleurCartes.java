@@ -24,8 +24,6 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		if(e.getButton() != MouseEvent.BUTTON1) return;
-
 		int numCarte = getNumCarte(e);
 		int numJoueur = getNumJoueur(e);
 
@@ -37,29 +35,43 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 			if(numCarte >= joueur.getCartes().size()
 			|| modele.getIdJoueur() != joueur) return;
 
-			Carte tresor = joueur.getCartes().get(numCarte);
+			Carte carte = joueur.getCartes().get(numCarte);
 
-			switch(tresor)
+			switch(carte)
 			{
 				case FEU: case EAU: case TERRE: case AIR:
-				if(joueur.getPosition().getType().toArtefact() == tresor.toArtefact()
-				&& joueur.getCartes().stream().filter(t -> t == tresor).count() >= 4)
-				{
-					modele.recupereArtefact(tresor.toArtefact());
 
-					for(int i = 0; i < 4; i++)
-					{
-						modele.getPileCartes().defausser(tresor);
-						joueur.getCartes().remove(tresor);
-					}
+				if(e.getButton() == MouseEvent.BUTTON1
+				&& joueur.getPosition().getType().toArtefact() == carte.toArtefact()
+				&& joueur.getCartes().stream().filter(t -> t == carte).count() >= 4)
+					joueur.recupereArtefact(carte);
 
-					modele.notifyObservers();
-				}
+				/* TODO donner carte
+				if(e.getButton() == MouseEvent.BUTTON3
+				&& joueur.getPosition() == cible.getPosition())
+					joueur.donneCarte(numCarte, cible);*/
+
 				break;
+
+				case HELICOPTERE:
+					if(e.getButton() == MouseEvent.BUTTON1)
+					{
+						// TODO mettre dans une variable qu'on veut voler avec l'helico (dans ControleurJoueur)
+						// puis joueur.deplace(c);
+					}
+					break;
+
+				case SAC_DE_SABLE:
+					if(e.getButton() == MouseEvent.BUTTON1)
+					{
+						// TODO idem
+						// puis joueur.asseche(c);
+					}
+					break;
 			}
 		}
 	}
-/*
+/* TODO flemme de lire
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
