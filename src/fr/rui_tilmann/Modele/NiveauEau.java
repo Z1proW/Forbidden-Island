@@ -1,18 +1,43 @@
 package fr.rui_tilmann.Modele;
 
+import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Enums.Difficulte;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class NiveauEau {
 
-    private int niveau;
+    private final Modele modele;
+    private float niveau;
 
-    public NiveauEau(Difficulte difficulte) {
+    public NiveauEau(Modele modele, Difficulte difficulte) {
+        this.modele = modele;
         niveau = difficulte.ordinal();
     }
 
-    public void monteeEau() {niveau++;}
+    public void monteeEau()
+    {
+        monteeEau((int)(niveau + 1));
+    }
 
-    public int getNiveau() {return this.niveau;}
+    private void monteeEau(int i)
+    {
+        if(niveau >= i) return;
+
+        new Timer().schedule(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                niveau += 0.05;
+                modele.notifyObservers();
+                monteeEau(i);
+            }
+        }, 50);
+    }
+
+    public float getNiveau() {return this.niveau;}
 
     public int getNombreCartes()
     {

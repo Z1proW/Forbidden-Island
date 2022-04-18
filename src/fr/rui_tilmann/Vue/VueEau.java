@@ -34,7 +34,7 @@ public class VueEau extends JPanel implements Observer
 	{
 		// eau
 		ImageIcon water = new ImageIcon("src/fr/rui_tilmann/images/water.png");
-		g.drawImage(water.getImage(), 0, (10 - (modele.getniveauEau() + 1)) * P/2 + P - 9, null);
+		g.drawImage(water.getImage(), 0, (int)((10 - (modele.getniveauEau() + 1)) * P/2 + P - 9), null);
 
 		// overlay blanc pour effet rond
 		ImageIcon over = new ImageIcon("src/fr/rui_tilmann/images/water_overlay.png");

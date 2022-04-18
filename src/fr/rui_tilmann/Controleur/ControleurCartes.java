@@ -35,7 +35,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 			Joueur joueur = modele.getJoueurs().get(numJoueur);
 
 			if(numCarte >= joueur.getCartes().size()
-			|| modele.getJoueur() != joueur) return;
+			|| modele.getIdJoueur() != joueur) return;
 
 			Carte tresor = joueur.getCartes().get(numCarte);
 
@@ -91,7 +91,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 
 		if(0 <= numCarte && numCarte < 5
 		&& 0 <= numJoueur && numJoueur < 4
-		&& modele.getJoueur() == modele.getJoueurs().get(numJoueur))
+		&& modele.getIdJoueur() == modele.getJoueurs().get(numJoueur))
 		{
 			vueCartes.hoveredCard = numCarte;
 			vueCartes.hoveredJoueur = numJoueur;

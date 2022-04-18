@@ -1,10 +1,14 @@
 package fr.rui_tilmann.Modele;
 
-import fr.rui_tilmann.Modele.Enums.*;
+import fr.rui_tilmann.Modele.Enums.Carte;
+import fr.rui_tilmann.Modele.Enums.Direction;
+import fr.rui_tilmann.Modele.Enums.Etat;
+import fr.rui_tilmann.Modele.Enums.Role;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Joueur
 {
@@ -28,6 +32,8 @@ public class Joueur
 
 	public void deplace(Case c)
 	{
+		if(!modele.actionsRestantes()) return;
+
 		if(c != getPosition()
 		&& c.getEtat() != Etat.SUBMERGEE)
 		{
@@ -46,6 +52,8 @@ public class Joueur
 	}
 
 	public void asseche(Case c) {
+		if(!modele.actionsRestantes()) return;
+
 		if(c.getEtat() == Etat.INONDEE) {
 			c.setEtat(Etat.SECHE);
 			modele.useAction();
@@ -53,20 +61,66 @@ public class Joueur
 		}
 	}
 
-	public void asseche(Direction d) {
-		asseche(getPosition().adjacente(d));
-	}
-
 	public List<Carte> getCartes() {return cartes;}
 
-	public void piocheCarte(ArrayList<Carte> tresors)
+	public void piocheCartes(boolean firstTime)
 	{
-		for(Carte tresor : tresors) {
-			if(cartes.size() < 5)
-				cartes.add(tresor);
+		new Timer().schedule(new TimerTask()
+		{
+			@Override
+			public void run()
+			{
+				piocheCarte(firstTime);
 
+				new Timer().schedule(new TimerTask()
+				{
+					@Override
+					public void run()
+					{
+						piocheCarte(firstTime);
+						cancel();
+					}
+				}, 500);
+				cancel();
+			}
+		}, 500);
+	}
+
+	private void piocheCarte(boolean firstTime)
+	{
+		if(cartes.size() >= 5) return;
+
+		Carte carte;
+
+		if(firstTime)
+		{
+			do {carte = modele.getPileCartes().getTresor();}
+			while(carte == Carte.MONTEE_DES_EAUX);
+
+			cartes.add(carte);
+		}
+		else
+		{
+			carte = modele.getPileCartes().getTresor();
+			cartes.add(carte);
+
+			if(carte == Carte.MONTEE_DES_EAUX)
+			{
+				new Timer().schedule(new TimerTask()
+				{
+					@Override
+					public void run()
+					{
+						modele.getPileCartes().defausser(Carte.MONTEE_DES_EAUX);
+						cartes.remove(Carte.MONTEE_DES_EAUX);
+						modele.monteeEau();
+						cancel();
+					}
+				}, 500);
+			}
 		}
 	}
+
 	/*
 	public Tresor utiliseTresor(int n) {
 		try {

@@ -55,9 +55,10 @@ public class VueCartes extends JPanel implements Observer
 				paint(g, tresors.get(x), x, y);
 			}
 
-			if(modele.getJoueur() != joueurs.get(y))
+			// noircir les autres cartes
+			if(modele.getIdJoueur() != joueurs.get(y))
 			{
-				g.setColor(new Color(0, 0, 0, 200));
+				g.setColor(new Color(0, 0, 0, 127));
 				g.fillRect(0, y*HEIGHT, getWidth(), HEIGHT);
 			}
 		}

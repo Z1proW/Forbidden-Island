@@ -22,7 +22,7 @@ public class VueJoueurs
 
 	public void draw(Graphics g, Case c)
 	{
-		Joueur joueur = modele.getJoueur();
+		Joueur joueur = modele.getIdJoueur();
 		titleBar.setTitle(joueur.getRole().toString(), joueur.getRole().getColor());
 
 		List<Joueur> js = c.getJoueurs();

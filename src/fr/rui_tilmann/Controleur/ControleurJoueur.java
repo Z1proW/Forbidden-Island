@@ -2,7 +2,6 @@ package fr.rui_tilmann.Controleur;
 
 import fr.rui_tilmann.Modele.Case;
 import fr.rui_tilmann.Modele.Enums.Direction;
-import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Enums.Role;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VuePlateau;
@@ -30,14 +29,14 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 		if(c == null) return;
 
-		boolean diago = modele.getJoueur().getRole() == Role.EXPLORATEUR;
+		boolean diago = modele.getIdJoueur().getRole() == Role.EXPLORATEUR;
 
-		if(c.estAdjacente(modele.getJoueur().getPosition(), diago))
+		if(c.estAdjacente(modele.getIdJoueur().getPosition(), diago))
 		{
 			if(e.getButton() == MouseEvent.BUTTON1)
-				modele.getJoueur().deplace(c);
+				modele.getIdJoueur().deplace(c);
 			else if(e.getButton() == MouseEvent.BUTTON3)
-				modele.getJoueur().asseche(c);
+				modele.getIdJoueur().asseche(c);
 		}
 	}
 
@@ -54,7 +53,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			case KeyEvent.VK_LEFT: d = Direction.OUEST; break;
 		}
 
-		modele.getJoueur().deplace(d);
+		modele.getIdJoueur().deplace(d);
 	}
 
 	@Override

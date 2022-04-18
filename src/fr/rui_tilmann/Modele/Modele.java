@@ -15,11 +15,10 @@ public class Modele extends Observable
 
 	private GameState state = GameState.EN_JEU;
 
-	private int joueur = 0;
+	private int idJoueur = 0;
 	private int nbActions = 3;
 
 	private final HashMap<Artefact, Boolean> tresorPris = new HashMap<>(4);
-	private boolean endTour = true;
 
 	public Modele()
 	{
@@ -27,15 +26,15 @@ public class Modele extends Observable
 
 		initJoueurs();
 
-		niveauEau = new NiveauEau(Difficulte.NOVICE);
+		niveauEau = new NiveauEau(this, Difficulte.NOVICE);
 		pileCartes = new PileCartes(this);
 
-		joueurs.forEach(this::piocheCartes);
-
+		joueurs.forEach(j -> j.piocheCartes(true));
+		/* test recup artefact
 		joueurs.get(0).getCartes().clear();
 		for(int i = 0; i < 5; i++)
 			joueurs.get(0).getCartes().add(Carte.TERRE);
-
+		*/
 	}
 
 	private void initJoueurs()
@@ -61,12 +60,12 @@ public class Modele extends Observable
 		return joueurs;
 	}
 
-	public Joueur getJoueur()
+	public Joueur getIdJoueur()
 	{
-		return joueurs.get(joueur);
+		return joueurs.get(idJoueur);
 	}
 
-	public int getniveauEau()
+	public float getniveauEau()
 	{
 		return niveauEau.getNiveau();
 	}
@@ -76,13 +75,14 @@ public class Modele extends Observable
 		return pileCartes;
 	}
 
-	public int getNbActions() {
-		return nbActions;
-	}
-
 	private void resetActions()
 	{
 		nbActions = 3;
+	}
+
+	public boolean actionsRestantes()
+	{
+		return nbActions > 0;
 	}
 
 	// TODO méthode à appeler quand on pioche une Carte MONTEE_DES_EAUX
@@ -148,19 +148,22 @@ public class Modele extends Observable
 
 	public void finDeTour()
 	{
-		if(endTour) {
-			piocheCartes(getJoueur());
-			endTour = !endTour;
-		}
-		if(joueurs.stream().allMatch(j -> j.getCartes().size() <= 5)) {
-			joueur = (joueur + 1) % 4;
-			resetActions();
-			inonderCases();
-			endTour = true;
-		}
+		joueurs.get(idJoueur).piocheCartes(false);
+
+		new Timer().schedule(new TimerTask()
+		{
+			@Override
+			public void run()
+			{
+				idJoueur = (idJoueur + 1) % 4;
+				resetActions();
+				inonderCases();
+				cancel();
+			}
+		}, 2000);
 	}
 
-	// TODO je ne crois pas que ça soit bon
+	/*
 	public void piocheCartes(Joueur j) {
 		ArrayList<Carte> cartePioche = new ArrayList<>();
 
@@ -187,7 +190,7 @@ public class Modele extends Observable
 			pileCartes.defausser(cartePioche.remove(0));
 
 		j.piocheCarte(cartePioche);
-	}
+	}*/
 
 	public void recupereArtefact(Artefact artefact) {
 		tresorPris.put(artefact, true);
