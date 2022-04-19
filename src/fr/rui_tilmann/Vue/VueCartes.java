@@ -78,6 +78,7 @@ public class VueCartes extends JPanel implements Observer
 		else g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);
 	}
 
+
 	/*
 	private void paint2(Graphics g, Carte carte, int x, int y)
 	{
@@ -97,9 +98,9 @@ public class VueCartes extends JPanel implements Observer
 			}
 		}
 
-		if(hoveredJoueur == y && hoveredCard == x)
+		if(modele.positionJoueur(hoveredJoueur) == y && hoveredCard == x)
 			g.drawImage(img, x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);
 		else g.drawImage(img, x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);
-	}*/
-
+	}
+	*/
 }

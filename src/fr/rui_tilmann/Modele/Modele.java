@@ -185,4 +185,12 @@ public class Modele extends Observable
 		return tresorPris.getOrDefault(artefact, false);
 	}
 
+	public int positionJoueur(Joueur j){
+		for(int i=0; i < joueurs.size(); i++){
+			if(joueurs.get(i) ==j)
+				return i;
+		}
+		return -1;
+	}
+
 }

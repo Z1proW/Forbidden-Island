@@ -61,6 +61,7 @@ public class PileCartes {
 				Collections.shuffle(tresors);
 				tresor = tresors.remove(0);
 			}
+
 		}
 
 		if(tresors.isEmpty()) reset();

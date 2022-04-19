@@ -22,8 +22,8 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	private final Modele modele;
 	private final VuePlateau vuePlateau;
 
-	public Joueur clickedJoueur;
-	public int clickedCard;
+	public static Joueur clickedJoueur = null;
+	public int clickedCard = -1;
 
 	// TODO le faire marcher plusieurs personne sur la même case
 	private int joueur_transporte = 0;
