@@ -32,8 +32,11 @@ public class Modele extends Observable
 		joueurs.forEach(j -> j.piocheCartes(false));
 		// test recup artefact
 		joueurs.get(0).getCartes().clear();
+		/*
 		for(int i = 0; i < 5; i++)
 			joueurs.get(0).getCartes().add(Carte.TERRE);
+
+		 */
 
 	}
 
@@ -158,7 +161,7 @@ public class Modele extends Observable
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
-				if(joueur.getCartes().size() < 5)
+				if(joueur.getCartes().size() <= 5)
 				{
 					idJoueur = (idJoueur + 1) % 4;
 					resetActions();

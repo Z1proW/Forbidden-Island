@@ -27,32 +27,25 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 
 		if(!(0 <= numJoueur && numJoueur < 4)) return;
 
-		if(0 <= numCarte && numCarte < 8)
-		{
-			if(e.getButton() == MouseEvent.BUTTON1) {
+		if(0 <= numCarte && numCarte < 8) {
+			if (e.getButton() == MouseEvent.BUTTON1) {
 				vueCartes.chosenCard = numCarte;
 				vueCartes.chosenJoueur = numJoueur;
 				vueCartes.repaint();
-			}
-			else if(e.getButton() == MouseEvent.BUTTON3
-			&& modele.getJoueur(numJoueur).getCartes().size() > 5) {
-				modele.getJoueur(numJoueur).defausseCarte(numCarte);
-				vueCartes.repaint();
-			}
-		}
-			if(e.getButton() == MouseEvent.BUTTON3 && 0 <= numJoueur && numJoueur < 4) {
+			} else if (e.getButton() == MouseEvent.BUTTON3 && 0 <= numJoueur && numJoueur < 4) {
 				Joueur j = modele.getJoueurs().get(numJoueur);
 				if (j.getCartes().size() > 5) {
 					modele.getJoueurs().get(numJoueur).defausseCarte(numCarte);
 					vueCartes.repaint();
 				}
 				Joueur donneur = modele.getJoueurs().get(vueCartes.chosenJoueur);
-				if(vueCartes.chosenJoueur != numJoueur &&
+				if (vueCartes.chosenJoueur != numJoueur &&
 						j.getPosition() == donneur.getPosition()
-						&& vueCartes.chosenCard <= donneur.getCartes().size()){
+						&& vueCartes.chosenCard <= donneur.getCartes().size()) {
 					donneur.donneCarte(vueCartes.chosenCard, j);
 				}
 			}
+		}
 
 		if(0 <= numCarte && numCarte < 5)
 		{
@@ -72,28 +65,10 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 						&& joueur.getCartes().stream().filter(t -> t == carte).count() >= 4)
 					joueur.recupereArtefact(carte);
 
-				/* TODO donner carte
-				if(e.getButton() == MouseEvent.BUTTON3
-				&& joueur.getPosition() == cible.getPosition())
-					joueur.donneCarte(numCarte, cible);*/
 
 				break;
 
-				case HELICOPTERE:
-					if(e.getButton() == MouseEvent.BUTTON1)
-					{
-						// TODO mettre dans une variable qu'on veut voler avec l'helico (dans ControleurJoueur)
-						// puis joueur.deplace(c);
-					}
-					break;
-
-				case SAC_DE_SABLE:
-					if(e.getButton() == MouseEvent.BUTTON1)
-					{
-						// TODO idem
-						// puis joueur.asseche(c);
-					}
-					break;
+				default: break;
 			}
 		}
 	}
