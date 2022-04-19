@@ -47,7 +47,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		if(0 <= clickedCard && clickedCard < joueur.getCartes().size()) {
 			switch(joueur.getCartes().get(clickedCard)) {
 				case HELICOPTERE:
-					if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) < 8)
+					if(c.getEtat() != Etat.SUBMERGEE)
 					{
 						modele.getJoueurs().get(joueur_transporte).deplace(c, true);
 						joueur.defausseCarte(clickedCard);
@@ -99,18 +99,18 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 		switch(e.getKeyCode())
 		{
-			case KeyEvent.VK_UP: d = Direction.NORD; break;
-			case KeyEvent.VK_RIGHT: d = Direction.EST; break;
-			case KeyEvent.VK_DOWN: d = Direction.SUD; break;
-			case KeyEvent.VK_LEFT: d = Direction.OUEST; break;
+			case KeyEvent.VK_UP: 	d = Direction.NORD;  break;
+			case KeyEvent.VK_RIGHT: d = Direction.EST; 	 break;
+			case KeyEvent.VK_DOWN: 	d = Direction.SUD; 	 break;
+			case KeyEvent.VK_LEFT: 	d = Direction.OUEST; break;
 			//TODO trouver un meilleur moyen de déplacer la personne
-			case KeyEvent.VK_SPACE: joueur_transporte = (joueur_transporte + 1) % 4;System.out.println(joueur_transporte);break;
-
+			case KeyEvent.VK_SPACE:
+				joueur_transporte = (joueur_transporte + 1) % 4;
+				System.out.println(joueur_transporte);
+				break;
 		}
 
 		modele.getIdJoueur().deplace(d);
-
-
 	}
 
 	@Override

@@ -47,10 +47,10 @@ public class Case
 
 		switch(direction)
 		{
-			case NORD : if(y>1)y--; break;
-			case SUD: 	if(y<7)y++; break;
-			case OUEST: if(x>1)x--; break;
-			case EST: 	if(x<7)x++; break;
+			case NORD : y--; break;
+			case SUD: 	y++; break;
+			case OUEST: x--; break;
+			case EST: 	x++; break;
 		}
 		return modele.getPlateau().getCase(x, y);
 	}
