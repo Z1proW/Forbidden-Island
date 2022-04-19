@@ -41,11 +41,11 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 			j.defausseCarte(numCarte);
 			vueCartes.repaint();
 
-			Joueur donneur = vueCartes.chosenJoueur;
+			Joueur donneur = vueCartes.clickedJoueur;
 			if(donneur != j
 			&& j.getPosition() == donneur.getPosition()
-			&& vueCartes.chosenCard <= donneur.getCartes().size()) {
-				donneur.donneCarte(vueCartes.chosenCard, j);
+			&& vueCartes.clickedCard <= donneur.getCartes().size()) {
+				donneur.donneCarte(vueCartes.clickedCard, j);
 			}
 		}
 

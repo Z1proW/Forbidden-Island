@@ -5,15 +5,17 @@ import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Enums.Direction;
 import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Enums.Role;
-import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VuePlateau;
-import static fr.rui_tilmann.Vue.VueCartes.chosenJoueur;
-import static fr.rui_tilmann.Vue.VueCartes.chosenCard;
-import javax.print.event.PrintJobEvent;
-import java.awt.event.*;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import static fr.rui_tilmann.Vue.VueCartes.clickedCard;
+import static fr.rui_tilmann.Vue.VueCartes.clickedJoueur;
 import static fr.rui_tilmann.Vue.VuePlateau.P;
 
 public class ControleurJoueur extends MouseAdapter implements KeyListener
@@ -37,25 +39,32 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		int x = c.getX();
 		int y = c.getY();
 		if(c == null) return;
+
 		boolean nonCarteAction = true;
-		Joueur joueur = modele.getJoueurs().get(chosenJoueur);
-		if( 0 <= chosenCard && chosenCard < joueur.getCartes().size())
-		switch (joueur.getCartes().get(chosenCard)){
-			case HELICOPTERE:if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) < 8)
-			{
-				modele.getJoueurs().get(joueur_transporte).deplace(c, true);
-				joueur.defausseCarte(chosenCard);
-			}
-			break;
-			case SAC_DE_SABLE:if(c.getEtat() == Etat.INONDEE)
-			{
-				joueur.asseche(c, true);
-				joueur.defausseCarte(chosenCard);
+
+		Joueur joueur = clickedJoueur;
+
+		if(0 <= clickedCard && clickedCard < joueur.getCartes().size()) {
+			switch(joueur.getCartes().get(clickedCard)) {
+				case HELICOPTERE:
+					if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) < 8)
+					{
+						modele.getJoueurs().get(joueur_transporte).deplace(c, true);
+						joueur.defausseCarte(clickedCard);
+					}
+					break;
+
+				case SAC_DE_SABLE:
+					if(c.getEtat() == Etat.INONDEE)
+					{
+						joueur.asseche(c, true);
+						joueur.defausseCarte(clickedCard);
+					}
+					break;
+
+				default: nonCarteAction = false;
 
 			}
-			break;
-			default:nonCarteAction = false;
-
 		}
 
 		boolean diago = modele.getIdJoueur().getRole() == Role.EXPLORATEUR;
