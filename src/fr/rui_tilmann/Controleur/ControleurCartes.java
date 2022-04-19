@@ -54,7 +54,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		if(numCarte < 5)
 		{
 			if(numCarte >= j.getCartes().size()
-			|| modele.getIdJoueur() != j) return;
+			|| modele.getCurrentJoueur() != j) return;
 
 			Carte carte = j.getCartes().get(numCarte);
 
@@ -84,12 +84,12 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 
 	public void mouseReleased(MouseEvent e)
 	{
-		int numCarte = getNumCarte(e);
 		Joueur j = getJoueur(e);
-		if(j == null || numCarte == -1) return;
+		if(j == null) return;
 
-		if(pressedPlayer != j)
-			pressedPlayer.donneCarte(numCarte, j);
+		if(pressedPlayer == modele.getCurrentJoueur() && pressedPlayer != j
+		&& pressedPlayer.getPosition() == j.getPosition())
+			pressedPlayer.donneCarte(pressedCard, j);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		Joueur j = getJoueur(e);
 		if(j == null || numCarte == -1) return;
 
-		if(modele.getIdJoueur() == j)
+		if(modele.getCurrentJoueur() == j)
 		{
 			vueCartes.hoveredCard = numCarte;
 			vueCartes.hoveredJoueur = j;

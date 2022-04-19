@@ -1,6 +1,5 @@
 package fr.rui_tilmann.Vue;
 
-import fr.rui_tilmann.Controleur.ControleurJoueur;
 import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
@@ -53,7 +52,7 @@ public class VueCartes extends JPanel implements Observer
 			}
 
 			// noircir les autres cartes
-			if(modele.getIdJoueur() != joueurs.get(y))
+			if(modele.getCurrentJoueur() != joueurs.get(y))
 			{
 				g.setColor(new Color(0, 0, 0, 127));
 				g.fillRect(0, y*HEIGHT, getWidth(), HEIGHT);

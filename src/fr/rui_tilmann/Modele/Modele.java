@@ -67,7 +67,7 @@ public class Modele extends Observable
 		return joueurs.get(i);
 	}
 
-	public Joueur getIdJoueur()
+	public Joueur getCurrentJoueur()
 	{
 		return joueurs.get(idJoueur);
 	}

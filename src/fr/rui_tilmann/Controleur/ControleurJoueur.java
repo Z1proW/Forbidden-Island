@@ -67,25 +67,25 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			}
 		}
 
-		boolean diago = modele.getIdJoueur().getRole() == Role.EXPLORATEUR;
+		boolean diago = modele.getCurrentJoueur().getRole() == Role.EXPLORATEUR;
 
-		if(c.estAdjacente(modele.getIdJoueur().getPosition(), diago))
+		if(c.estAdjacente(modele.getCurrentJoueur().getPosition(), diago))
 		{
 			if(e.getButton() == MouseEvent.BUTTON1)
-				modele.getIdJoueur().deplace(c);
+				modele.getCurrentJoueur().deplace(c);
 			else if(e.getButton() == MouseEvent.BUTTON3)
-				modele.getIdJoueur().asseche(c);
+				modele.getCurrentJoueur().asseche(c);
 		}
 
-		if(c == modele.getIdJoueur().getPosition()
+		if(c == modele.getCurrentJoueur().getPosition()
 		&& e.getButton() == MouseEvent.BUTTON1) {
-			Joueur j = modele.getIdJoueur();
+			Joueur j = modele.getCurrentJoueur();
 			long occurences = j.getCartes().stream().filter(carte -> carte.toArtefact() == c.getType().toArtefact()).count();
 
 			if(occurences > 3)
 				for(Carte carte : j.getCartes())
 					if(carte.toArtefact() == c.getType().toArtefact()) {
-						modele.getIdJoueur().recupereArtefact(carte);
+						modele.getCurrentJoueur().recupereArtefact(carte);
 						break;
 					}
 		}
@@ -110,7 +110,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 				break;
 		}
 
-		modele.getIdJoueur().deplace(d);
+		modele.getCurrentJoueur().deplace(d);
 	}
 
 	@Override
