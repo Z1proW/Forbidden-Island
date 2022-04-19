@@ -30,7 +30,8 @@ public class Joueur
 		if(!modele.actionsRestantes()) return;
 
 		if(c != getPosition()
-		&& c.getEtat() != Etat.SUBMERGEE)
+		&& c.getEtat() != Etat.SUBMERGEE
+		&& c.estValide())
 		{
 			position = c;
 			modele.useAction();

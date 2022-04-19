@@ -153,7 +153,7 @@ public class Modele extends Observable
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
-				if(joueur.getCartes().size() <= 5)
+				if(joueur.getCartes().size() < 5)
 				{
 					idJoueur = (idJoueur + 1) % 4;
 					resetActions();

@@ -26,41 +26,41 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 	{
 		int numCarte = getNumCarte(e);
 		int numJoueur = getNumJoueur(e);
+
 		if(0 <= numJoueur && numJoueur < 4
-		&& 0 <= numCarte && numCarte < 8)
+		&& 0 <= numCarte && numCarte < 5)
 		{
 			Joueur joueur = modele.getJoueurs().get(numJoueur);
 
+			if(numCarte >= joueur.getCartes().size()
+			|| modele.getIdJoueur() != joueur) return;
 
-			//Carte carte = joueur.getCartes().get(numCarte);
-			if(e.getButton() == MouseEvent.BUTTON1){
+			if(e.getButton() == MouseEvent.BUTTON1) {
 				vueCartes.chosenCard = numCarte;
 				vueCartes.chosenJoueur = numJoueur;
 				vueCartes.repaint();
 			}
-			if(e.getButton() == MouseEvent.BUTTON3 && 0 <= numJoueur && numJoueur < 4) {
-				Joueur j = modele.getJoueurs().get(numJoueur);
-				if (j.getCartes().size() > 5) {
-					modele.getJoueurs().get(numJoueur).defausseCarte(numCarte);
-					vueCartes.repaint();
-				}
+			else if(e.getButton() == MouseEvent.BUTTON3
+			&& joueur.getCartes().size() > 5) {
+				modele.getJoueurs().get(numJoueur).defausseCarte(numCarte);
+				vueCartes.repaint();
 			}
 
+			Carte carte = joueur.getCartes().get(numCarte);
 
-			/*
 			switch(carte)
 			{
 				case FEU: case EAU: case TERRE: case AIR:
 
 				if(e.getButton() == MouseEvent.BUTTON1
-				&& joueur.getPosition().getType().toArtefact() == carte.toArtefact()
-				&& joueur.getCartes().stream().filter(t -> t == carte).count() >= 4)
+						&& joueur.getPosition().getType().toArtefact() == carte.toArtefact()
+						&& joueur.getCartes().stream().filter(t -> t == carte).count() >= 4)
 					joueur.recupereArtefact(carte);
 
-				// TODO donner carte
+				/* TODO donner carte
 				if(e.getButton() == MouseEvent.BUTTON3
 				&& joueur.getPosition() == cible.getPosition())
-					joueur.donneCarte(numCarte, cible);
+					joueur.donneCarte(numCarte, cible);*/
 
 				break;
 
@@ -79,32 +79,9 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 						// puis joueur.asseche(c);
 					}
 					break;
-			}*/
-		}
-	}
-/* TODO flemme de lire
-	@Override
-	public void mouseReleased(MouseEvent e)
-	{
-		int numCarte = (e.getX() - vueCartes.getX())/vueCartes.WIDTH;
-		int numJoueur = (e.getY() - vueCartes.getY())/vueCartes.HEIGHT;
-		if(0 <= numCarte && numCarte < 10
-				&& 0 <= numJoueur && numJoueur < 4 && e.getButton() == MouseEvent.BUTTON1)
-		{
-			vueCartes.chosenCard = numCarte;
-			vueCartes.chosenJoueur = numJoueur;
-			vueCartes.repaint();
-		}
-		//A la place de getJoueur car c'est plus de travailler si on prend celui directement via numJoueur
-		if(e.getButton() == MouseEvent.BUTTON3 && 0 <= numJoueur && numJoueur < 4){
-			Joueur j = modele.getJoueurs().get(numJoueur);
-			if(j.getCartes().size() > 5) {
-				modele.getJoueurs().get(numJoueur).discardArtefact(numCarte);
-				vueCartes.repaint();
 			}
 		}
-
-	}*/
+	}
 
 	@Override
 	public void mouseMoved(MouseEvent e)

@@ -1,6 +1,7 @@
 package fr.rui_tilmann.Controleur;
 
 import fr.rui_tilmann.Modele.Case;
+import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Enums.Direction;
 import fr.rui_tilmann.Modele.Enums.Role;
 import fr.rui_tilmann.Modele.Joueur;
@@ -46,14 +47,12 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			Joueur j = modele.getIdJoueur();
 			long occurences = j.getCartes().stream().filter(carte -> carte.toArtefact() == c.getType().toArtefact()).count();
 
-			if(occurences > 3){
-				for(int i=0 ; i< j.getCartes().size(); i++) {
-					if (j.getCartes().get(i).toArtefact() == c.getType().toArtefact()){
-						modele.getIdJoueur().recupereArtefact(j.getCartes().get(i));
+			if(occurences > 3)
+				for(Carte carte : j.getCartes())
+					if(carte.toArtefact() == c.getType().toArtefact()) {
+						modele.getIdJoueur().recupereArtefact(carte);
 						break;
 					}
-				}
-			}
 		}
 	}
 
