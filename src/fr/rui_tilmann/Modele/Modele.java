@@ -169,7 +169,7 @@ public class Modele extends Observable
 					cancel();
 				}
 			}
-		}, 1000, 10);
+		}, 2000, 10);
 	}
 
 	public void recupereArtefact(Artefact artefact) {

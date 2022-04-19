@@ -17,20 +17,19 @@ public class Joueur
 		this.modele = modele;
 		this.role = role;
 		this.position = pos;
-		this.cartes = new ArrayList<>(8);
+		this.cartes = new ArrayList<>(Carte.MAX);
 	}
 
 	public Role getRole() {return role;}
 
-	public Case getPosition() {return this.position;}
+	public Case getPosition() {return position;}
 
 	public void deplace(Case c)
 	{
 		if(!modele.actionsRestantes()) return;
 
-		if(c != getPosition()
-		&& c.getEtat() != Etat.SUBMERGEE
-		&& c.estValide())
+		if(c != position
+		&& c.getEtat() != Etat.SUBMERGEE)
 		{
 			position = c;
 			modele.useAction();
@@ -49,7 +48,13 @@ public class Joueur
 		Case adjacente = getPosition().adjacente(d);
 
 		if(adjacente.getEtat() == Etat.SUBMERGEE && getRole() == Role.PLONGEUR)
-			deplace(adjacente.adjacente(d));
+		{
+			adjacente = adjacente.adjacente(d);
+
+			if(0 <= adjacente.getX() && adjacente.getX() < Plateau.LENGTH
+			&& 0 <= adjacente.getY() && adjacente.getY() < Plateau.LENGTH)
+				deplace(adjacente);
+		}
 		else deplace(adjacente);
 	}
 
@@ -68,7 +73,10 @@ public class Joueur
 		}
 	}
 
-	public List<Carte> getCartes() {return cartes;}
+	public List<Carte> getCartes()
+	{
+		return cartes;
+	}
 
 	public void piocheCartes(boolean monteeEaux)
 	{
@@ -84,7 +92,7 @@ public class Joueur
 				i++;
 				if(i >= 2) cancel();
 			}
-		}, 500, 500);
+		}, 500, 400);
 	}
 
 	public void piocheCartes()
@@ -101,13 +109,13 @@ public class Joueur
 
 		if(carte == Carte.MONTEE_DES_EAUX)
 		{
+			modele.monteeEau();
+
 			new Timer().schedule(new TimerTask()
 			{
 				@Override
 				public void run()
 				{
-					modele.monteeEau();
-
 					if(melanger)
 						modele.getPileCartes().melangerCartesInondation();
 

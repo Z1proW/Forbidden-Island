@@ -14,6 +14,8 @@ public enum Carte
     SAC_DE_SABLE("sable.png"),
     MONTEE_DES_EAUX("eaux.png");
 
+    public static final int MAX = 8;
+
     private final ImageIcon img;
 
     Carte(String fileName)

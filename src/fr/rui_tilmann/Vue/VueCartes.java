@@ -17,18 +17,18 @@ public class VueCartes extends JPanel implements Observer
 	public static final int WIDTH = 80;
 	public static final int HEIGHT = 110;
 
-	public int hoveredJoueur = -1;
+	public Joueur hoveredJoueur = null;
 	public int hoveredCard = -1;
 
-	public static int chosenJoueur;
-	public static int chosenCard;
+	public static Joueur clickedJoueur;
+	public static int clickedCard;
 
 	public VueCartes(Modele modele)
 	{
 		this.modele = modele;
 		modele.addObserver(this);
 
-		this.setPreferredSize(new Dimension(8*WIDTH, 4*HEIGHT));
+		this.setPreferredSize(new Dimension(Carte.MAX*WIDTH, 4*HEIGHT));
 	}
 
 	@Override
@@ -66,12 +66,12 @@ public class VueCartes extends JPanel implements Observer
 
 	private void paint(Graphics g, Carte carte, int x, int y)
 	{
-		if(hoveredJoueur == y && hoveredCard == x)
+		if(hoveredJoueur == modele.getJoueur(y) && hoveredCard == x)
 			g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);
 		else g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);
 	}
 
-	// TODO peut mieux faire
+	/*
 	private void paint2(Graphics g, Carte carte, int x, int y)
 	{
 		Image image = carte.getImage();
@@ -80,7 +80,7 @@ public class VueCartes extends JPanel implements Observer
 		int pixelColor;
 		int toAlpha;
 
-		if(chosenJoueur == y && chosenCard == x) {
+		if(clickedJoueur == y && clickedCard == x) {
 			for (int i = 0; i < image.getWidth(null); i++) {
 				for (int j = 0; j < image.getHeight(null); j++) {
 					pixelColor = img.getRGB(i, j);
@@ -93,6 +93,6 @@ public class VueCartes extends JPanel implements Observer
 		if(hoveredJoueur == y && hoveredCard == x)
 			g.drawImage(img, x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);
 		else g.drawImage(img, x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);
-	}
+	}*/
 
 }

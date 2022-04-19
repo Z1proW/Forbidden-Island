@@ -64,12 +64,6 @@ public class Case
 			&& (diago || this.x == x || this.y == y);
 	}
 
-	public boolean estValide()
-	{
-		return 0 <= x && x < Plateau.LENGTH
-			&& 0 <= y && y < Plateau.LENGTH;
-	}
-
 	public String toString()
 	{
 		return "case " + x + ", " + y + ", " + etat + ", " + type;

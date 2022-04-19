@@ -4,7 +4,10 @@ import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VueCartes;
-import java.awt.event.*;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 public class ControleurCartes implements MouseMotionListener, MouseListener
 {
@@ -12,6 +15,8 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 	private Modele modele;
 	private VueCartes vueCartes;
 
+	private int pressedCard = -1;
+	private Joueur pressedPlayer = null;
 
 	public ControleurCartes(Modele modele, VueCartes vueCartes)
 	{
@@ -20,71 +25,98 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e)
+	public void mouseClicked(MouseEvent e)
 	{
 		int numCarte = getNumCarte(e);
-		int numJoueur = getNumJoueur(e);
+		Joueur j = getJoueur(e);
+		if(j == null || numCarte == -1) return;
 
-		if(!(0 <= numJoueur && numJoueur < 4)) return;
+		if(e.getButton() == MouseEvent.BUTTON1) {
+			vueCartes.clickedCard = numCarte;
+			vueCartes.clickedJoueur = j;
+			vueCartes.repaint();
+		}
+		else if(e.getButton() == MouseEvent.BUTTON3
+		&& j.getCartes().size() > 5) {
+			j.defausseCarte(numCarte);
+			vueCartes.repaint();
 
-		if(0 <= numCarte && numCarte < 8) {
-			if (e.getButton() == MouseEvent.BUTTON1) {
-				vueCartes.chosenCard = numCarte;
-				vueCartes.chosenJoueur = numJoueur;
-				vueCartes.repaint();
-			} else if (e.getButton() == MouseEvent.BUTTON3 && 0 <= numJoueur && numJoueur < 4) {
-				Joueur j = modele.getJoueurs().get(numJoueur);
-				if (j.getCartes().size() > 5) {
-					modele.getJoueurs().get(numJoueur).defausseCarte(numCarte);
-					vueCartes.repaint();
-				}
-				Joueur donneur = modele.getJoueurs().get(vueCartes.chosenJoueur);
-				if (vueCartes.chosenJoueur != numJoueur &&
-						j.getPosition() == donneur.getPosition()
-						&& vueCartes.chosenCard <= donneur.getCartes().size()) {
-					donneur.donneCarte(vueCartes.chosenCard, j);
-				}
+			Joueur donneur = vueCartes.chosenJoueur;
+			if(donneur != j
+			&& j.getPosition() == donneur.getPosition()
+			&& vueCartes.chosenCard <= donneur.getCartes().size()) {
+				donneur.donneCarte(vueCartes.chosenCard, j);
 			}
 		}
 
-		if(0 <= numCarte && numCarte < 5)
+		if(numCarte < 5)
 		{
-			Joueur joueur = modele.getJoueur(numJoueur);
+			if(numCarte >= j.getCartes().size()
+			|| modele.getIdJoueur() != j) return;
 
-			if(numCarte >= joueur.getCartes().size()
-			|| modele.getIdJoueur() != joueur) return;
-
-			Carte carte = joueur.getCartes().get(numCarte);
+			Carte carte = j.getCartes().get(numCarte);
 
 			switch(carte)
 			{
 				case FEU: case EAU: case TERRE: case AIR:
 
 				if(e.getButton() == MouseEvent.BUTTON1
-						&& joueur.getPosition().getType().toArtefact() == carte.toArtefact()
-						&& joueur.getCartes().stream().filter(t -> t == carte).count() >= 4)
-					joueur.recupereArtefact(carte);
-
+				&& j.getPosition().getType().toArtefact() == carte.toArtefact()
+				&& j.getCartes().stream().filter(t -> t == carte).count() >= 4)
+					j.recupereArtefact(carte);
 
 				break;
 
-				default: break;
+				case HELICOPTERE:
+					if(e.getButton() == MouseEvent.BUTTON1)
+					{
+						// TODO mettre dans une variable qu'on veut voler avec l'helico (dans ControleurJoueur)
+						// puis joueur.deplace(c);
+					}
+					break;
+
+				case SAC_DE_SABLE:
+					if(e.getButton() == MouseEvent.BUTTON1)
+					{
+						// TODO idem
+						// puis joueur.asseche(c);
+					}
+					break;
 			}
 		}
+	}
+
+	public void mousePressed(MouseEvent e)
+	{
+		int numCarte = getNumCarte(e);
+		Joueur j = getJoueur(e);
+		if(j == null || numCarte == -1) return;
+
+		pressedCard = numCarte;
+		pressedPlayer = j;
+	}
+
+	public void mouseReleased(MouseEvent e)
+	{
+		int numCarte = getNumCarte(e);
+		Joueur j = getJoueur(e);
+		if(j == null || numCarte == -1) return;
+
+		if(pressedPlayer != j)
+			pressedPlayer.donneCarte(numCarte, j);
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e)
 	{
 		int numCarte = getNumCarte(e);
-		int numJoueur = getNumJoueur(e);
+		Joueur j = getJoueur(e);
+		if(j == null || numCarte == -1) return;
 
-		if(0 <= numCarte && numCarte < 8
-		&& 0 <= numJoueur && numJoueur < 4
-		&& modele.getIdJoueur() == modele.getJoueur(numJoueur))
+		if(modele.getIdJoueur() == j)
 		{
 			vueCartes.hoveredCard = numCarte;
-			vueCartes.hoveredJoueur = numJoueur;
+			vueCartes.hoveredJoueur = j;
 			vueCartes.repaint();
 		}
 		else mouseExited(e);
@@ -92,27 +124,24 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 
 	public void mouseExited(MouseEvent e)
 	{
-		vueCartes.hoveredJoueur = -1;
+		vueCartes.hoveredJoueur = null;
 		vueCartes.hoveredCard = -1;
 		vueCartes.repaint();
 	}
 
 	private int getNumCarte(MouseEvent e)
 	{
-		int i = (e.getX() - vueCartes.getX());
-		return i >= 0 ? i/vueCartes.WIDTH : -1;
+		int numCarte = (e.getX() - vueCartes.getX())/VueCartes.WIDTH;
+		return 0 <= numCarte && numCarte < Carte.MAX ? numCarte : -1;
 	}
 
-	private int getNumJoueur(MouseEvent e)
+	private Joueur getJoueur(MouseEvent e)
 	{
-		int i = (e.getY() - vueCartes.getY());
-		return i >= 0 ? i/vueCartes.HEIGHT : -1;
+		int numJoueur = (e.getY() - vueCartes.getY())/VueCartes.HEIGHT;
+		return 0 <= numJoueur && numJoueur < 4 ? modele.getJoueur(numJoueur) : null;
 	}
 
 	public void mouseDragged(MouseEvent e) {}
-
-	public void mouseClicked(MouseEvent e) {}
-	public void mousePressed(MouseEvent e) {}
 	public void mouseEntered(MouseEvent e) {}
 
 }
