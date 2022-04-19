@@ -11,7 +11,6 @@ public class Joueur
 	private final Role role;
 	private Case position;
 	private final List<Carte> cartes;
-	private int count = 0;
 
 	public Joueur(Modele modele, Role role, Case pos)
 	{

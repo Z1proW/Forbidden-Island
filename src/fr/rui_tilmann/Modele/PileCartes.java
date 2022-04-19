@@ -5,7 +5,7 @@ import fr.rui_tilmann.Modele.Enums.Carte;
 import java.util.*;
 
 public class PileCartes {
-
+	// todo il y a un problème car on peut avoir plus de 5 clés du même artefact dans les inventaires
 	private final Modele modele;
 
 	private List<Carte> tresors = new ArrayList<>();

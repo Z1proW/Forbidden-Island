@@ -60,6 +60,11 @@ public class Modele extends Observable
 		return joueurs;
 	}
 
+	public Joueur getJoueur(int i)
+	{
+		return joueurs.get(i);
+	}
+
 	public Joueur getIdJoueur()
 	{
 		return joueurs.get(idJoueur);

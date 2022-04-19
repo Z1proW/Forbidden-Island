@@ -27,24 +27,28 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		int numCarte = getNumCarte(e);
 		int numJoueur = getNumJoueur(e);
 
-		if(0 <= numJoueur && numJoueur < 4
-		&& 0 <= numCarte && numCarte < 5)
+		if(!(0 <= numJoueur && numJoueur < 4)) return;
+
+		if(0 <= numCarte && numCarte < 8)
 		{
-			Joueur joueur = modele.getJoueurs().get(numJoueur);
-
-			if(numCarte >= joueur.getCartes().size()
-			|| modele.getIdJoueur() != joueur) return;
-
 			if(e.getButton() == MouseEvent.BUTTON1) {
 				vueCartes.chosenCard = numCarte;
 				vueCartes.chosenJoueur = numJoueur;
 				vueCartes.repaint();
 			}
 			else if(e.getButton() == MouseEvent.BUTTON3
-			&& joueur.getCartes().size() > 5) {
-				modele.getJoueurs().get(numJoueur).defausseCarte(numCarte);
+			&& modele.getJoueur(numJoueur).getCartes().size() > 5) {
+				modele.getJoueur(numJoueur).defausseCarte(numCarte);
 				vueCartes.repaint();
 			}
+		}
+
+		if(0 <= numCarte && numCarte < 5)
+		{
+			Joueur joueur = modele.getJoueur(numJoueur);
+
+			if(numCarte >= joueur.getCartes().size()
+			|| modele.getIdJoueur() != joueur) return;
 
 			Carte carte = joueur.getCartes().get(numCarte);
 
@@ -89,9 +93,9 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		int numCarte = getNumCarte(e);
 		int numJoueur = getNumJoueur(e);
 
-		if(0 <= numCarte && numCarte < 5
+		if(0 <= numCarte && numCarte < 8
 		&& 0 <= numJoueur && numJoueur < 4
-		&& modele.getIdJoueur() == modele.getJoueurs().get(numJoueur))
+		&& modele.getIdJoueur() == modele.getJoueur(numJoueur))
 		{
 			vueCartes.hoveredCard = numCarte;
 			vueCartes.hoveredJoueur = numJoueur;
