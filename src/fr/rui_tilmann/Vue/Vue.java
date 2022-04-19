@@ -44,7 +44,7 @@ public class Vue
 		VueCartes vueCartes = new VueCartes(modele);
 		eastPanel.add(vueCartes, BorderLayout.NORTH);
 
-		ControleurCartes controleurCartes = new ControleurCartes(modele, vueCartes);
+		ControleurCartes controleurCartes = new ControleurCartes(modele, vueCartes, controleurJoueur);
 		eastPanel.addMouseListener(controleurCartes);
 		eastPanel.addMouseMotionListener(controleurCartes);
 

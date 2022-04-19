@@ -1,12 +1,12 @@
 package fr.rui_tilmann.Vue;
 
+import fr.rui_tilmann.Controleur.ControleurJoueur;
 import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class VueCartes extends JPanel implements Observer
@@ -19,9 +19,6 @@ public class VueCartes extends JPanel implements Observer
 
 	public Joueur hoveredJoueur = null;
 	public int hoveredCard = -1;
-
-	public static Joueur clickedJoueur;
-	public static int clickedCard;
 
 	public VueCartes(Modele modele)
 	{

@@ -14,8 +14,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static fr.rui_tilmann.Vue.VueCartes.clickedCard;
-import static fr.rui_tilmann.Vue.VueCartes.clickedJoueur;
 import static fr.rui_tilmann.Vue.VuePlateau.P;
 
 public class ControleurJoueur extends MouseAdapter implements KeyListener
@@ -23,6 +21,10 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 	private final Modele modele;
 	private final VuePlateau vuePlateau;
+
+	public Joueur clickedJoueur;
+	public int clickedCard;
+
 	//TODO le faire marcher plusieurs personne sur la même case
 	private int joueur_transporte = 0;
 
