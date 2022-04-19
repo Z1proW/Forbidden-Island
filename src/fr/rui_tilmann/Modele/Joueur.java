@@ -60,23 +60,19 @@ public class Joueur
 
 	public void piocheCartes(boolean monteeEaux)
 	{
-		count = 0;
 		new Timer().schedule(new TimerTask()
 		{
 			int i = 0;
+			boolean dejaEuMDE = false;
 
 			@Override
 			public void run()
 			{
-				piocheCarte(monteeEaux);
+				piocheCarte(monteeEaux, !dejaEuMDE);
 				i++;
-				if(i >= modele.nbCartes()) cancel();
+				if(i >= 2) cancel();
 			}
 		}, 500, 500);
-
-		if(count>1){
-			modele.getPileCartes().melangerCartesInondation();
-		}
 	}
 
 	public void piocheCartes()
@@ -84,25 +80,30 @@ public class Joueur
 		piocheCartes(true);
 	}
 
-	private void piocheCarte(boolean monteeEaux)
+	private void piocheCarte(boolean monteeEaux, boolean melanger)
 	{
+		//if(cartes.size() >= 5) return;
 
 		Carte carte = modele.getPileCartes().getTresor(monteeEaux);
 		cartes.add(carte);
-		if(carte == Carte.MONTEE_DES_EAUX){
-			count++;
 
+		if(carte == Carte.MONTEE_DES_EAUX)
+		{
 			new Timer().schedule(new TimerTask()
 			{
 				@Override
 				public void run()
 				{
 					modele.monteeEau();
+
+					if(melanger)
+						modele.getPileCartes().melangerCartesInondation();
+
 					modele.getPileCartes().defausser(Carte.MONTEE_DES_EAUX);
 					cartes.remove(Carte.MONTEE_DES_EAUX);
+
 					cancel();
 				}}, 500);
-
 		}
 	}
 
@@ -146,12 +147,6 @@ public class Joueur
 		}
 
 		modele.notifyObservers();
-	}
-
-
-	public void enleveArtefact(int n){
-		modele.getPileCartes().defausser(cartes.remove(n));
-		modele.finDeTour();
 	}
 
 	public String toString()

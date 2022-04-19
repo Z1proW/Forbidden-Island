@@ -17,9 +17,6 @@ public class Modele extends Observable
 
 	private int idJoueur = 0;
 	private int nbActions = 3;
-	//C'est pour pouvoir choisir les cartes qu'on enleve du deck lorsqu'un
-	//des joueurs a trop de cartes
-	private boolean tourTermine = true;
 
 	private final HashMap<Artefact, Boolean> tresorPris = new HashMap<>(4);
 
@@ -87,9 +84,6 @@ public class Modele extends Observable
 	{
 		return nbActions > 0;
 	}
-	public int nbCartes(){
-		return niveauEau.getNombreCartes();
-	}
 
 	// TODO méthode à appeler quand on pioche une Carte MONTEE_DES_EAUX
 	public void monteeEau()
@@ -153,24 +147,21 @@ public class Modele extends Observable
 
 	public void finDeTour()
 	{
-		if(tourTermine && nbActions == 0) {
-			joueurs.get(idJoueur).piocheCartes();
-			tourTermine = false;
-		}
+		Joueur joueur = joueurs.get(idJoueur);
+		joueur.piocheCartes();
 
-		if(joueurs.stream().allMatch(j -> j.getCartes().size() <= 5) && nbActions == 0) {
-			new Timer().schedule(new TimerTask() {
-				@Override
-				public void run() {
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				if(joueur.getCartes().size() <= 5)
+				{
 					idJoueur = (idJoueur + 1) % 4;
 					resetActions();
 					inonderCases();
 					cancel();
 				}
-			}, 2000);
-			tourTermine = true;
-
-		}
+			}
+		}, 1000, 10);
 	}
 
 	public void recupereArtefact(Artefact artefact) {

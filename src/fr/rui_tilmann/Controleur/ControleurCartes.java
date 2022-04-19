@@ -41,7 +41,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 			if(e.getButton() == MouseEvent.BUTTON3 && 0 <= numJoueur && numJoueur < 4) {
 				Joueur j = modele.getJoueurs().get(numJoueur);
 				if (j.getCartes().size() > 5) {
-					modele.getJoueurs().get(numJoueur).enleveArtefact(numCarte);
+					modele.getJoueurs().get(numJoueur).defausseCarte(numCarte);
 					vueCartes.repaint();
 				}
 			}

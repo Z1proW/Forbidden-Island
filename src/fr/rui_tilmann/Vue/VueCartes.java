@@ -64,15 +64,15 @@ public class VueCartes extends JPanel implements Observer
 		}
 	}
 
-	private void paint2(Graphics g, Carte tresor, int x, int y)
+	private void paint(Graphics g, Carte carte, int x, int y)
 	{
 		if(hoveredJoueur == y && hoveredCard == x)
-			g.drawImage(tresor.getImage(), x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);
-		else g.drawImage(tresor.getImage(), x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);
+			g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);
+		else g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);
 	}
 
 	// TODO peut mieux faire
-	private void paint(Graphics g, Carte carte, int x, int y)
+	private void paint2(Graphics g, Carte carte, int x, int y)
 	{
 		Image image = carte.getImage();
 		BufferedImage img = new BufferedImage(image.getWidth(null), image.getHeight(null) , Image.SCALE_DEFAULT);

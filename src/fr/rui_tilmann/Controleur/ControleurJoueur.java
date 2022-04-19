@@ -40,17 +40,17 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			else if(e.getButton() == MouseEvent.BUTTON3)
 				modele.getIdJoueur().asseche(c);
 		}
-		if(c == modele.getIdJoueur().getPosition()){
-			if(e.getButton() == MouseEvent.BUTTON1){
-				Joueur j = modele.getIdJoueur();
-				long occurence = j.getCartes().stream()
-						.filter(carte -> carte.toArtefact() == c.getType().toArtefact()).count();
-				if(occurence > 3){
-					for(int i=0 ; i< j.getCartes().size(); i++) {
-						if (j.getCartes().get(i).toArtefact() == c.getType().toArtefact()){
-							modele.getIdJoueur().recupereArtefact(j.getCartes().get(i));
-							break;
-						}
+
+		if(c == modele.getIdJoueur().getPosition()
+		&& e.getButton() == MouseEvent.BUTTON1) {
+			Joueur j = modele.getIdJoueur();
+			long occurences = j.getCartes().stream().filter(carte -> carte.toArtefact() == c.getType().toArtefact()).count();
+
+			if(occurences > 3){
+				for(int i=0 ; i< j.getCartes().size(); i++) {
+					if (j.getCartes().get(i).toArtefact() == c.getType().toArtefact()){
+						modele.getIdJoueur().recupereArtefact(j.getCartes().get(i));
+						break;
 					}
 				}
 			}
