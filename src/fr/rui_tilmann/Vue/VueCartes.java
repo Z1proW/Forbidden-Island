@@ -1,5 +1,6 @@
 package fr.rui_tilmann.Vue;
 
+import fr.rui_tilmann.Controleur.ControleurCartes;
 import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
@@ -62,7 +63,11 @@ public class VueCartes extends JPanel implements Observer
 
 	private void paint(Graphics g, Carte carte, int x, int y)
 	{
-		if(hoveredJoueur == modele.getJoueur(y) && hoveredCard == x)
+		if(ControleurCartes.pressedPlayer == modele.getJoueur(y) && ControleurCartes.pressedCard == x)
+		{
+			g.drawImage(carte.getImage(), ControleurCartes.X - WIDTH/2, ControleurCartes.Y - HEIGHT/2, null);
+		}
+		else if(hoveredJoueur == modele.getJoueur(y) && hoveredCard == x)
 			g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);
 		else g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);
 	}
