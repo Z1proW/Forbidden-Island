@@ -30,11 +30,11 @@ public class Modele extends Observable
 		pileCartes = new PileCartes(this);
 
 		joueurs.forEach(j -> j.piocheCartes(false));
-		/* test recup artefact
+		// test recup artefact
 		joueurs.get(0).getCartes().clear();
 		for(int i = 0; i < 5; i++)
 			joueurs.get(0).getCartes().add(Carte.TERRE);
-		*/
+
 	}
 
 	private void initJoueurs()

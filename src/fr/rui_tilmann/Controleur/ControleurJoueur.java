@@ -3,11 +3,14 @@ package fr.rui_tilmann.Controleur;
 import fr.rui_tilmann.Modele.Case;
 import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Enums.Direction;
+import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Enums.Role;
+import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VuePlateau;
-
+import static fr.rui_tilmann.Vue.VueCartes.chosenJoueur;
+import static fr.rui_tilmann.Vue.VueCartes.chosenCard;
 import javax.print.event.PrintJobEvent;
 import java.awt.event.*;
 
@@ -18,6 +21,8 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 	private final Modele modele;
 	private final VuePlateau vuePlateau;
+	//TODO le faire marcher plusieurs personne sur la même case
+	private int joueur_transporte = 0;
 
 	public ControleurJoueur(Modele modele, VuePlateau vuePlateau)
 	{
@@ -29,8 +34,29 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	public void mouseReleased(MouseEvent e)
 	{
 		Case c = getCase(e);
-
+		int x = c.getX();
+		int y = c.getY();
 		if(c == null) return;
+		boolean nonCarteAction = true;
+		Joueur joueur = modele.getJoueurs().get(chosenJoueur);
+		if( 0 <= chosenCard && chosenCard < joueur.getCartes().size())
+		switch (joueur.getCartes().get(chosenCard)){
+			case HELICOPTERE:if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) < 8)
+			{
+				modele.getJoueurs().get(joueur_transporte).deplace(c, true);
+				joueur.defausseCarte(chosenCard);
+			}
+			break;
+			case SAC_DE_SABLE:if(c.getEtat() == Etat.INONDEE)
+			{
+				joueur.asseche(c, true);
+				joueur.defausseCarte(chosenCard);
+
+			}
+			break;
+			default:nonCarteAction = false;
+
+		}
 
 		boolean diago = modele.getIdJoueur().getRole() == Role.EXPLORATEUR;
 
@@ -54,6 +80,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 						break;
 					}
 		}
+
 	}
 
 	@Override
@@ -67,9 +94,14 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			case KeyEvent.VK_RIGHT: d = Direction.EST; break;
 			case KeyEvent.VK_DOWN: d = Direction.SUD; break;
 			case KeyEvent.VK_LEFT: d = Direction.OUEST; break;
+			//TODO trouver un meilleur moyen de déplacer la personne
+			case KeyEvent.VK_SPACE: joueur_transporte = (joueur_transporte + 1) % 4;System.out.println(joueur_transporte);break;
+
 		}
 
 		modele.getIdJoueur().deplace(d);
+
+
 	}
 
 	@Override

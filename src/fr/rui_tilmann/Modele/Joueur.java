@@ -37,6 +37,13 @@ public class Joueur
 			modele.notifyObservers();
 		}
 	}
+	public void deplace(Case c, boolean b)
+	{
+		if(b)
+			position = c;
+		modele.notifyObservers();
+
+	}
 
 	public void deplace(Direction d) {
 		Case adjacente = getPosition().adjacente(d);
@@ -53,6 +60,11 @@ public class Joueur
 			c.setEtat(Etat.SECHE);
 			modele.useAction();
 			modele.notifyObservers();
+		}
+	}
+	public void asseche(Case c, boolean b){
+		if(c.getEtat() == Etat.INONDEE && b) {
+			c.setEtat(Etat.SECHE);
 		}
 	}
 

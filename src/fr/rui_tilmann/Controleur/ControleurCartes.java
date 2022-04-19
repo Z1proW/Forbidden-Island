@@ -4,16 +4,14 @@ import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VueCartes;
-
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
 public class ControleurCartes implements MouseMotionListener, MouseListener
 {
 
 	private Modele modele;
 	private VueCartes vueCartes;
+
 
 	public ControleurCartes(Modele modele, VueCartes vueCartes)
 	{
@@ -42,6 +40,19 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 				vueCartes.repaint();
 			}
 		}
+			if(e.getButton() == MouseEvent.BUTTON3 && 0 <= numJoueur && numJoueur < 4) {
+				Joueur j = modele.getJoueurs().get(numJoueur);
+				if (j.getCartes().size() > 5) {
+					modele.getJoueurs().get(numJoueur).defausseCarte(numCarte);
+					vueCartes.repaint();
+				}
+				Joueur donneur = modele.getJoueurs().get(vueCartes.chosenJoueur);
+				if(vueCartes.chosenJoueur != numJoueur &&
+						j.getPosition() == donneur.getPosition()
+						&& vueCartes.chosenCard <= donneur.getCartes().size()){
+					donneur.donneCarte(vueCartes.chosenCard, j);
+				}
+			}
 
 		if(0 <= numCarte && numCarte < 5)
 		{

@@ -20,8 +20,8 @@ public class VueCartes extends JPanel implements Observer
 	public int hoveredJoueur = -1;
 	public int hoveredCard = -1;
 
-	public int chosenJoueur;
-	public int chosenCard;
+	public static int chosenJoueur;
+	public static int chosenCard;
 
 	public VueCartes(Modele modele)
 	{
