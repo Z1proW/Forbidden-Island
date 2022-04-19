@@ -88,7 +88,7 @@ public class Joueur
 			@Override
 			public void run()
 			{
-				piocheCarte(monteeEaux, !dejaEuMDE);
+				dejaEuMDE = piocheCarte(monteeEaux, !dejaEuMDE);
 				i++;
 				if(i >= 2) cancel();
 			}
@@ -100,7 +100,7 @@ public class Joueur
 		piocheCartes(true);
 	}
 
-	private void piocheCarte(boolean monteeEaux, boolean melanger)
+	private boolean piocheCarte(boolean monteeEaux, boolean melanger)
 	{
 		//if(cartes.size() >= 5) return;
 
@@ -124,7 +124,9 @@ public class Joueur
 
 					cancel();
 				}}, 500);
+			return true;
 		}
+		return false;
 	}
 
 	// TODO c'est peut être mieux de ne pas catch l'erreur car c'est pas censé arriver

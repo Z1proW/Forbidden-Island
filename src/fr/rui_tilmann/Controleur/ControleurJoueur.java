@@ -25,7 +25,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	public Joueur clickedJoueur;
 	public int clickedCard;
 
-	//TODO le faire marcher plusieurs personne sur la même case
+	// TODO le faire marcher plusieurs personne sur la même case
 	private int joueur_transporte = 0;
 
 	public ControleurJoueur(Modele modele, VuePlateau vuePlateau)
@@ -38,8 +38,6 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	public void mouseReleased(MouseEvent e)
 	{
 		Case c = getCase(e);
-		int x = c.getX();
-		int y = c.getY();
 		if(c == null) return;
 
 		boolean nonCarteAction = true;

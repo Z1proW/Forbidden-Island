@@ -68,22 +68,6 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 					j.recupereArtefact(carte);
 
 				break;
-
-				case HELICOPTERE:
-					if(e.getButton() == MouseEvent.BUTTON1)
-					{
-						// TODO mettre dans une variable qu'on veut voler avec l'helico (dans ControleurJoueur)
-						// puis joueur.deplace(c);
-					}
-					break;
-
-				case SAC_DE_SABLE:
-					if(e.getButton() == MouseEvent.BUTTON1)
-					{
-						// TODO idem
-						// puis joueur.asseche(c);
-					}
-					break;
 			}
 		}
 	}
