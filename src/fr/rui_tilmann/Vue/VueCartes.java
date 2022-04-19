@@ -28,7 +28,7 @@ public class VueCartes extends JPanel implements Observer
 		this.modele = modele;
 		modele.addObserver(this);
 
-		this.setPreferredSize(new Dimension(10*WIDTH, 4*HEIGHT));
+		this.setPreferredSize(new Dimension(8*WIDTH, 4*HEIGHT));
 	}
 
 	@Override

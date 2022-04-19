@@ -18,7 +18,7 @@ public class Joueur
 		this.modele = modele;
 		this.role = role;
 		this.position = pos;
-		this.cartes = new ArrayList<>(10);
+		this.cartes = new ArrayList<>(8);
 	}
 
 	public Role getRole() {return role;}

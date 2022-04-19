@@ -12,7 +12,7 @@ public class TitleBar extends JPanel
 
 	private boolean hovered = false;
 
-	public static int width = Plateau.LENGTH * VuePlateau.P + 2*VueEau.P + 5*VueCartes.WIDTH;
+	public static int width = Plateau.LENGTH * VuePlateau.P + 2*VueEau.P + 8*VueCartes.WIDTH;
 	public static int height = 30;
 
 	public static int left = width - height;

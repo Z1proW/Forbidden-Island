@@ -27,7 +27,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		int numCarte = getNumCarte(e);
 		int numJoueur = getNumJoueur(e);
 		if(0 <= numJoueur && numJoueur < 4
-		&& 0 <= numCarte && numCarte < 10)
+		&& 0 <= numCarte && numCarte < 8)
 		{
 			Joueur joueur = modele.getJoueurs().get(numJoueur);
 
