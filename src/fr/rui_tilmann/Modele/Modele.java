@@ -71,6 +71,10 @@ public class Modele extends Observable
 	{
 		return joueurs.get(idJoueur);
 	}
+	public int getCurrentJoueurId()
+	{
+		return idJoueur;
+	}
 
 	public float getniveauEau()
 	{

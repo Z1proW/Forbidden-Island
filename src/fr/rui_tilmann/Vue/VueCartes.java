@@ -20,6 +20,8 @@ public class VueCartes extends JPanel implements Observer
 	public Joueur hoveredJoueur = null;
 	public int hoveredCard = -1;
 
+	public static int draggedX, draggedY;
+
 	public VueCartes(Modele modele)
 	{
 		this.modele = modele;
@@ -43,30 +45,34 @@ public class VueCartes extends JPanel implements Observer
 			g.fillRect(0, i*HEIGHT, getWidth(), HEIGHT);
 		}
 
+		// on dessine les cartes qui sont pas du joueur current
 		for(int y = 0; y < joueurs.size(); y++)
 		{
-			List<Carte> tresors = joueurs.get(y).getCartes();
-
-			for(int x = 0; x < joueurs.get(y).getCartes().size(); x++)
-			{
-				paint(g, tresors.get(x), x, y);
-			}
-
-			// noircir les autres cartes
 			if(modele.getCurrentJoueur() != joueurs.get(y))
 			{
+				List<Carte> tresors = joueurs.get(y).getCartes();
+
+				for(int x = 0; x < joueurs.get(y).getCartes().size(); x++)
+				{
+					paint(g, tresors.get(x), x, y);
+				}
+
+				// on noircit
 				g.setColor(new Color(0, 0, 0, 127));
 				g.fillRect(0, y*HEIGHT, getWidth(), HEIGHT);
 			}
 		}
+
+		// on dessine les cartes du joueur current pour qu'elles soient en avant plan
+		int y = modele.getCurrentJoueurId();
+		for(int x = 0; x < joueurs.get(y).getCartes().size(); x++)
+			paint(g, joueurs.get(y).getCartes().get(x), x, y);
 	}
 
 	private void paint(Graphics g, Carte carte, int x, int y)
 	{
 		if(ControleurCartes.pressedPlayer == modele.getJoueur(y) && ControleurCartes.pressedCard == x)
-		{
-			g.drawImage(carte.getImage(), ControleurCartes.X - WIDTH/2, ControleurCartes.Y - HEIGHT/2, null);
-		}
+			g.drawImage(carte.getImage(), draggedX - WIDTH/2, draggedY - HEIGHT/2, null);
 		else if(hoveredJoueur == modele.getJoueur(y) && hoveredCard == x)
 			g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);
 		else g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);

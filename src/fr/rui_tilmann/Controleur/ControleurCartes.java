@@ -19,8 +19,6 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 	public static int pressedCard = -1;
 	public static Joueur pressedPlayer = null;
 
-	public static int X, Y;
-
 	public ControleurCartes(Modele modele, VueCartes vueCartes, ControleurJoueur controleurJoueur)
 	{
 		this.modele = modele;
@@ -78,10 +76,12 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 	{
 		int numCarte = getNumCarte(e);
 		Joueur j = getJoueur(e);
-		if(j == null || numCarte == -1) return;
+		if(j == null || numCarte == -1
+		|| modele.getCurrentJoueur() != j) return;
 
 		pressedCard = numCarte;
 		pressedPlayer = j;
+		mouseDragged(e);
 	}
 
 	public void mouseReleased(MouseEvent e)
@@ -115,7 +115,8 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 
 	public void mouseDragged(MouseEvent e)
 	{
-		X = e.getX(); Y = e.getY();
+		vueCartes.draggedX = e.getX();
+		vueCartes.draggedY = e.getY();
 	}
 
 	public void mouseExited(MouseEvent e)
