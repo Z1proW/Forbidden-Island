@@ -45,6 +45,9 @@ public class PileCartes {
 		Collections.shuffle(tresors);
 	}
 
+	public List<Carte> getTresors(){
+		return tresors;
+	}
 	public void defausser(Carte t)
 	{
 		defausse.add(t);
@@ -58,7 +61,6 @@ public class PileCartes {
 			while(tresor == Carte.MONTEE_DES_EAUX)
 			{
 				tresors.add(tresor);
-				Collections.shuffle(tresors);
 				tresor = tresors.remove(0);
 			}
 

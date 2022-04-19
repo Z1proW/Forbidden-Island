@@ -90,9 +90,11 @@ public class Joueur
 			{
 				dejaEuMDE = piocheCarte(monteeEaux, !dejaEuMDE);
 				i++;
-				if(i >= 2) cancel();
+				//Pour débugger
+				System.out.println(modele.getPileCartes().getTresors().size());
+				if(i >= 5) cancel();
 			}
-		}, 500, 400);
+		}, 800, 400);
 	}
 
 	public void piocheCartes()
@@ -123,7 +125,7 @@ public class Joueur
 					cartes.remove(Carte.MONTEE_DES_EAUX);
 
 					cancel();
-				}}, 500);
+				}}, 400);
 			return true;
 		}
 		return false;
