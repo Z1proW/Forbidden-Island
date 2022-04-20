@@ -20,6 +20,12 @@ public class VuePlateau extends JPanel implements Observer
 
 	// TODO le faire marcher plusieurs personne sur la même case
 	public int joueurTransporte = 0;
+	//TODO pour les actions spéciale peut mieux faire je pense
+	public boolean actionSpeNavigateur = false;
+	public boolean actionSpePilote = false;
+	public boolean actionUtilisePilote = false;
+	public int caseDeplace = 0;
+	public boolean actionSpePlongeur = false;
 
 	public VuePlateau(Modele modele, VueJoueurs vueJoueurs)
 	{

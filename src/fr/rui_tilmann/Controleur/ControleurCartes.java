@@ -6,6 +6,7 @@ import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VueCartes;
 
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -44,14 +45,15 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 			j.defausseCarte(numCarte);
 			vueCartes.repaint();
 
-			Joueur donneur = controleurJoueur.clickedJoueur;
-			if(donneur != null && donneur != j
-			&& (j.getPosition() == donneur.getPosition()
-			|| modele.getCurrentJoueur().getRole() == Role.MESSAGER)
-			&& controleurJoueur.clickedCard <= donneur.getCartes().size()) {
-				donneur.donneCarte(controleurJoueur.clickedCard, j);
-				controleurJoueur.clickedCard = -1;
-			}
+		}
+		Joueur donneur = controleurJoueur.clickedJoueur;
+		if(donneur != null && donneur != j && e.getButton() == MouseEvent.BUTTON3
+				&& (j.getPosition() == donneur.getPosition()
+				|| modele.getCurrentJoueur().getRole() == Role.MESSAGER)
+				&& controleurJoueur.clickedCard <= donneur.getCartes().size()
+				) {
+			donneur.donneCarte(controleurJoueur.clickedCard, j);
+			controleurJoueur.clickedCard = -1;
 		}
 
 
@@ -82,6 +84,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		Joueur j = getJoueur(e);
 		if(j == null || numCarte == -1
 		|| modele.getCurrentJoueur() != j
+		|| e.getButton() == MouseEvent.BUTTON3
 		|| j.getCartes().get(numCarte) == Carte.HELICOPTERE
 		|| j.getCartes().get(numCarte) == Carte.SAC_DE_SABLE) return;
 
@@ -95,12 +98,12 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		Joueur j = getJoueur(e);
 
 		if(j != null
+				&& carteEnfoncee != -1
 		&& joueurEnfonce == modele.getCurrentJoueur()
 		&& joueurEnfonce != j
 		&& (joueurEnfonce.getPosition() == j.getPosition()
 		|| modele.getCurrentJoueur().getRole() == Role.MESSAGER))
 			joueurEnfonce.donneCarte(carteEnfoncee, j);
-
 		carteEnfoncee = -1;
 	}
 
@@ -125,8 +128,10 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 
 	public void mouseDragged(MouseEvent e)
 	{
+
 		vueCartes.draggedX = e.getX();
 		vueCartes.draggedY = e.getY();
+
 	}
 
 	public void mouseExited(MouseEvent e)

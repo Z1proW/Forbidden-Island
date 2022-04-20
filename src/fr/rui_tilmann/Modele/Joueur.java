@@ -43,7 +43,7 @@ public class Joueur
 		deplace(c, true);
 	}
 
-	public void deplace(Direction d) {
+	public void deplace(Direction d, boolean useAction) {
 		Case adjacente = getPosition().adjacente(d);
 
 		if(adjacente.getEtat() == Etat.SUBMERGEE && getRole() == Role.PLONGEUR)
@@ -51,9 +51,13 @@ public class Joueur
 			adjacente = adjacente.adjacente(d);
 
 			if(adjacente != null)
-				deplace(adjacente);
+				deplace(adjacente, useAction);
 		}
-		else deplace(adjacente);
+		else deplace(adjacente, useAction);
+	}
+
+	public void deplace(Direction d){
+		deplace(d, true);
 	}
 
 	public void asseche(Case c) {
