@@ -88,8 +88,6 @@ public class Joueur
 			{
 				dejaEuMDE = piocheCarte(monteeEaux, !dejaEuMDE);
 				i++;
-				//Pour débugger
-				System.out.println(modele.getPileCartes().getTresors().size());
 				if(i >= 2) cancel();
 			}
 		}, 500, 400);

@@ -1,6 +1,8 @@
 package fr.rui_tilmann.Vue;
 
+import fr.rui_tilmann.Controleur.ControleurCartes;
 import fr.rui_tilmann.Modele.Case;
+import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Modele.Plateau;
@@ -15,6 +17,9 @@ public class VuePlateau extends JPanel implements Observer
 	public final static int P = 80; // pixels par case
 	private final VueJoueurs vueJoueurs;
 	public Case hoveredCase;
+
+	// TODO le faire marcher plusieurs personne sur la même case
+	public int joueurTransporte = 0;
 
 	public VuePlateau(Modele modele, VueJoueurs vueJoueurs)
 	{
@@ -49,6 +54,13 @@ public class VuePlateau extends JPanel implements Observer
 		{
 			g.setColor(new Color(255, 255, 255, 100));
 			g.fillRect(x, y, P, P);
+		}
+
+		if(ControleurCartes.joueurEnfonce != null && ControleurCartes.carteEnfoncee != -1
+		&& ControleurCartes.joueurEnfonce.getCartes().get(ControleurCartes.carteEnfoncee) == Carte.HELICOPTERE)
+		{
+			g.setColor(new Color(100, 255, 100, 100));
+			g.fillOval(x, y, P, P);
 		}
 
 		vueJoueurs.draw(g, c);

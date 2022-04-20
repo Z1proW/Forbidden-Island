@@ -25,9 +25,6 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	public static Joueur clickedJoueur = null;
 	public int clickedCard = -1;
 
-	// TODO le faire marcher plusieurs personne sur la même case
-	private int joueur_transporte = 0;
-
 	public ControleurJoueur(Modele modele, VuePlateau vuePlateau)
 	{
 		this.modele = modele;
@@ -49,7 +46,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 				case HELICOPTERE:
 					if(c != joueur.getPosition()
 					&& c.getEtat() != Etat.SUBMERGEE) {
-						modele.getJoueurs().get(joueur_transporte).deplace(c, false);
+						modele.getJoueurs().get(vuePlateau.joueurTransporte).deplace(c, false);
 						joueur.defausseCarte(clickedCard);
 					}
 					break;
@@ -103,10 +100,10 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			case KeyEvent.VK_RIGHT: d = Direction.EST; 	 break;
 			case KeyEvent.VK_DOWN: 	d = Direction.SUD; 	 break;
 			case KeyEvent.VK_LEFT: 	d = Direction.OUEST; break;
-			//TODO trouver un meilleur moyen de déplacer la personne
+
 			case KeyEvent.VK_SPACE:
-				joueur_transporte = (joueur_transporte + 1) % 4;
-				System.out.println(joueur_transporte);
+				vuePlateau.joueurTransporte = (vuePlateau.joueurTransporte + 1) % 4;
+				System.out.println(vuePlateau.joueurTransporte);
 				break;
 		}
 

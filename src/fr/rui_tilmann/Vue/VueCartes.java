@@ -71,7 +71,7 @@ public class VueCartes extends JPanel implements Observer
 
 	private void paint(Graphics g, Carte carte, int x, int y)
 	{
-		if(ControleurCartes.pressedPlayer == modele.getJoueur(y) && ControleurCartes.pressedCard == x)
+		if(ControleurCartes.joueurEnfonce == modele.getJoueur(y) && ControleurCartes.carteEnfoncee == x)
 			g.drawImage(carte.getImage(), draggedX - WIDTH/2, draggedY - HEIGHT/2, null);
 		else if(hoveredJoueur == modele.getJoueur(y) && hoveredCard == x)
 			g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);

@@ -17,8 +17,8 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 	private VueCartes vueCartes;
 	private ControleurJoueur controleurJoueur;
 
-	public static int pressedCard = -1;
-	public static Joueur pressedPlayer = null;
+	public static int carteEnfoncee = -1;
+	public static Joueur joueurEnfonce = null;
 
 	public ControleurCartes(Modele modele, VueCartes vueCartes, ControleurJoueur controleurJoueur)
 	{
@@ -85,8 +85,8 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		|| j.getCartes().get(numCarte) == Carte.HELICOPTERE
 		|| j.getCartes().get(numCarte) == Carte.SAC_DE_SABLE) return;
 
-		pressedCard = numCarte;
-		pressedPlayer = j;
+		carteEnfoncee = numCarte;
+		joueurEnfonce = j;
 		mouseDragged(e);
 	}
 
@@ -95,13 +95,13 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		Joueur j = getJoueur(e);
 
 		if(j != null
-		&& pressedPlayer == modele.getCurrentJoueur()
-		&& pressedPlayer != j
-		&& (pressedPlayer.getPosition() == j.getPosition()
+		&& joueurEnfonce == modele.getCurrentJoueur()
+		&& joueurEnfonce != j
+		&& (joueurEnfonce.getPosition() == j.getPosition()
 		|| modele.getCurrentJoueur().getRole() == Role.MESSAGER))
-			pressedPlayer.donneCarte(pressedCard, j);
+			joueurEnfonce.donneCarte(carteEnfoncee, j);
 
-		pressedCard = -1;
+		carteEnfoncee = -1;
 	}
 
 	@Override
