@@ -52,7 +52,11 @@ public class Case
 			case OUEST: x--; break;
 			case EST: 	x++; break;
 		}
-		return modele.getPlateau().getCase(x, y);
+
+		if(0 <= x && x < Plateau.LENGTH
+		&& 0 <= y && y < Plateau.LENGTH)
+			return modele.getPlateau().getCase(x, y);
+		else return null;
 	}
 
 	public boolean estAdjacente(Case c, boolean diago)

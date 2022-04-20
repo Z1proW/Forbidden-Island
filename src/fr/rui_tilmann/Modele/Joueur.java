@@ -24,7 +24,7 @@ public class Joueur
 
 	public Case getPosition() {return position;}
 
-	public void deplace(Case c)
+	public void deplace(Case c, boolean useAction)
 	{
 		if(!modele.actionsRestantes()) return;
 
@@ -32,16 +32,15 @@ public class Joueur
 		&& c.getEtat() != Etat.SUBMERGEE)
 		{
 			position = c;
-			modele.useAction();
+			if(useAction)
+				modele.useAction();
 			modele.notifyObservers();
 		}
 	}
-	public void deplace(Case c, boolean b)
-	{
-		if(b)
-			position = c;
-		modele.notifyObservers();
 
+	public void deplace(Case c)
+	{
+		deplace(c, true);
 	}
 
 	public void deplace(Direction d) {
@@ -51,8 +50,7 @@ public class Joueur
 		{
 			adjacente = adjacente.adjacente(d);
 
-			if(0 <= adjacente.getX() && adjacente.getX() < Plateau.LENGTH
-			&& 0 <= adjacente.getY() && adjacente.getY() < Plateau.LENGTH)
+			if(adjacente != null)
 				deplace(adjacente);
 		}
 		else deplace(adjacente);
@@ -125,7 +123,7 @@ public class Joueur
 					cartes.remove(Carte.MONTEE_DES_EAUX);
 
 					cancel();
-				}}, 400);
+				}}, 500);
 			return true;
 		}
 		return false;

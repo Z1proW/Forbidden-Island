@@ -21,7 +21,6 @@ public class PileCartes {
 
 		cartesInondation = this.modele.getPlateau().getCartesCase();
 		Collections.shuffle(cartesInondation);
-		Collections.shuffle(tresors);
 	}
 
 	private void initTresors() {
@@ -63,7 +62,6 @@ public class PileCartes {
 				tresors.add(tresor);
 				tresor = tresors.remove(0);
 			}
-
 		}
 
 		if(tresors.isEmpty()) reset();

@@ -47,9 +47,9 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		if(0 <= clickedCard && clickedCard < joueur.getCartes().size()) {
 			switch(joueur.getCartes().get(clickedCard)) {
 				case HELICOPTERE:
-					if(c.getEtat() != Etat.SUBMERGEE)
-					{
-						modele.getJoueurs().get(joueur_transporte).deplace(c, true);
+					if(c != joueur.getPosition()
+					&& c.getEtat() != Etat.SUBMERGEE) {
+						modele.getJoueurs().get(joueur_transporte).deplace(c, false);
 						joueur.defausseCarte(clickedCard);
 					}
 					break;

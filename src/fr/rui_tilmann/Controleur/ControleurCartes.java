@@ -32,26 +32,24 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 	{
 		int numCarte = getNumCarte(e);
 		Joueur j = getJoueur(e);
-		if (j == null || numCarte == -1) return;
+		if(j == null || numCarte == -1) return;
 
 		if(e.getButton() == MouseEvent.BUTTON1) {
 			controleurJoueur.clickedCard = numCarte;
 			controleurJoueur.clickedJoueur = j;
 			vueCartes.repaint();
-		} else if (e.getButton() == MouseEvent.BUTTON3
-				&& j.getCartes().size() > 5) {
+		}
+		else if(e.getButton() == MouseEvent.BUTTON3
+		&& j.getCartes().size() > 5) {
 			j.defausseCarte(numCarte);
 			vueCartes.repaint();
 
-		}
-		if(e.getButton() == MouseEvent.BUTTON3) {
 			Joueur donneur = controleurJoueur.clickedJoueur;
-			if (donneur != j
-					&& (j.getPosition() == donneur.getPosition()
-					|| modele.getCurrentJoueur().getRole() == Role.MESSAGER)
-					&& controleurJoueur.clickedCard <= donneur.getCartes().size()) {
+			if(donneur != null && donneur != j
+			&& (j.getPosition() == donneur.getPosition()
+			|| modele.getCurrentJoueur().getRole() == Role.MESSAGER)
+			&& controleurJoueur.clickedCard <= donneur.getCartes().size()) {
 				donneur.donneCarte(controleurJoueur.clickedCard, j);
-				//Pour reset
 				controleurJoueur.clickedCard = -1;
 			}
 		}
@@ -98,7 +96,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		&& pressedPlayer == modele.getCurrentJoueur()
 		&& pressedPlayer != j
 		&& (pressedPlayer.getPosition() == j.getPosition()
-				|| modele.getCurrentJoueur().getRole() == Role.MESSAGER))
+		|| modele.getCurrentJoueur().getRole() == Role.MESSAGER))
 			pressedPlayer.donneCarte(pressedCard, j);
 
 		pressedCard = -1;
@@ -111,7 +109,10 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		Joueur j = getJoueur(e);
 		if(j == null || numCarte == -1) return;
 
-		if(modele.getCurrentJoueur() == j)
+		if(modele.getCurrentJoueur() == j
+		|| numCarte < j.getCartes().size()
+		&& (j.getCartes().get(numCarte) == Carte.HELICOPTERE
+		|| j.getCartes().get(numCarte) == Carte.SAC_DE_SABLE))
 		{
 			vueCartes.hoveredCard = numCarte;
 			vueCartes.hoveredJoueur = j;

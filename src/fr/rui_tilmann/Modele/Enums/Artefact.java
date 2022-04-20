@@ -2,6 +2,7 @@ package fr.rui_tilmann.Modele.Enums;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public enum Artefact
 {
@@ -21,11 +22,15 @@ public enum Artefact
 
 	public Image getImage()
 	{
-		return img.getImage();
+		Image img = this.img.getImage();
+		img.getScaledInstance(4*img.getHeight(null), 4*img.getHeight(null), Image.SCALE_DEFAULT);
+		return img;
 	}
 
 	public Image getContour()
 	{
-		return ctr.getImage();
+		Image img = ctr.getImage();
+		img.getScaledInstance(4*img.getHeight(null), 4*img.getHeight(null), Image.SCALE_DEFAULT);
+		return img;
 	}
 }
