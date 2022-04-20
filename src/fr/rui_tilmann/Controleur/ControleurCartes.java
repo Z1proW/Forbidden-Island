@@ -81,7 +81,9 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		int numCarte = getNumCarte(e);
 		Joueur j = getJoueur(e);
 		if(j == null || numCarte == -1
-		|| modele.getCurrentJoueur() != j) return;
+		|| modele.getCurrentJoueur() != j
+		|| j.getCartes().get(numCarte) == Carte.HELICOPTERE
+		|| j.getCartes().get(numCarte) == Carte.SAC_DE_SABLE) return;
 
 		pressedCard = numCarte;
 		pressedPlayer = j;

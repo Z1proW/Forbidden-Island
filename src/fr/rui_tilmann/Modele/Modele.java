@@ -29,14 +29,13 @@ public class Modele extends Observable
 		niveauEau = new NiveauEau(this, Difficulte.NOVICE);
 		pileCartes = new PileCartes(this);
 
-		joueurs.forEach(j -> j.piocheCartes(false));
+		distribueCartesJoueurs();
 		// test recup artefact
 		/*
 		joueurs.get(0).getCartes().clear();
 		for(int i = 0; i < 5; i++)
-			joueurs.get(0).getCartes().add(Carte.TERRE);
-		 */
-
+			joueurs.get(2).getCartes().add(Carte.TERRE);
+		*/
 	}
 
 	private void initJoueurs()
@@ -50,6 +49,20 @@ public class Modele extends Observable
 			joueurs.add(new Joueur(this, roles.get(i), plateau.caseAleatoire(Etat.SECHE, Etat.INONDEE)));
 			System.out.println(joueurs.get(i));
 		}
+	}
+
+	private void distribueCartesJoueurs()
+	{
+		new Timer().schedule(new TimerTask() {
+			int i = 0;
+
+			@Override
+			public void run() {
+				joueurs.get(i).piocheCartes(false);
+				i++;
+				if(i == 4) cancel();
+			}
+		}, 0, 100);
 	}
 
 	public Plateau getPlateau()
@@ -164,7 +177,7 @@ public class Modele extends Observable
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
-				if(joueur.getCartes().size() <= 5)
+				if(joueurs.stream().allMatch(j -> j.getCartes().size() <= 5))
 				{
 					idJoueur = (idJoueur + 1) % 4;
 					resetActions();

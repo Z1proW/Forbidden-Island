@@ -150,12 +150,13 @@ public class Joueur
 	}
 
 	public void donneCarte(int n, Joueur j) {
+		if(!modele.actionsRestantes()) return;
+
 		Carte carte = cartes.get(n);
 
 		if(carte.toArtefact() != null) {
 			j.getCartes().add(cartes.remove(n));
 			modele.useAction();
-			modele.notifyObservers();
 		}
 	}
 
