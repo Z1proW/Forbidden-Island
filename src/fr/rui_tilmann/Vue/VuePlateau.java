@@ -24,6 +24,7 @@ public class VuePlateau extends JPanel implements Observer
 	public boolean actionSpeNavigateur = false;
 	public boolean actionSpePilote = false;
 	public boolean actionUtilisePilote = false;
+	public boolean actionSpeIngenieur = false;
 	public int caseDeplace = 0;
 	public boolean actionSpePlongeur = false;
 

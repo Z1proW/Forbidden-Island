@@ -73,22 +73,39 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		}
 		if(nonCarteAction) {
 			boolean diago = modele.getCurrentJoueur().getRole() == Role.EXPLORATEUR;
-
-			if (c.estAdjacente(modele.getCurrentJoueur().getPosition(), diago)) {
-				if (e.getButton() == MouseEvent.BUTTON1)
-					modele.getCurrentJoueur().deplace(c);
-				else if (e.getButton() == MouseEvent.BUTTON3)
-					modele.getCurrentJoueur().asseche(c);
+			Joueur j = modele.getCurrentJoueur();
+			if (c.estAdjacente(j.getPosition(), diago)) {
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					if (j.getRole() == Role.INGENIEUR && vuePlateau.actionSpeIngenieur) {
+						vuePlateau.actionSpeIngenieur = false;
+						modele.useAction();
+						if (!modele.actionsRestantes()) return;
+					}
+					j.deplace(c);
+				}
+				else if (e.getButton() == MouseEvent.BUTTON3) {
+					if(j.getRole() == Role.INGENIEUR && !vuePlateau.actionSpeIngenieur) {
+						j.asseche(c, true);
+						vuePlateau.actionSpeIngenieur = true;
+					}else {
+						j.asseche(c);
+						vuePlateau.actionSpeIngenieur = false;
+					}
+				}
 			}
 
-			if (c == modele.getCurrentJoueur().getPosition()
+			if (c == j.getPosition()
 					&& e.getButton() == MouseEvent.BUTTON1) {
-				Joueur j = modele.getCurrentJoueur();
 				long occurences = j.getCartes().stream().filter(carte -> carte.toArtefact() == c.getType().toArtefact()).count();
 
 				if (occurences > 3)
 					for (Carte carte : j.getCartes())
 						if (carte.toArtefact() == c.getType().toArtefact()) {
+							if(j.getRole() == Role.INGENIEUR && vuePlateau.actionSpeIngenieur) {
+								vuePlateau.actionSpeIngenieur = false;
+								modele.useAction();
+								if(!modele.actionsRestantes())return;
+							}
 							modele.getCurrentJoueur().recupereArtefact(carte);
 							break;
 						}
@@ -120,6 +137,11 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		}
 
 		//TODO à gerer les cas out of bounds afin qu'il utilise pas d'action
+		if (modele.getCurrentJoueur().getRole() == Role.INGENIEUR && vuePlateau.actionSpeIngenieur) {
+			vuePlateau.actionSpeIngenieur = false;
+			modele.useAction();
+			if (!modele.actionsRestantes()) return;
+		}
 		if(modele.getCurrentJoueur().getRole() == Role.NAVIGATEUR
 				&& d != Direction.AUCUNE
 				&& vuePlateau.actionSpeNavigateur){
