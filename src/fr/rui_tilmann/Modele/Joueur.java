@@ -92,9 +92,9 @@ public class Joueur
 				i++;
 				//Pour débugger
 				System.out.println(modele.getPileCartes().getTresors().size());
-				if(i >= 5) cancel();
+				if(i >= 2) cancel();
 			}
-		}, 800, 400);
+		}, 500, 400);
 	}
 
 	public void piocheCartes()

@@ -1,6 +1,7 @@
 package fr.rui_tilmann.Controleur;
 
 import fr.rui_tilmann.Modele.Enums.Carte;
+import fr.rui_tilmann.Modele.Enums.Role;
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VueCartes;
@@ -46,7 +47,8 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		if(e.getButton() == MouseEvent.BUTTON3) {
 			Joueur donneur = controleurJoueur.clickedJoueur;
 			if (donneur != j
-					&& j.getPosition() == donneur.getPosition()
+					&& (j.getPosition() == donneur.getPosition()
+					|| modele.getCurrentJoueur().getRole() == Role.MESSAGER)
 					&& controleurJoueur.clickedCard <= donneur.getCartes().size()) {
 				donneur.donneCarte(controleurJoueur.clickedCard, j);
 				//Pour reset
@@ -95,7 +97,8 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		if(j != null
 		&& pressedPlayer == modele.getCurrentJoueur()
 		&& pressedPlayer != j
-		&& pressedPlayer.getPosition() == j.getPosition())
+		&& (pressedPlayer.getPosition() == j.getPosition()
+				|| modele.getCurrentJoueur().getRole() == Role.MESSAGER))
 			pressedPlayer.donneCarte(pressedCard, j);
 
 		pressedCard = -1;
