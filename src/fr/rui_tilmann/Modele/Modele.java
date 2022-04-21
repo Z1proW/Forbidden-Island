@@ -1,6 +1,5 @@
 package fr.rui_tilmann.Modele;
 
-import fr.rui_tilmann.Controleur.ControleurJoueur;
 import fr.rui_tilmann.Modele.Enums.*;
 import fr.rui_tilmann.Vue.Observable;
 
@@ -14,6 +13,8 @@ public class Modele extends Observable
 	private final NiveauEau niveauEau;
 	private final PileCartes pileCartes;
 
+	public static int NOMBRE_JOUEURS;
+
 	private GameState state = GameState.EN_JEU;
 
 	private int idJoueur = 0;
@@ -24,13 +25,15 @@ public class Modele extends Observable
 	public boolean actionUtiliseePilote = false;
 	public boolean actionSpeIngenieur = false;
 
-	public Modele()
+	public Modele(Difficulte difficulte, int nbJoueurs)
 	{
+		NOMBRE_JOUEURS = nbJoueurs;
+
 		plateau = new Plateau(this);
 
 		initJoueurs();
 
-		niveauEau = new NiveauEau(this, Difficulte.NOVICE);
+		niveauEau = new NiveauEau(this, difficulte);
 		pileCartes = new PileCartes(this);
 
 		distribueCartesJoueurs();
@@ -48,7 +51,7 @@ public class Modele extends Observable
 		List<Role> roles = Arrays.asList(Role.values());
 		Collections.shuffle(roles);
 
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < NOMBRE_JOUEURS; i++)
 		{
 			joueurs.add(new Joueur(this, roles.get(i), plateau.caseAleatoire(Etat.SECHE, Etat.INONDEE)));
 			System.out.println(joueurs.get(i));
@@ -64,7 +67,7 @@ public class Modele extends Observable
 			public void run() {
 				joueurs.get(i).piocheCartes(false);
 				i++;
-				if(i == 4) cancel();
+				if(i == NOMBRE_JOUEURS) cancel();
 			}
 		}, 0, 100);
 	}
@@ -121,9 +124,6 @@ public class Modele extends Observable
 		if(niveauEau.getNombreCartes() == -1)
 			state = GameState.NIVEAU_EAU_TROP_HAUT;
 
-	}
-	public void setDifficulte(Difficulte difficulte){
-		niveauEau.setNiveauEau(difficulte);
 	}
 
 	public void inonderCases()

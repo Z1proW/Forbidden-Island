@@ -1,18 +1,98 @@
 package fr.rui_tilmann.Vue;
 
 import fr.rui_tilmann.Controleur.ControleurCartes;
-import fr.rui_tilmann.Controleur.ControleurJoueur;
 import fr.rui_tilmann.Controleur.ControleurFenetre;
+import fr.rui_tilmann.Controleur.ControleurJoueur;
+import fr.rui_tilmann.Modele.Enums.Difficulte;
 import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Hashtable;
 
 public class Vue
 {
 
-	public Vue(Modele modele)
+	private Difficulte difficulte = Difficulte.NOVICE;
+	private int nbJoueurs = 4;
+
+	String sDif = "Difficulté: ";
+	String sJrs = "Joueurs: ";
+
+	public Vue()
+	{
+		JFrame f = new JFrame("L'île Interdite");
+		f.setResizable(false);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+		MainMenu mainMenu = new MainMenu();
+		f.setContentPane(mainMenu);
+
+		Dimension buttonDim = new Dimension(200, 50);
+
+		JButton boutonJouer = new JButton("Jouer");
+		boutonJouer.setSize(buttonDim);
+		boutonJouer.setLocation(500, 100);
+		boutonJouer.addActionListener(e -> {
+			f.dispose();
+			newGameFrame(new Modele(difficulte, nbJoueurs));
+		});
+		f.add(boutonJouer);
+
+		JButton boutonDifficulte = new JButton(sDif + difficulte.toString());
+		boutonDifficulte.setSize(buttonDim);
+		boutonDifficulte.setLocation(500, 200);
+		boutonDifficulte.addActionListener(e -> {
+			Difficulte[] values = Difficulte.values();
+			difficulte = values[(difficulte.ordinal() + 1) % values.length];
+			boutonDifficulte.setText(sDif + difficulte.toString());
+		});
+		f.add(boutonDifficulte);
+
+		JSlider sliderDifficulte = new JSlider(0, Difficulte.values().length - 1, difficulte.ordinal());
+		sliderDifficulte.setSize(buttonDim);
+		sliderDifficulte.setLocation(500, 168);
+		sliderDifficulte.setBackground(new Color(0, 0, 0, 0));
+		sliderDifficulte.addChangeListener(e -> {
+			difficulte = Difficulte.values()[sliderDifficulte.getValue()];
+			boutonDifficulte.setText(sDif + difficulte.toString());
+		});
+		f.add(sliderDifficulte);
+
+		JButton boutonJoueurs = new JButton("Joueurs: " + nbJoueurs);
+		boutonJoueurs.setSize(buttonDim);
+		boutonJoueurs.setLocation(500, 300);
+		boutonJoueurs.addActionListener(e -> {
+			nbJoueurs = nbJoueurs % 3 + 2;
+			boutonJoueurs.setText(sJrs + nbJoueurs);
+		});
+		f.add(boutonJoueurs);
+
+		JSlider sliderJoueurs = new JSlider(2, 4, nbJoueurs);
+		sliderJoueurs.setSize(buttonDim);
+		sliderJoueurs.setLocation(500, 268);
+		sliderJoueurs.setBackground(new Color(0, 0, 0, 0));
+		sliderJoueurs.addChangeListener(e -> {
+			nbJoueurs = sliderJoueurs.getValue();
+			boutonJoueurs.setText(sJrs + nbJoueurs);
+		});
+		f.add(sliderJoueurs);
+
+		JButton boutonQuitter = new JButton("Quitter");
+		boutonQuitter.setSize(buttonDim);
+		boutonQuitter.setLocation(500, 400);
+		boutonQuitter.addActionListener(e -> System.exit(0));
+		f.add(boutonQuitter);
+
+		f.setLayout(new BorderLayout());
+		f.pack();
+		f.setLocationRelativeTo(null);
+		f.setVisible(true);
+	}
+
+	private void newGameFrame(Modele modele)
 	{
 		JFrame f = new JFrame();
 		f.setLayout(new BorderLayout());
@@ -53,78 +133,12 @@ public class Vue
 
 		f.add(eastPanel, BorderLayout.EAST);
 
-		f.setTitle("Jeu de l'île Interdite");
 		f.setResizable(false);
 		f.pack();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setLocationRelativeTo(null);
 		f.setShape(new RoundRectangle2D.Double(0, 0, f.getWidth(), f.getHeight(), 20, 20));
-		f.setVisible(false); // TODO
-
-		JFrame M = new JFrame("ILE INTERDITE");
-		MainMenu mainMenu = new MainMenu(modele);;
-		JButton play = new JButton("Play");
-		JButton difficulte = new JButton("Difficulte:NOVICE");
-		JButton nbJoueur = new JButton("Nombre de joueur:4");
-		JButton Exit = new JButton("Exit");
-		M.setContentPane(mainMenu);
-		play.setSize(200,50);
-		difficulte.setSize(200,50);
-		nbJoueur.setSize(200,50);
-		Exit.setSize(200,50);
-		play.setLocation(500,100);
-		difficulte.setLocation(500,200);
-		nbJoueur.setLocation(500,300);
-		Exit.setLocation(500,400);
-
-		play.addActionListener(e -> {
-				M.setVisible(false);
-				f.setVisible(true);
-
-			});
-		difficulte.addActionListener(e -> {
-			switch (((JButton) e.getSource()).getText()){
-				case "Difficulte:NOVICE":
-					modele.setDifficulte(Difficulte.NORMAL);
-					difficulte.setText("Difficulte:NORMAL");
-					break;
-				case "Difficulte:NORMAL":
-					modele.setDifficulte(Difficulte.ELITE);
-					difficulte.setText("Difficulte:ELITE");
-					break;
-				case "Difficulte:ELITE":
-					modele.setDifficulte(Difficulte.LEGENDAIRE);
-					difficulte.setText("Difficulte:LEGENDAIRE");
-					break;
-				case "Difficulte:LEGENDAIRE":
-					modele.setDifficulte(Difficulte.NOVICE);
-					difficulte.setText("Difficulte:NOVICE");
-					break;
-			}
-		});
-		nbJoueur.addActionListener(e -> {
-			switch (((JButton) e.getSource()).getText()){
-				case "Nombre de joueur:2":
-					nbJoueur.setText("Nombre de joueur:3");break;
-				case "Nombre de joueur:3":
-					nbJoueur.setText("Nombre de joueur:4");break;
-				case "Nombre de joueur:4":
-					nbJoueur.setText("Nombre de joueur:2");break;
-
-			}
-		});
-		Exit.addActionListener(e -> System.exit(0));
-
-		M.add(play);
-		M.add(difficulte);
-		M.add(nbJoueur);
-		M.add(Exit);
-		M.setLayout(new BorderLayout(3,1));
-		M.setVisible(true);
-		M.pack();
-		M.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		M.setSize(1200,580);
-
+		f.setVisible(true);
 	}
 
 }

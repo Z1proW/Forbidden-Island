@@ -1,40 +1,24 @@
 package fr.rui_tilmann.Vue;
 
-import fr.rui_tilmann.Modele.Modele;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainMenu extends JPanel implements Observer
+public class MainMenu extends JPanel
 {
-    private Modele modele;
-    private ImageIcon img = new ImageIcon("src/fr/rui_tilmann/images/MainMenu/BackGround MainMenu.png" );
+    private ImageIcon bg = new ImageIcon("src/fr/rui_tilmann/images/menu/background.png");
 
-    public MainMenu(Modele modele){
-        this.modele = modele;
-        //this.setPreferredSize(new Dimension(400,1200));
-        modele.addObserver(this);
+    public MainMenu()
+    {
+        setPreferredSize(new Dimension(bg.getIconWidth(), bg.getIconHeight()));
     }
 
     @Override
-    public void update() {
-        repaint();
-    }
-
-    public void init(){
-
-    }
-
-    @Override
-    public void paintComponents(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.repaint();
-        paint(g);
-    }
-    public void paint(Graphics g){
-        Image image = img.getImage();
-        g.drawImage(image,0,0,null);
-        g.setColor(new Color(128,128,128));
-        g.setFont(new Font("SANS_SERIF",0, 30));
-        g.drawString("Ile interdite Premium delux", 400, 60);
-    }
 
+        g.drawImage(bg.getImage(),0,0,null);
+        g.setColor(new Color(255,200,100));
+        g.setFont(new Font("SegoeUI", Font.BOLD, 50));
+        g.drawString("L'ILE INTERDITE", getWidth()/2 - 200, 60);
+    }
 }

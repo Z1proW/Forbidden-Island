@@ -12,8 +12,7 @@ public class Main
     {
         EventQueue.invokeLater(() ->
         {
-            Modele modele = new Modele();
-            new Vue(modele);
+            new Vue();
         });
     }
 

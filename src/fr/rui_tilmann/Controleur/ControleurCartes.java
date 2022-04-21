@@ -148,7 +148,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 	private Joueur getJoueur(MouseEvent e)
 	{
 		int numJoueur = (e.getY() - vueCartes.getY())/VueCartes.HEIGHT;
-		return 0 <= numJoueur && numJoueur < 4 ? modele.getJoueur(numJoueur) : null;
+		return 0 <= numJoueur && numJoueur < Modele.NOMBRE_JOUEURS ? modele.getJoueur(numJoueur) : null;
 	}
 
 	public void mouseEntered(MouseEvent e) {}

@@ -38,9 +38,6 @@ public class NiveauEau {
             }
         }, 0, 50);
     }
-    public void setNiveauEau(Difficulte difficulte){
-        niveau = difficulte.ordinal();
-    }
 
     public float getNiveau() {return this.niveau;}
 
