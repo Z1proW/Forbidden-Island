@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class MainMenu extends JPanel
 {
-    private ImageIcon bg = new ImageIcon("src/fr/rui_tilmann/images/menu/background.png");
+    private final ImageIcon bg = new ImageIcon("src/fr/rui_tilmann/images/menu/background.png");
 
     public MainMenu()
     {

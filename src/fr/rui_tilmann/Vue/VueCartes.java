@@ -27,7 +27,7 @@ public class VueCartes extends JPanel implements Observer
 		this.modele = modele;
 		modele.addObserver(this);
 
-		this.setPreferredSize(new Dimension(Carte.MAX*WIDTH, 4*HEIGHT));
+		this.setPreferredSize(new Dimension(Carte.MAX*WIDTH, Modele.NOMBRE_JOUEURS*HEIGHT));
 	}
 
 	@Override

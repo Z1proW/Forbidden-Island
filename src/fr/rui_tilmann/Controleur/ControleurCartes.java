@@ -2,6 +2,7 @@ package fr.rui_tilmann.Controleur;
 
 import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Enums.Role;
+import fr.rui_tilmann.Modele.Enums.Son;
 import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VueCartes;
@@ -13,9 +14,9 @@ import java.awt.event.MouseMotionListener;
 public class ControleurCartes implements MouseMotionListener, MouseListener
 {
 
-	private Modele modele;
-	private VueCartes vueCartes;
-	private ControleurJoueur controleurJoueur;
+	private final Modele modele;
+	private final VueCartes vueCartes;
+	private final ControleurJoueur controleurJoueur;
 
 	public static int carteEnfoncee = -1;
 	public static Joueur joueurEnfonce = null;

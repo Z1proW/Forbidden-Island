@@ -32,7 +32,7 @@ public class Joueur
 
 	public int getId()
 	{
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < Modele.NOMBRE_JOUEURS; i++)
 			if(modele.getJoueur(i) == this)
 				return i;
 		return -1;
@@ -115,10 +115,10 @@ public class Joueur
 
 	private boolean piocheCarte(boolean monteeEaux, boolean melanger)
 	{
-		//if(cartes.size() >= 5) return;
-
 		Carte carte = modele.getPileCartes().getTresor(monteeEaux);
 		cartes.add(carte);
+
+		if(monteeEaux) Son.CARTE.jouerSon();
 
 		if(carte == Carte.MONTEE_DES_EAUX)
 		{

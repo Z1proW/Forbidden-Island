@@ -2,6 +2,7 @@ package fr.rui_tilmann.Modele;
 
 import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Enums.Difficulte;
+import fr.rui_tilmann.Modele.Enums.Son;
 
 import javax.sound.sampled.*;
 import java.io.File;
@@ -21,7 +22,7 @@ public class NiveauEau {
 
     public void monteeEau()
     {
-        jouerSon();
+        Son.EAU.jouerSon();
 
         new Timer().schedule(new TimerTask()
         {
@@ -48,18 +49,6 @@ public class NiveauEau {
         if(niveau < 7) return 4;
         if(niveau < 9) return 5;
         return -1;
-    }
-
-    private void jouerSon()
-    {
-        try
-        {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(new File("src/fr/rui_tilmann/audio/water.wav")));
-            clip.start();
-        }
-        catch(Exception e) {e.getMessage();}
-
     }
 
 }

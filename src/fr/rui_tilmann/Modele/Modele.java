@@ -214,7 +214,7 @@ public class Modele extends Observable
 					actionUtiliseePilote = false;
 					actionSpeIngenieur = false;
 
-					idJoueur = (idJoueur + 1) % 4;
+					idJoueur = (idJoueur + 1) % NOMBRE_JOUEURS;
 					resetActions();
 					inonderCases();
 					cancel();

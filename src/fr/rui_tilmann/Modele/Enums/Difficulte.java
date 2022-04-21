@@ -5,5 +5,5 @@ public enum Difficulte {
     NOVICE,
     NORMAL,
     ELITE,
-    LEGENDAIRE;
+    LEGENDAIRE
 }

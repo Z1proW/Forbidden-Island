@@ -2,7 +2,6 @@ package fr.rui_tilmann.Modele.Enums;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public enum Artefact
 {

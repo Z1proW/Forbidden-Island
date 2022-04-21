@@ -10,5 +10,5 @@ public enum Direction
 	SUD_OUEST,
 	OUEST,
 	NORD_OUEST,
-	AUCUNE;
+	AUCUNE
 }

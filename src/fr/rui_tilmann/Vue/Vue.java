@@ -9,7 +9,6 @@ import fr.rui_tilmann.Modele.Modele;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
-import java.util.Hashtable;
 
 public class Vue
 {
@@ -129,7 +128,8 @@ public class Vue
 		eastPanel.addMouseMotionListener(controleurCartes);
 
 		VueArtefact vueArtefact = new VueArtefact(modele);
-		eastPanel.add(vueArtefact, BorderLayout.SOUTH);
+		eastPanel.add(vueArtefact
+		);
 
 		f.add(eastPanel, BorderLayout.EAST);
 
