@@ -118,6 +118,9 @@ public class Modele extends Observable
 			state = GameState.NIVEAU_EAU_TROP_HAUT;
 
 	}
+	public void setDifficulte(Difficulte difficulte){
+		niveauEau.setNiveauEau(difficulte);
+	}
 
 	public void inonderCases()
 	{

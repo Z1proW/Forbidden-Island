@@ -64,7 +64,9 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 			}
 		}
-		if(vuePlateau.actionSpePilote && !vuePlateau.actionUtilisePilote && c.getEtat() != Etat.SUBMERGEE)
+		if(vuePlateau.actionSpePilote && !vuePlateau.actionUtilisePilote
+				&& c.getEtat() != Etat.SUBMERGEE
+				&& modele.getCurrentJoueur().getRole() == Role.PILOTE)
 		{
 			modele.getCurrentJoueur().deplace(c);
 			vuePlateau.actionUtilisePilote = true;
