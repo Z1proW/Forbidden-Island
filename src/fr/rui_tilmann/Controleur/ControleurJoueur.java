@@ -25,9 +25,12 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	public Joueur clickedJoueur = null;
 	public int clickedCard = -1;
 
-	public Case caseHelico;
+	private Case caseHelico = null;
 
-	private boolean actionUtilisePilote = false;
+	private boolean actionSpeNavigateur = false;
+	private boolean actionSpePlongeur = false;
+
+	private int caseDeplace = 0;
 
 	public ControleurJoueur(Modele modele, VuePlateau vuePlateau)
 	{
@@ -41,12 +44,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		Case c = getCase(e);
 		if(c == null) return;
 
-		boolean nonCarteAction = false;
-
 		Joueur joueur = clickedJoueur;
-
-		if(modele.getCurrentJoueur().getRole() != Role.PILOTE)
-			actionUtilisePilote = false;
 
 		if(e.getButton() == MouseEvent.BUTTON3)
 			caseHelico = c;
@@ -57,7 +55,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			switch(joueur.getCartes().get(clickedCard))
 			{
 				case HELICOPTERE:
-					if(c != joueur.getPosition()
+					if(c != caseHelico
 					&& c.getEtat() != Etat.SUBMERGEE)
 					{
 						if(caseHelico == null)
@@ -65,6 +63,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 						caseHelico.getJoueurs().forEach(j -> j.deplace(c, false));
 						joueur.defausseCarte(clickedCard);
+						caseHelico = null;
 					}
 					break;
 
@@ -75,62 +74,59 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 						joueur.defausseCarte(clickedCard);
 					}
 					break;
-
-				default: nonCarteAction = true;
-
 			}
+			return;
 		}
 
-		if(!actionUtilisePilote
+		if(modele.getCurrentJoueur().getRole() == Role.PILOTE
+		&& !modele.actionUtiliseePilote
 		&& e.getButton() == MouseEvent.BUTTON1)
 		{
 			modele.getCurrentJoueur().deplace(c);
-			actionUtilisePilote = true;
+			modele.actionUtiliseePilote = true;
+			return;
 		}
-		else nonCarteAction = true;
 
-		if(nonCarteAction) {
-			boolean diago = modele.getCurrentJoueur().getRole() == Role.EXPLORATEUR;
-			Joueur j = modele.getCurrentJoueur();
+		boolean diago = modele.getCurrentJoueur().getRole() == Role.EXPLORATEUR;
+		Joueur j = modele.getCurrentJoueur();
 
-			if(c.estAdjacente(j.getPosition(), diago)) {
-				switch (e.getButton())
-				{
-					case 1: // gauche
-						if(j.getRole() == Role.INGENIEUR && vuePlateau.actionSpeIngenieur) {
-							vuePlateau.actionSpeIngenieur = false;
+		if(c.estAdjacente(j.getPosition(), diago)) {
+			switch (e.getButton())
+			{
+				case 1: // gauche
+					if(j.getRole() == Role.INGENIEUR && modele.actionSpeIngenieur) {
+						modele.actionSpeIngenieur = false;
+						modele.useAction();
+						if(!modele.actionsRestantes()) return;
+					}
+					j.deplace(c);
+					break;
+
+				case 3: // droit
+					if(j.getRole() == Role.INGENIEUR && !modele.actionSpeIngenieur) {
+						j.asseche(c, true);
+						modele.actionSpeIngenieur = true;
+					} else {
+						j.asseche(c);
+						modele.actionSpeIngenieur = false;
+					}
+			}
+		}
+
+		if(c == j.getPosition() && e.getButton() == MouseEvent.BUTTON1) {
+			long occurences = j.getCartes().stream().filter(carte -> carte.toArtefact() == c.getType().toArtefact()).count();
+
+			if(occurences > 3)
+				for(Carte carte : j.getCartes())
+					if(carte.toArtefact() == c.getType().toArtefact()) {
+						if(j.getRole() == Role.INGENIEUR && modele.actionSpeIngenieur) {
+							modele.actionSpeIngenieur = false;
 							modele.useAction();
-							if (!modele.actionsRestantes()) return;
+							if(!modele.actionsRestantes())return;
 						}
-						j.deplace(c);
+						modele.getCurrentJoueur().recupereArtefact(carte);
 						break;
-
-					case 3: // droit
-						if(j.getRole() == Role.INGENIEUR && !vuePlateau.actionSpeIngenieur) {
-							j.asseche(c, true);
-							vuePlateau.actionSpeIngenieur = true;
-						} else {
-							j.asseche(c);
-							vuePlateau.actionSpeIngenieur = false;
-						}
-				}
-			}
-
-			if(c == j.getPosition() && e.getButton() == MouseEvent.BUTTON1) {
-				long occurences = j.getCartes().stream().filter(carte -> carte.toArtefact() == c.getType().toArtefact()).count();
-
-				if(occurences > 3)
-					for(Carte carte : j.getCartes())
-						if(carte.toArtefact() == c.getType().toArtefact()) {
-							if(j.getRole() == Role.INGENIEUR && vuePlateau.actionSpeIngenieur) {
-								vuePlateau.actionSpeIngenieur = false;
-								modele.useAction();
-								if(!modele.actionsRestantes())return;
-							}
-							modele.getCurrentJoueur().recupereArtefact(carte);
-							break;
-						}
-			}
+					}
 		}
 
 	}
@@ -148,31 +144,31 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			case KeyEvent.VK_DOWN: 	d = Direction.SUD; 	 break;
 			case KeyEvent.VK_LEFT: 	d = Direction.OUEST; break;
 
-			//TODO trouver d'autre moyen pour changer
+			// TODO trouver d'autre moyen pour changer
 			case KeyEvent.VK_N:
-				vuePlateau.actionSpeNavigateur = !vuePlateau.actionSpeNavigateur;
+				actionSpeNavigateur = !actionSpeNavigateur;
 				break;
 
 			case KeyEvent.VK_M:
-				vuePlateau.caseDeplace = (vuePlateau.caseDeplace + 1) % 2;
+				caseDeplace = (caseDeplace + 1) % 2;
 				break;
 		}
 
-		//TODO à gerer les cas out of bounds afin qu'il utilise pas d'action
-		if(modele.getCurrentJoueur().getRole() == Role.INGENIEUR && vuePlateau.actionSpeIngenieur) {
-			vuePlateau.actionSpeIngenieur = false;
+		// TODO à gerer les cas out of bounds afin qu'il utilise pas d'action
+		if(modele.getCurrentJoueur().getRole() == Role.INGENIEUR && modele.actionSpeIngenieur) {
+			modele.actionSpeIngenieur = false;
 			modele.useAction();
 			if(!modele.actionsRestantes()) return;
 		}
 
 		if(modele.getCurrentJoueur().getRole() == Role.NAVIGATEUR
 		&& d != Direction.AUCUNE
-		&& vuePlateau.actionSpeNavigateur) {
+		&& actionSpeNavigateur) {
 
-			//for(int i = 0; i <= vuePlateau.caseDeplace; i++)
-			//	modele.getJoueur(vuePlateau.joueurTransporte).deplace(d, vuePlateau.actionSpeNavigateur);
+			for(int i = 0; i <= caseDeplace; i++)
+				clickedJoueur.deplace(d, actionSpeNavigateur);
 
-			//vuePlateau.actionSpeNavigateur = false;
+			actionSpeNavigateur = false;
 		}
 		else modele.getCurrentJoueur().deplace(d);
 	}

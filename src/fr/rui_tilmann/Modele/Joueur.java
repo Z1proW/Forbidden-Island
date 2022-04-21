@@ -32,23 +32,20 @@ public class Joueur
 
 	public int getId()
 	{
-		System.out.println(this);
 		for(int i = 0; i < 4; i++)
-			if(modele.getJoueur(i) == this){
-				System.out.println(i);return i;}
+			if(modele.getJoueur(i) == this)
+				return i;
 		return -1;
 	}
 
 	public void deplace(Case c, boolean useAction)
 	{
-		if(!modele.actionsRestantes()) return;
-
-		if(c != position
+		if(modele.actionsRestantes()
+		&& c != position
 		&& c.getEtat() != Etat.SUBMERGEE)
 		{
 			position = c;
-			if(useAction)
-				modele.useAction();
+			if(useAction) modele.useAction();
 			modele.notifyObservers();
 		}
 	}
@@ -76,9 +73,8 @@ public class Joueur
 	}
 
 	public void asseche(Case c) {
-		if(!modele.actionsRestantes()) return;
-
-		if(c.getEtat() == Etat.INONDEE) {
+		if(modele.actionsRestantes()
+		&& c.getEtat() == Etat.INONDEE) {
 			c.setEtat(Etat.SECHE);
 			modele.useAction();
 			modele.notifyObservers();

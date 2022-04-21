@@ -1,5 +1,6 @@
 package fr.rui_tilmann.Modele;
 
+import fr.rui_tilmann.Controleur.ControleurJoueur;
 import fr.rui_tilmann.Modele.Enums.*;
 import fr.rui_tilmann.Vue.Observable;
 
@@ -19,6 +20,9 @@ public class Modele extends Observable
 	private int nbActions = 3;
 
 	private final HashMap<Artefact, Boolean> tresorPris = new HashMap<>(4);
+
+	public boolean actionUtiliseePilote = false;
+	public boolean actionSpeIngenieur = false;
 
 	public Modele()
 	{
@@ -207,6 +211,9 @@ public class Modele extends Observable
 			public void run() {
 				if(joueurs.stream().allMatch(j -> j.getCartes().size() <= 5))
 				{
+					actionUtiliseePilote = false;
+					actionSpeIngenieur = false;
+
 					idJoueur = (idJoueur + 1) % 4;
 					resetActions();
 					inonderCases();

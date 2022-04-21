@@ -18,12 +18,6 @@ public class VuePlateau extends JPanel implements Observer
 	private final VueJoueurs vueJoueurs;
 	public Case hoveredCase;
 
-	//TODO pour les actions spéciale peut mieux faire je pense
-	public boolean actionSpeNavigateur = false;
-	public boolean actionSpeIngenieur = false;
-	public int caseDeplace = 0;
-	public boolean actionSpePlongeur = false;
-
 	public VuePlateau(Modele modele, VueJoueurs vueJoueurs)
 	{
 		this.modele = modele;
