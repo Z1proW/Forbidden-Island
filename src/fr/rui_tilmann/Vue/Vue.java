@@ -128,8 +128,7 @@ public class Vue
 		eastPanel.addMouseMotionListener(controleurCartes);
 
 		VueArtefact vueArtefact = new VueArtefact(modele);
-		eastPanel.add(vueArtefact
-		);
+		eastPanel.add(vueArtefact);
 
 		f.add(eastPanel, BorderLayout.EAST);
 

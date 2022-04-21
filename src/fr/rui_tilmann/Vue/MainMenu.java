@@ -2,6 +2,7 @@ package fr.rui_tilmann.Vue;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Locale;
 
 public class MainMenu extends JPanel
 {
@@ -17,8 +18,14 @@ public class MainMenu extends JPanel
         super.repaint();
 
         g.drawImage(bg.getImage(),0,0,null);
+
+        g.setFont(new Font("", Font.BOLD, 50));
+
+        // ombre
+        g.setColor(Color.BLACK);
+        g.drawString("L'île interdite".toUpperCase(), getWidth()/2 - 200 + 5, 60 + 5);
+
         g.setColor(new Color(255,200,100));
-        g.setFont(new Font("SegoeUI", Font.BOLD, 50));
-        g.drawString("L'ILE INTERDITE", getWidth()/2 - 200, 60);
+        g.drawString("L'île interdite".toUpperCase(), getWidth()/2 - 200, 60);
     }
 }
