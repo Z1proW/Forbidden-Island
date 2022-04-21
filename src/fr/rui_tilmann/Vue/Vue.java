@@ -3,13 +3,10 @@ package fr.rui_tilmann.Vue;
 import fr.rui_tilmann.Controleur.ControleurCartes;
 import fr.rui_tilmann.Controleur.ControleurJoueur;
 import fr.rui_tilmann.Controleur.ControleurFenetre;
-import fr.rui_tilmann.Modele.Enums.Difficulte;
 import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 
 public class Vue
@@ -20,7 +17,8 @@ public class Vue
 		JFrame f = new JFrame();
 		f.setLayout(new BorderLayout());
 		f.setUndecorated(true);
-		f.setBackground(new Color(255, 255, 255, 100));
+		f.setBackground(new Color(0, 0, 0, 100));
+
 		TitleBar titleBar = new TitleBar();
 		f.add(titleBar, BorderLayout.NORTH);
 		ControleurFenetre c = new ControleurFenetre(f, titleBar);
@@ -61,7 +59,8 @@ public class Vue
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setLocationRelativeTo(null);
 		f.setShape(new RoundRectangle2D.Double(0, 0, f.getWidth(), f.getHeight(), 20, 20));
-		f.setVisible(false);
+		f.setVisible(false); // TODO
+
 		JFrame M = new JFrame("ILE INTERDITE");
 		MainMenu mainMenu = new MainMenu(modele);;
 		JButton play = new JButton("Play");

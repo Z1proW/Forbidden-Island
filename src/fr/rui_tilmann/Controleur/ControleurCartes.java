@@ -6,7 +6,6 @@ import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VueCartes;
 
-
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -35,27 +34,22 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		Joueur j = getJoueur(e);
 		if(j == null || numCarte == -1) return;
 
-		if(e.getButton() == MouseEvent.BUTTON1) {
-			controleurJoueur.clickedCard = numCarte;
-			controleurJoueur.clickedJoueur = j;
-			vueCartes.repaint();
-		}
-		else if(e.getButton() == MouseEvent.BUTTON3
-		&& j.getCartes().size() > 5) {
-			j.defausseCarte(numCarte);
-			vueCartes.repaint();
+		switch(e.getButton())
+		{
+			case MouseEvent.BUTTON1:
+				controleurJoueur.clickedCard = numCarte;
+				controleurJoueur.clickedJoueur = j;
+				vueCartes.repaint();
+				break;
 
+			case MouseEvent.BUTTON3:
+				if(j.getCartes().size() > 5)
+				{
+					j.defausseCarte(numCarte);
+					vueCartes.repaint();
+				}
+				break;
 		}
-		Joueur donneur = controleurJoueur.clickedJoueur;
-		if(donneur != null && donneur != j && e.getButton() == MouseEvent.BUTTON3
-				&& (j.getPosition() == donneur.getPosition()
-				|| modele.getCurrentJoueur().getRole() == Role.MESSAGER)
-				&& controleurJoueur.clickedCard <= donneur.getCartes().size()
-				) {
-			donneur.donneCarte(controleurJoueur.clickedCard, j);
-			controleurJoueur.clickedCard = -1;
-		}
-
 
 		if(numCarte < 5)
 		{
@@ -83,13 +77,17 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 		int numCarte = getNumCarte(e);
 		Joueur j = getJoueur(e);
 		if(j == null || numCarte == -1
+		|| numCarte >= j.getCartes().size()
 		|| modele.getCurrentJoueur() != j
-		|| e.getButton() == MouseEvent.BUTTON3
+		|| e.getButton() != MouseEvent.BUTTON1
 		|| j.getCartes().get(numCarte) == Carte.HELICOPTERE
-		|| j.getCartes().get(numCarte) == Carte.SAC_DE_SABLE) return;
+		|| j.getCartes().get(numCarte) == Carte.SAC_DE_SABLE)
+			return;
 
 		carteEnfoncee = numCarte;
 		joueurEnfonce = j;
+
+		// pour avoir la carte a la bonne position quand on a cliqué mais pas encore drag
 		mouseDragged(e);
 	}
 
@@ -97,13 +95,13 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 	{
 		Joueur j = getJoueur(e);
 
-		if(j != null
-				&& carteEnfoncee != -1
+		if(j != null && carteEnfoncee != -1
 		&& joueurEnfonce == modele.getCurrentJoueur()
 		&& joueurEnfonce != j
 		&& (joueurEnfonce.getPosition() == j.getPosition()
 		|| modele.getCurrentJoueur().getRole() == Role.MESSAGER))
 			joueurEnfonce.donneCarte(carteEnfoncee, j);
+
 		carteEnfoncee = -1;
 	}
 

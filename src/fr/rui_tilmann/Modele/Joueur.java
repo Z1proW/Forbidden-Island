@@ -20,9 +20,24 @@ public class Joueur
 		this.cartes = new ArrayList<>(Carte.MAX);
 	}
 
-	public Role getRole() {return role;}
+	public Role getRole()
+	{
+		return role;
+	}
 
-	public Case getPosition() {return position;}
+	public Case getPosition()
+	{
+		return position;
+	}
+
+	public int getId()
+	{
+		System.out.println(this);
+		for(int i = 0; i < 4; i++)
+			if(modele.getJoueur(i) == this){
+				System.out.println(i);return i;}
+		return -1;
+	}
 
 	public void deplace(Case c, boolean useAction)
 	{
@@ -131,19 +146,10 @@ public class Joueur
 		return false;
 	}
 
-	// TODO c'est peut être mieux de ne pas catch l'erreur car c'est pas censé arriver
-	// et si ça arrive on veut le savoir
-	// de toute façon on test si c'est dans les bounds 0 - 5 dans le controlleur
 	public Carte utiliseCarte(int n) {
-		try {
-			modele.getPileCartes().defausser(cartes.get(n));
-			modele.useAction();
-			return cartes.remove(n);
-		}
-		catch(IndexOutOfBoundsException e) {
-			System.out.println("Pas de carte à cet emplacement");
-			return null;
-		}
+		modele.getPileCartes().defausser(cartes.get(n));
+		modele.useAction();
+		return cartes.remove(n);
 	}
 
 	public void defausseCarte(int n) {

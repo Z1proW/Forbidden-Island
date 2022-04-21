@@ -16,21 +16,18 @@ public enum Artefact
 
 	Artefact(String fileName)
 	{
-		this.img = new ImageIcon("src/fr/rui_tilmann/images/artefact/" + fileName);
-		this.ctr = new ImageIcon("src/fr/rui_tilmann/images/artefact/c_" + fileName);
+		String path = "src/fr/rui_tilmann/images/artefact/";
+		this.img = new ImageIcon(path + fileName);
+		this.ctr = new ImageIcon(path + "c_" + fileName);
 	}
 
 	public Image getImage()
 	{
-		Image img = this.img.getImage();
-		img.getScaledInstance(4*img.getHeight(null), 4*img.getHeight(null), Image.SCALE_DEFAULT);
-		return img;
+		return img.getImage();
 	}
 
 	public Image getContour()
 	{
-		Image img = ctr.getImage();
-		img.getScaledInstance(4*img.getHeight(null), 4*img.getHeight(null), Image.SCALE_DEFAULT);
-		return img;
+		return ctr.getImage();
 	}
 }

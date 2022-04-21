@@ -150,6 +150,31 @@ public class Modele extends Observable
 							adjSub = false;
 
 					if(adjSub) state = GameState.NOYADE;
+
+					// TODO le joueur peut se sauver si il est dans l'eau
+					// si ça fonc pas pas grave car à son tour il pourra sortir mais faudra rajouter une action du coup
+					/*
+					int currentId = idJoueur;
+					List<Joueur> joueursCase = c.getJoueurs();
+					new Timer().schedule(new TimerTask()
+					{
+						int jId = 0;
+
+						@Override
+						public void run()
+						{
+							if(jId == joueursCase.size()) {cancel(); return;}
+
+							idJoueur = joueursCase.get(jId).getId();
+							for(int i = 0; i < 2; i++)
+								useAction();
+
+							if(actionsRestantes()) return;
+							jId++;
+						}
+					}, 0, 10);
+					idJoueur = currentId;
+					 */
 				}
 
 				// perdu si c'est l'heliport
@@ -199,14 +224,6 @@ public class Modele extends Observable
 	public boolean hasArtefact(Artefact artefact)
 	{
 		return tresorPris.getOrDefault(artefact, false);
-	}
-
-	public int positionJoueur(Joueur j){
-		for(int i=0; i < joueurs.size(); i++){
-			if(joueurs.get(i) ==j)
-				return i;
-		}
-		return -1;
 	}
 
 }
