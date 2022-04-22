@@ -38,11 +38,11 @@ public class Modele extends Observable
 
 		distribueCartesJoueurs();
 		// test recup artefact
-		/*
+
 		joueurs.get(0).getCartes().clear();
 		for(int i = 0; i < 5; i++)
-			joueurs.get(2).getCartes().add(Carte.TERRE);
-		*/
+			joueurs.get(0).getCartes().add(Carte.TERRE);
+
 	}
 
 	private void initJoueurs()
@@ -225,7 +225,20 @@ public class Modele extends Observable
 
 	public void recupereArtefact(Artefact artefact) {
 		tresorPris.put(artefact, true);
+		enleverZones(artefact);
 		useAction();
+	}
+
+	private void enleverZones(Artefact artefact)
+	{
+		for(int x = 0; x < Plateau.LENGTH; x++)
+			for(int y = 0; y < Plateau.LENGTH; y++)
+			{
+				Case c = plateau.getCase(x, y);
+
+				if(c.getType().toArtefact() == artefact)
+				c.setType(Zone.NORMALE);
+			}
 	}
 
 	public boolean hasArtefact(Artefact artefact)
