@@ -17,6 +17,14 @@ public class VueArtefact extends JPanel implements Observer
 		modele.addObserver(this);
 
 		this.setPreferredSize(new Dimension(5*VueCartes.WIDTH, 8*VuePlateau.P - 4*VueCartes.HEIGHT));
+
+		// TODO le bouton empêche le ControleurJoueur d'acceder au clavier
+		// TODO fix quand on spam le bouton
+		/*
+		JButton boutonFinTour = new JButton("Fin de tour");
+		boutonFinTour.addActionListener(e -> modele.finDeTour());
+		add(boutonFinTour);
+		*/
 	}
 
 	@Override

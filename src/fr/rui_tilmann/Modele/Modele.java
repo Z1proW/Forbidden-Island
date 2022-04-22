@@ -37,11 +37,11 @@ public class Modele extends Observable
 
 		distribueCartesJoueurs();
 		// test recup artefact
-
+		/*
 		joueurs.get(0).getCartes().clear();
 		for(int i = 0; i < 5; i++)
 			joueurs.get(0).getCartes().add(Carte.TERRE);
-
+		*/
 	}
 
 	private void initJoueurs()
@@ -226,7 +226,7 @@ public class Modele extends Observable
 
 	public void finDeTour()
 	{
-		Joueur joueur = joueurs.get(idJoueur);
+		Joueur joueur = getCurrentJoueur();
 		joueur.piocheCartes();
 
 		new Timer().schedule(new TimerTask() {
@@ -253,7 +253,7 @@ public class Modele extends Observable
 		switch(state)
 		{
 			case GAGNE:
-				System.exit(1);
+				System.exit(1); // TODO
 				break;
 
 			case NOYADE:
