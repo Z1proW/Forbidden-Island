@@ -3,10 +3,8 @@ package fr.rui_tilmann.Modele;
 import fr.rui_tilmann.Modele.Enums.Etat;
 import fr.rui_tilmann.Modele.Enums.Zone;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class Plateau
 {
@@ -35,10 +33,11 @@ public class Plateau
 
 	private void ileCirculaire()
 	{
-		for(int x = 0; x < LENGTH; x++)
-			for(int y = 0; y < LENGTH; y++)
-				if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) > 8)
-					cases[x][y].setEtat(Etat.SUBMERGEE);
+		forEachCase(c ->
+		{
+			if((c.getX()-3.5)*(c.getX()-3.5) + (c.getY()-3.5)*(c.getY()-3.5) > 8)
+				c.setEtat(Etat.SUBMERGEE);
+		});
 	}
 
 	private void inonderSixCases()
@@ -59,7 +58,17 @@ public class Plateau
 		placerZoneAleatoire(Zone.HELIPORT);
 	}
 
-	public Case getCase(int x, int y) {return cases[x][y];}
+	public Case getCase(int x, int y)
+	{
+		return cases[x][y];
+	}
+
+	public void forEachCase(Consumer<Case> action) {
+		Objects.requireNonNull(action);
+		for(int x = 0; x < LENGTH; x++)
+			for(int y = 0; y < LENGTH; y++)
+				action.accept(getCase(x, y));
+	}
 
 	private void placerZoneAleatoire(Zone type)
 	{
@@ -85,10 +94,11 @@ public class Plateau
 
 	public ArrayList<Case> getCartesCase(){
 		ArrayList<Case> CarteAInonder = new ArrayList<>();
-		for(int x = 0; x < LENGTH; x++)
-			for(int y = 0; y < LENGTH; y++)
-				if((x-3.5)*(x-3.5) + (y-3.5)*(y-3.5) < 8)
-					CarteAInonder.add(getCase(x, y));
+		forEachCase(c ->
+		{
+			if((c.getX()-3.5)*(c.getX()-3.5) + (c.getY()-3.5)*(c.getY()-3.5) < 8)
+				CarteAInonder.add(c);
+		});
 		return CarteAInonder;
 	}
 

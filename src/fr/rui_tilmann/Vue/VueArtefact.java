@@ -5,6 +5,8 @@ import fr.rui_tilmann.Modele.Modele;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.Collection;
 
 public class VueArtefact extends JPanel implements Observer
 {
@@ -34,7 +36,7 @@ public class VueArtefact extends JPanel implements Observer
 	{
 		super.repaint();
 
-		Artefact[] artefacts = new Artefact[] {Artefact.AIR, Artefact.EAU, Artefact.TERRE, Artefact.FEU};
+		Artefact[] artefacts = Artefact.values();
 
 		for(int i = 0; i < 4; i++)
 		{

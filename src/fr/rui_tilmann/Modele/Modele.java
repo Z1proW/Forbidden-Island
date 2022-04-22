@@ -132,14 +132,11 @@ public class Modele extends Observable
 
 	private void enleverZones(Artefact artefact)
 	{
-		for(int x = 0; x < Plateau.LENGTH; x++)
-			for(int y = 0; y < Plateau.LENGTH; y++)
-			{
-				Case c = plateau.getCase(x, y);
-
-				if(c.getType().toArtefact() == artefact)
-					c.setType(Zone.NORMALE);
-			}
+		plateau.forEachCase(c ->
+		{
+			if(c.getType().toArtefact() == artefact)
+				c.setType(Zone.NORMALE);
+		});
 	}
 
 	public boolean hasArtefact(Artefact artefact)
