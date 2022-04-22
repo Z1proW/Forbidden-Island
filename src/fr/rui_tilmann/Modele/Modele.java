@@ -2,6 +2,7 @@ package fr.rui_tilmann.Modele;
 
 import fr.rui_tilmann.Modele.Enums.*;
 import fr.rui_tilmann.Vue.Observable;
+import fr.rui_tilmann.Vue.Vue;
 
 import java.util.*;
 
@@ -14,8 +15,6 @@ public class Modele extends Observable
 	private final PileCartes pileCartes;
 
 	public static int NOMBRE_JOUEURS;
-
-	private GameState state = GameState.EN_JEU;
 
 	private int idJoueur = 0;
 	private int nbActions = 3;
@@ -122,8 +121,30 @@ public class Modele extends Observable
 		niveauEau.monteeEau();
 
 		if(niveauEau.getNombreCartes() == -1)
-			state = GameState.NIVEAU_EAU_TROP_HAUT;
+			finDePartie(GameOver.NIVEAU_EAU_TROP_HAUT);
+	}
 
+	public void recupereArtefact(Artefact artefact) {
+		tresorPris.put(artefact, true);
+		enleverZones(artefact);
+		useAction();
+	}
+
+	private void enleverZones(Artefact artefact)
+	{
+		for(int x = 0; x < Plateau.LENGTH; x++)
+			for(int y = 0; y < Plateau.LENGTH; y++)
+			{
+				Case c = plateau.getCase(x, y);
+
+				if(c.getType().toArtefact() == artefact)
+					c.setType(Zone.NORMALE);
+			}
+	}
+
+	public boolean hasArtefact(Artefact artefact)
+	{
+		return tresorPris.getOrDefault(artefact, false);
 	}
 
 	public void inonderCases()
@@ -153,7 +174,8 @@ public class Modele extends Observable
 						if(c.adjacente(d).getEtat() != Etat.SUBMERGEE)
 							adjSub = false;
 
-					if(adjSub) state = GameState.NOYADE;
+					if(adjSub)
+						finDePartie(GameOver.NOYADE);
 
 					// TODO le joueur peut se sauver si il est dans l'eau
 					// si ça fonc pas pas grave car à son tour il pourra sortir mais faudra rajouter une action du coup
@@ -183,13 +205,14 @@ public class Modele extends Observable
 
 				// perdu si c'est l'heliport
 				if(c.getType() == Zone.HELIPORT)
-					state = GameState.HELIPORT_SUBMERGE;
+					finDePartie(GameOver.HELIPORT_SUBMERGE);
 
 				//Perdu si 2 zone du meme type tombe
-				if(c.getType() != Zone.NORMALE){
+				if(c.getType() != Zone.NORMALE) {
 					plateau.removeZoneImportante(c);
+
 					if(plateau.zoneImportantePasSubmergee(c.getType()) == 0 && !tresorPris.getOrDefault(c.getType().toArtefact(), false))
-						state = GameState.TRESOR_IRRECUPERABLE;
+						finDePartie(GameOver.TRESOR_IRRECUPERABLE);
 				}
 				break;
 		}
@@ -223,27 +246,32 @@ public class Modele extends Observable
 		}, 2000, 10);
 	}
 
-	public void recupereArtefact(Artefact artefact) {
-		tresorPris.put(artefact, true);
-		enleverZones(artefact);
-		useAction();
-	}
-
-	private void enleverZones(Artefact artefact)
+	private void finDePartie(GameOver state)
 	{
-		for(int x = 0; x < Plateau.LENGTH; x++)
-			for(int y = 0; y < Plateau.LENGTH; y++)
-			{
-				Case c = plateau.getCase(x, y);
+		nbActions = 0;
 
-				if(c.getType().toArtefact() == artefact)
-				c.setType(Zone.NORMALE);
-			}
-	}
+		switch(state)
+		{
+			case GAGNE:
+				System.exit(1);
+				break;
 
-	public boolean hasArtefact(Artefact artefact)
-	{
-		return tresorPris.getOrDefault(artefact, false);
+			case NOYADE:
+				System.exit(2);
+				break;
+
+			case HELIPORT_SUBMERGE:
+				System.exit(3);
+				break;
+
+			case NIVEAU_EAU_TROP_HAUT:
+				System.exit(4);
+				break;
+
+			case TRESOR_IRRECUPERABLE:
+				System.exit(5);
+				break;
+		}
 	}
 
 }

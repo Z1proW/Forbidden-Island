@@ -21,10 +21,14 @@ public class Vue
 
 	public Vue()
 	{
+		afficherMenu();
+	}
+
+	private void afficherMenu()
+	{
 		JFrame f = new JFrame("L'île Interdite");
 		f.setResizable(false);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
 		MainMenu mainMenu = new MainMenu();
 		f.setContentPane(mainMenu);
@@ -34,55 +38,64 @@ public class Vue
 		JButton boutonJouer = new JButton("Jouer");
 		boutonJouer.setSize(buttonDim);
 		boutonJouer.setLocation(500, 100);
-		boutonJouer.addActionListener(e -> {
-			f.dispose();
-			newGameFrame(new Modele(difficulte, nbJoueurs));
-		});
-		f.add(boutonJouer);
 
 		JButton boutonDifficulte = new JButton(sDif + difficulte.toString());
 		boutonDifficulte.setSize(buttonDim);
 		boutonDifficulte.setLocation(500, 200);
-		boutonDifficulte.addActionListener(e -> {
-			Difficulte[] values = Difficulte.values();
-			difficulte = values[(difficulte.ordinal() + 1) % values.length];
-			boutonDifficulte.setText(sDif + difficulte.toString());
-		});
-		f.add(boutonDifficulte);
 
 		JSlider sliderDifficulte = new JSlider(0, Difficulte.values().length - 1, difficulte.ordinal());
 		sliderDifficulte.setSize(buttonDim);
 		sliderDifficulte.setLocation(500, 168);
 		sliderDifficulte.setBackground(new Color(0, 0, 0, 0));
-		sliderDifficulte.addChangeListener(e -> {
-			difficulte = Difficulte.values()[sliderDifficulte.getValue()];
-			boutonDifficulte.setText(sDif + difficulte.toString());
-		});
-		f.add(sliderDifficulte);
 
 		JButton boutonJoueurs = new JButton("Joueurs: " + nbJoueurs);
 		boutonJoueurs.setSize(buttonDim);
 		boutonJoueurs.setLocation(500, 300);
-		boutonJoueurs.addActionListener(e -> {
-			nbJoueurs = nbJoueurs % 3 + 2;
-			boutonJoueurs.setText(sJrs + nbJoueurs);
-		});
-		f.add(boutonJoueurs);
 
 		JSlider sliderJoueurs = new JSlider(2, 4, nbJoueurs);
 		sliderJoueurs.setSize(buttonDim);
 		sliderJoueurs.setLocation(500, 268);
 		sliderJoueurs.setBackground(new Color(0, 0, 0, 0));
-		sliderJoueurs.addChangeListener(e -> {
-			nbJoueurs = sliderJoueurs.getValue();
-			boutonJoueurs.setText(sJrs + nbJoueurs);
-		});
-		f.add(sliderJoueurs);
 
 		JButton boutonQuitter = new JButton("Quitter");
 		boutonQuitter.setSize(buttonDim);
 		boutonQuitter.setLocation(500, 400);
+
+		boutonJouer.addActionListener(e -> {
+			f.dispose();
+			afficherJeu(new Modele(difficulte, nbJoueurs));
+		});
+
+		boutonDifficulte.addActionListener(e -> {
+			Difficulte[] values = Difficulte.values();
+			difficulte = values[(difficulte.ordinal() + 1) % values.length];
+			boutonDifficulte.setText(sDif + difficulte.toString());
+			sliderDifficulte.setValue(difficulte.ordinal());
+		});
+
+		sliderDifficulte.addChangeListener(e -> {
+			difficulte = Difficulte.values()[sliderDifficulte.getValue()];
+			boutonDifficulte.setText(sDif + difficulte.toString());
+		});
+
+		boutonJoueurs.addActionListener(e -> {
+			nbJoueurs = nbJoueurs % 3 + 2;
+			boutonJoueurs.setText(sJrs + nbJoueurs);
+			sliderJoueurs.setValue(nbJoueurs);
+		});
+
+		sliderJoueurs.addChangeListener(e -> {
+			nbJoueurs = sliderJoueurs.getValue();
+			boutonJoueurs.setText(sJrs + nbJoueurs);
+		});
+
 		boutonQuitter.addActionListener(e -> System.exit(0));
+
+		f.add(boutonJouer);
+		f.add(boutonDifficulte);
+		f.add(sliderDifficulte);
+		f.add(boutonJoueurs);
+		f.add(sliderJoueurs);
 		f.add(boutonQuitter);
 
 		f.setLayout(new BorderLayout());
@@ -91,7 +104,7 @@ public class Vue
 		f.setVisible(true);
 	}
 
-	private void newGameFrame(Modele modele)
+	private void afficherJeu(Modele modele)
 	{
 		JFrame f = new JFrame();
 		f.setLayout(new BorderLayout());

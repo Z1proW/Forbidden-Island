@@ -1,8 +1,7 @@
 package fr.rui_tilmann.Modele.Enums;
 
-public enum GameState
+public enum GameOver
 {
-    EN_JEU,
     GAGNE,
     NIVEAU_EAU_TROP_HAUT,
     NOYADE,
