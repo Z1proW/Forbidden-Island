@@ -39,8 +39,6 @@ public class VueArtefact extends JPanel implements Observer
 		int width = 192;
 		int x = 32;
 
-		// TODO il faut pas faire 4 boutons quand il y a pas 4 joueurs
-
 		Bouton text = new Bouton("Helico", x, 50, width, 30);
 		add(text);
 

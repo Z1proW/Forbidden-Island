@@ -12,7 +12,8 @@ public class VueGameOver extends JPanel
 {
 
 	private final GameOver state;
-	private Image eau = new ImageIcon("src/fr/rui_tilmann/images/game_over/eau.png").getImage();
+	private final Image eau = new ImageIcon("src/fr/rui_tilmann/images/game_over/eau.png").getImage();
+	private int y = 620;
 
 	public VueGameOver(GameOver state)
 	{
@@ -20,6 +21,16 @@ public class VueGameOver extends JPanel
 		setVisible(true);
 
 		Son.EAU.jouerSon();
+
+		new Timer().schedule(new TimerTask()
+		{
+			@Override
+			public void run()
+			{
+				y -= 3;
+				if(y <= 0) cancel();
+			}
+		}, 0, 1);
 	}
 
 	public void paintComponent(Graphics g)
@@ -28,7 +39,7 @@ public class VueGameOver extends JPanel
 
 		if(state != GameOver.GAGNE)
 		{
-			g.drawImage(eau, 0, 0, null);
+			g.drawImage(eau, 0, y, null);
 		}
 	}
 
