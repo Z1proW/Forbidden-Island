@@ -9,12 +9,19 @@ import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Vue.VuePlateau;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import static fr.rui_tilmann.Vue.VuePlateau.P;
+import static fr.rui_tilmann.Vue.VueArtefact.boutonJoueur1;
+import static fr.rui_tilmann.Vue.VueArtefact.boutonJoueur2;
+import static fr.rui_tilmann.Vue.VueArtefact.boutonJoueur3;
+import static fr.rui_tilmann.Vue.VueArtefact.boutonJoueur4;
+import static fr.rui_tilmann.Vue.VueArtefact.boutonActionSpe;
 
 public class ControleurJoueur extends MouseAdapter implements KeyListener
 {
@@ -27,8 +34,10 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 	private Case caseHelico = null;
 
-	private boolean actionSpeNavigateur = false;
+	private boolean actionSpeNavigateurOuPilote = false;
 	private boolean actionSpePlongeur = false;
+	private boolean j1, j2, j3, j4 = false;
+	private int joueurDeplace = 0;
 
 	private int caseDeplace = 0;
 
@@ -36,11 +45,71 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 	{
 		this.modele = modele;
 		this.vuePlateau = vuePlateau;
+
+		boutonJoueur1.addActionListener(e -> {
+			AbstractButton button = (AbstractButton) e.getSource();
+			Color color = button.getBackground();
+			if(color == Color.RED) {
+				boutonJoueur1.setBackground(Color.GREEN);
+				j1 = true;
+			}
+			else {
+				boutonJoueur1.setBackground(Color.RED);
+				j1 = false;
+			}
+		});
+		boutonJoueur2.addActionListener(e -> {
+			AbstractButton button = (AbstractButton) e.getSource();
+			Color color = button.getBackground();
+			if(color == Color.RED) {
+				boutonJoueur2.setBackground(Color.GREEN);
+				j2 = true;
+			}
+			else {
+				boutonJoueur2.setBackground(Color.RED);
+				j2 = false;
+			}
+		});
+		boutonJoueur3.addActionListener(e -> {
+			AbstractButton button = (AbstractButton) e.getSource();
+			Color color = button.getBackground();
+			if(color == Color.RED) {
+				boutonJoueur3.setBackground(Color.GREEN);
+				j3 = true;
+			}
+			else {
+				boutonJoueur3.setBackground(Color.RED);
+				j3 = false;
+			}
+		});
+		boutonJoueur4.addActionListener(e -> {
+			AbstractButton button = (AbstractButton) e.getSource();
+			Color color = button.getBackground();
+			if(color == Color.RED) {
+				boutonJoueur4.setBackground(Color.GREEN);
+				j4 = true;
+			}
+			else {
+				boutonJoueur4.setBackground(Color.RED);
+				j4 = false;
+			}
+		});
+		boutonActionSpe.addActionListener(e -> {
+			if(!actionSpeNavigateurOuPilote) {
+				boutonActionSpe.setBackground(Color.GREEN);
+				actionSpeNavigateurOuPilote = true;
+			}
+			else {
+				boutonActionSpe.setBackground(Color.RED);
+				actionSpeNavigateurOuPilote = false;
+			}
+		});
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
+		vuePlateau.setFocusable(true);
 		Case c = getCase(e);
 		if(c == null) return;
 
@@ -49,19 +118,29 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		if(e.getButton() == MouseEvent.BUTTON3)
 			caseHelico = c;
 
-		if(0 <= clickedCard && clickedCard < joueur.getCartes().size()
+		if(0 <= clickedCard && clickedCard < clickedJoueur.getCartes().size()
 		&& e.getButton() == MouseEvent.BUTTON1)
 		{
-			switch(joueur.getCartes().get(clickedCard))
+			switch(clickedJoueur.getCartes().get(clickedCard))
 			{
 				case HELICOPTERE:
 					if(c != caseHelico
 					&& c.getEtat() != Etat.SUBMERGEE)
 					{
 						if(caseHelico == null)
-							caseHelico = joueur.getPosition();
+							caseHelico = clickedJoueur.getPosition();
 
-						caseHelico.getJoueurs().forEach(j -> j.deplace(c, false));
+						for(Joueur j:caseHelico.getJoueurs()){
+							if(j == modele.getJoueur(0) && j1){
+								j.deplace(c, false);
+							}else if(j == modele.getJoueur(1) && j2){
+								j.deplace(c, false);
+							}else if(j == modele.getJoueur(2) && j3){
+								j.deplace(c, false);
+							}else if(j == modele.getJoueur(3) && j4){
+								j.deplace(c, false);
+							}
+						}
 						joueur.defausseCarte(clickedCard);
 						caseHelico = null;
 					}
@@ -79,7 +158,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		}
 
 		if(modele.getCurrentJoueur().getRole() == Role.PILOTE
-		&& !modele.actionUtiliseePilote
+		&& !modele.actionUtiliseePilote && actionSpeNavigateurOuPilote
 		&& e.getButton() == MouseEvent.BUTTON1)
 		{
 			modele.getCurrentJoueur().deplace(c);
@@ -146,15 +225,16 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 			// TODO trouver d'autre moyen pour changer
 			case KeyEvent.VK_N:
-				actionSpeNavigateur = !actionSpeNavigateur;
+				actionSpeNavigateurOuPilote = !actionSpeNavigateurOuPilote;
 				break;
 
 			case KeyEvent.VK_M:
 				caseDeplace = (caseDeplace + 1) % 2;
 				break;
+			case  KeyEvent.VK_SPACE:
+				joueurDeplace = (joueurDeplace + 1) % 4;
 		}
 
-		// TODO à gerer les cas out of bounds afin qu'il utilise pas d'action
 		if(modele.getCurrentJoueur().getRole() == Role.INGENIEUR && modele.actionSpeIngenieur) {
 			modele.actionSpeIngenieur = false;
 			modele.useAction();
@@ -163,12 +243,12 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 		if(modele.getCurrentJoueur().getRole() == Role.NAVIGATEUR
 		&& d != Direction.AUCUNE
-		&& actionSpeNavigateur) {
+		&& actionSpeNavigateurOuPilote) {
 
-			for(int i = 0; i <= caseDeplace; i++)
-				clickedJoueur.deplace(d, actionSpeNavigateur);
-
-			actionSpeNavigateur = false;
+			//TODO Avec joueurClicked ca ne marche pas
+			for(int i = 0; i <= caseDeplace; i++) {
+				modele.getJoueur(joueurDeplace).deplace(d, actionSpeNavigateurOuPilote);
+			}
 		}
 		else modele.getCurrentJoueur().deplace(d);
 	}

@@ -4,9 +4,10 @@ import fr.rui_tilmann.Controleur.ControleurCartes;
 import fr.rui_tilmann.Modele.Case;
 import fr.rui_tilmann.Modele.Enums.Carte;
 import fr.rui_tilmann.Modele.Enums.Etat;
+import fr.rui_tilmann.Modele.Joueur;
 import fr.rui_tilmann.Modele.Modele;
 import fr.rui_tilmann.Modele.Plateau;
-
+import fr.rui_tilmann.Controleur.ControleurJoueur;
 import javax.swing.*;
 import java.awt.*;
 
