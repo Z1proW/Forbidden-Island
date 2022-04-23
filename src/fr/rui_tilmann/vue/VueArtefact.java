@@ -29,21 +29,21 @@ public class VueArtefact extends JPanel implements Observer
 
 	}
 
-	public void initButton(){
-
+	public void initButton() {
+		// TODO il faut pas faire 4 boutons quand il y a pas 4 joueurs
 		boutonFinTour.addActionListener(e -> modele.finDeTour());
 		boutonFinTour.setFocusable(false);
 		boutonFinTour.setSize(200,60);
-		boutonFinTour.setLocation(50,125);
+		boutonFinTour.setLocation(20,120);
 		add(boutonFinTour);
 
-		boutonJoueur1.setLocation(50,50);
+		boutonJoueur1.setLocation(20,70);
 		boutonJoueur1.setSize(50,50);
-		boutonJoueur2.setLocation(100,50);
+		boutonJoueur2.setLocation(70,70);
 		boutonJoueur2.setSize(50,50);
-		boutonJoueur3.setLocation(150,50);
+		boutonJoueur3.setLocation(120,70);
 		boutonJoueur3.setSize(50,50);
-		boutonJoueur4.setLocation(200,50);
+		boutonJoueur4.setLocation(170,70);
 		boutonJoueur4.setSize(50,50);
 
 		boutonJoueur1.setBackground(Color.RED);
@@ -61,12 +61,14 @@ public class VueArtefact extends JPanel implements Observer
 		add(boutonJoueur3);
 		add(boutonJoueur4);
 
-		boutonActionSpe.setBounds(250,50,160,80);
+		boutonActionSpe.setBounds(220,50,160,70);
+		boutonActionSpe.setFocusable(false);
 		boutonActionSpe.setBackground(Color.RED);
 		add(boutonActionSpe);
 
 		JButton text = new JButton("Helico");
-		text.setBounds(50,30,200,20);
+		text.setBounds(20,50,200,20);
+		text.setFocusable(false);
 		add(text);
 		setLayout(new BorderLayout());
 	}
