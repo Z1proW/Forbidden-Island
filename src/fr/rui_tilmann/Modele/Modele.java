@@ -23,6 +23,7 @@ public class Modele extends Observable
 
 	public boolean actionUtiliseePilote = false;
 	public boolean actionSpeIngenieur = false;
+	public boolean TrueEnd = true;
 
 	public Modele(Difficulte difficulte, int nbJoueurs)
 	{
@@ -223,24 +224,27 @@ public class Modele extends Observable
 
 	public void finDeTour()
 	{
-		Joueur joueur = getCurrentJoueur();
-		joueur.piocheCartes();
+		if(TrueEnd) {
+			TrueEnd = false;
+			Joueur joueur = getCurrentJoueur();
+			joueur.piocheCartes();
 
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				if(joueurs.stream().allMatch(j -> j.getCartes().size() <= 5))
-				{
-					actionUtiliseePilote = false;
-					actionSpeIngenieur = false;
+			new Timer().schedule(new TimerTask() {
+				@Override
+				public void run() {
+					if (joueurs.stream().allMatch(j -> j.getCartes().size() <= 5)) {
+						actionUtiliseePilote = false;
+						actionSpeIngenieur = false;
 
-					idJoueur = (idJoueur + 1) % NOMBRE_JOUEURS;
-					resetActions();
-					inonderCases();
-					cancel();
+						idJoueur = (idJoueur + 1) % NOMBRE_JOUEURS;
+						resetActions();
+						inonderCases();
+						TrueEnd = true;
+						cancel();
+					}
 				}
-			}
-		}, 2000, 10);
+			}, 2000, 10);
+		}
 	}
 
 	private void finDePartie(GameOver state)
