@@ -7,7 +7,7 @@ public enum Etat
 {
 	SECHE("seche.png"),
 	INONDEE("inondee.png"),
-	SUBMERGEE("submergee.png");
+	SUBMERGEE("submergee.gif");
 
 	private final ImageIcon img;
 

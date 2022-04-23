@@ -22,11 +22,9 @@ public class VueGameOver extends JPanel
 
 		Son.EAU.jouerSon();
 
-		new Timer().schedule(new TimerTask()
-		{
+		new Timer().schedule(new TimerTask() {
 			@Override
-			public void run()
-			{
+			public void run() {
 				y -= 3;
 				if(y <= 0) cancel();
 			}
