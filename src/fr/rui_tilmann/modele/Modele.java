@@ -42,12 +42,18 @@ public class Modele extends Observable
 		pileCartes = new PileCartes(this);
 
 		distribueCartesJoueurs();
+		initInondation();
 		// test recup artefact
 		/*
 		joueurs.get(0).getCartes().clear();
 		for(int i = 0; i < 5; i++)
 			joueurs.get(0).getCartes().add(Carte.TERRE);
 		*/
+	}
+	private void initInondation()
+	{
+		for(int i=0; i < 6 ; i++)
+			inonderCase(pileCartes.caseAInonder());
 	}
 
 	private void initJoueurs()

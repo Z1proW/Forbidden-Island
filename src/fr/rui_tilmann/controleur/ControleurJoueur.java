@@ -111,6 +111,8 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 						}
 						if(aBienTransporte)
 							joueur.defausseCarte(clickedCard);
+						clickedJoueur = null;
+						clickedCard = -1;
 					}
 					caseHelico = null;
 					break;
@@ -147,10 +149,18 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 						modele.useAction();
 						if(!modele.actionsRestantes()) return;
 					}
-					j.deplace(c);
+					if(j.getRole() == Role.PLONGEUR && c.getEtat() != Etat.SECHE)
+						actionSpePlongeur = true;
+					else
+						actionSpePlongeur = false;
+					j.deplace(c,!actionSpePlongeur);
 					break;
 
 				case 3: // droit
+					if(actionSpePlongeur){
+						actionSpePlongeur = false;
+						modele.useAction();
+					}
 					if(j.getRole() == Role.INGENIEUR && !modele.actionSpeIngenieur) {
 						j.asseche(c, true);
 						modele.actionSpeIngenieur = true;
@@ -202,9 +212,14 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 			case  KeyEvent.VK_SPACE:
 				joueurDeplace = (joueurDeplace + 1) % 4;
+
+			case  KeyEvent.VK_R:
+				clickedCard = -1;
+				clickedJoueur = null;
 		}
 
 		// TODO à gerer les cas out of bounds afin qu'il utilise pas d'action
+
 		if(modele.getCurrentJoueur().getRole() == Role.INGENIEUR && modele.actionSpeIngenieur) {
 			modele.actionSpeIngenieur = false;
 			modele.useAction();

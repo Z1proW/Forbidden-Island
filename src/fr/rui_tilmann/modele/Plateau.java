@@ -20,7 +20,7 @@ public class Plateau
 
 		initCases();
 		ileCirculaire();
-		inonderSixCases();
+		//inonderSixCases();
 		placerZones();
 	}
 

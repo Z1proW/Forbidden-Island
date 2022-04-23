@@ -58,12 +58,12 @@ public class Joueur
 	public void deplace(Direction d, boolean useAction) {
 		Case adjacente = getPosition().adjacente(d);
 
-		if(adjacente.getEtat() == Etat.SUBMERGEE && getRole() == Role.PLONGEUR)
+		if(adjacente.getEtat() != Etat.SECHE && getRole() == Role.PLONGEUR)
 		{
-			adjacente = adjacente.adjacente(d);
+			//adjacente = adjacente.adjacente(d);
 
-			if(adjacente != null)
-				deplace(adjacente, useAction);
+			//if(adjacente != null)
+			deplace(adjacente, false);
 		}
 		else deplace(adjacente, useAction);
 	}
