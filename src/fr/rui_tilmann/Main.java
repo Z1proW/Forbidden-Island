@@ -1,6 +1,6 @@
 package fr.rui_tilmann;
 
-import fr.rui_tilmann.Vue.Vue;
+import fr.rui_tilmann.vue.Vue;
 
 import java.awt.*;
 
