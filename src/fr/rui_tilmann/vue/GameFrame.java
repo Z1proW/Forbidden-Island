@@ -33,7 +33,9 @@ public class GameFrame extends JFrame
 		VuePlateau vuePlateau = new VuePlateau(modele, vueJoueurs);
 		add(vuePlateau, BorderLayout.WEST);
 
-		ControleurJoueur controleurJoueur = new ControleurJoueur(modele, vuePlateau);
+		VueArtefact vueArtefact = new VueArtefact(modele);
+
+		ControleurJoueur controleurJoueur = new ControleurJoueur(modele, vuePlateau, vueArtefact);
 		addMouseListener(controleurJoueur);
 		addKeyListener(controleurJoueur);
 		addMouseMotionListener(controleurJoueur);
@@ -51,7 +53,6 @@ public class GameFrame extends JFrame
 		eastPanel.addMouseListener(controleurCartes);
 		eastPanel.addMouseMotionListener(controleurCartes);
 
-		VueArtefact vueArtefact = new VueArtefact(modele);
 		eastPanel.add(vueArtefact);
 
 		add(eastPanel, BorderLayout.EAST);

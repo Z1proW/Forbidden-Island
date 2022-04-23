@@ -1,12 +1,13 @@
 package fr.rui_tilmann.controleur;
 
 import fr.rui_tilmann.modele.Case;
+import fr.rui_tilmann.modele.Joueur;
+import fr.rui_tilmann.modele.Modele;
 import fr.rui_tilmann.modele.enums.Carte;
 import fr.rui_tilmann.modele.enums.Direction;
 import fr.rui_tilmann.modele.enums.Etat;
 import fr.rui_tilmann.modele.enums.Role;
-import fr.rui_tilmann.modele.Joueur;
-import fr.rui_tilmann.modele.Modele;
+import fr.rui_tilmann.vue.VueArtefact;
 import fr.rui_tilmann.vue.VuePlateau;
 
 import javax.swing.*;
@@ -17,11 +18,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import static fr.rui_tilmann.vue.VuePlateau.P;
-import static fr.rui_tilmann.vue.VueArtefact.boutonJoueur1;
-import static fr.rui_tilmann.vue.VueArtefact.boutonJoueur2;
-import static fr.rui_tilmann.vue.VueArtefact.boutonJoueur3;
-import static fr.rui_tilmann.vue.VueArtefact.boutonJoueur4;
-import static fr.rui_tilmann.vue.VueArtefact.boutonActionSpe;
 
 public class ControleurJoueur extends MouseAdapter implements KeyListener
 {
@@ -36,71 +32,43 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 	private boolean actionSpeNavigateurOuPilote = false;
 	private boolean actionSpePlongeur = false;
-	private boolean j1, j2, j3, j4 = false;
+	private final boolean[] jSelect = new boolean[Modele.NOMBRE_JOUEURS];
 	private int joueurDeplace = 0;
 
 	private int caseDeplace = 0;
 
-	public ControleurJoueur(Modele modele, VuePlateau vuePlateau)
+	public ControleurJoueur(Modele modele, VuePlateau vuePlateau, VueArtefact vueArtefact)
 	{
 		this.modele = modele;
 		this.vuePlateau = vuePlateau;
 
-		boutonJoueur1.addActionListener(e -> {
-			AbstractButton button = (AbstractButton) e.getSource();
-			Color color = button.getBackground();
-			if(color == Color.RED) {
-				boutonJoueur1.setBackground(Color.GREEN);
-				j1 = true;
-			}
-			else {
-				boutonJoueur1.setBackground(Color.RED);
-				j1 = false;
-			}
-		});
-		boutonJoueur2.addActionListener(e -> {
-			AbstractButton button = (AbstractButton) e.getSource();
-			Color color = button.getBackground();
-			if(color == Color.RED) {
-				boutonJoueur2.setBackground(Color.GREEN);
-				j2 = true;
-			}
-			else {
-				boutonJoueur2.setBackground(Color.RED);
-				j2 = false;
-			}
-		});
-		boutonJoueur3.addActionListener(e -> {
-			AbstractButton button = (AbstractButton) e.getSource();
-			Color color = button.getBackground();
-			if(color == Color.RED) {
-				boutonJoueur3.setBackground(Color.GREEN);
-				j3 = true;
-			}
-			else {
-				boutonJoueur3.setBackground(Color.RED);
-				j3 = false;
-			}
-		});
-		boutonJoueur4.addActionListener(e -> {
-			AbstractButton button = (AbstractButton) e.getSource();
-			Color color = button.getBackground();
-			if(color == Color.RED) {
-				boutonJoueur4.setBackground(Color.GREEN);
-				j4 = true;
-			}
-			else {
-				boutonJoueur4.setBackground(Color.RED);
-				j4 = false;
-			}
-		});
-		boutonActionSpe.addActionListener(e -> {
+		for(int i = 0; i < Modele.NOMBRE_JOUEURS; i++)
+		{
+			jSelect[i] = false;
+
+			int finalI = i;
+			vueArtefact.boutonJoueur[i].addActionListener(e -> {
+				AbstractButton button = (AbstractButton)e.getSource();
+				Color color = button.getBackground();
+
+				if(color == Color.RED) {
+					vueArtefact.boutonJoueur[finalI].setBackground(Color.GREEN);
+					jSelect[finalI] = true;
+				}
+				else {
+					vueArtefact.boutonJoueur[finalI].setBackground(Color.RED);
+					jSelect[finalI] = false;
+				}
+			});
+		}
+
+		vueArtefact.boutonActionSpe.addActionListener(e -> {
 			if(!actionSpeNavigateurOuPilote) {
-				boutonActionSpe.setBackground(Color.GREEN);
+				vueArtefact.boutonActionSpe.setBackground(Color.GREEN);
 				actionSpeNavigateurOuPilote = true;
 			}
 			else {
-				boutonActionSpe.setBackground(Color.RED);
+				vueArtefact.boutonActionSpe.setBackground(Color.RED);
 				actionSpeNavigateurOuPilote = false;
 			}
 		});
@@ -131,15 +99,10 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 					if(c != caseHelico)
 					{
-						for(Joueur j : caseHelico.getJoueurs()) {
-							if(j == modele.getJoueur(0) && j1)
-								j.deplace(c, false);
-							else if(j == modele.getJoueur(1) && j2)
-								j.deplace(c, false);
-							else if(j == modele.getJoueur(2) && j3)
-								j.deplace(c, false);
-							else if(j == modele.getJoueur(3) && j4)
-								j.deplace(c, false);
+						for(int i = 0; i < caseHelico.getJoueurs().size(); i++) {
+							if(caseHelico.getJoueurs().get(i) == modele.getJoueur(i)
+							&& jSelect[i])
+								caseHelico.getJoueurs().get(i).deplace(c, false);
 						}
 						joueur.defausseCarte(clickedCard);
 					}
@@ -207,7 +170,6 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 						break;
 					}
 		}
-
 	}
 
 	@Override
@@ -231,6 +193,9 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			case KeyEvent.VK_M:
 				caseDeplace = (caseDeplace + 1) % 2;
 				break;
+
+			case  KeyEvent.VK_SPACE:
+				joueurDeplace = (joueurDeplace + 1) % 4;
 		}
 
 		// TODO à gerer les cas out of bounds afin qu'il utilise pas d'action

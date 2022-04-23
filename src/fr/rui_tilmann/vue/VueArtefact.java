@@ -2,6 +2,7 @@ package fr.rui_tilmann.vue;
 
 import fr.rui_tilmann.modele.enums.Artefact;
 import fr.rui_tilmann.modele.Modele;
+import fr.rui_tilmann.vue.menu.Bouton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +11,9 @@ public class VueArtefact extends JPanel implements Observer
 {
 
 	private final Modele modele;
-	public JButton boutonFinTour = new JButton("Fin de tour");
-	public static JButton boutonJoueur1 = new JButton("1");
-	public static JButton boutonJoueur2 = new JButton("2");
-	public static JButton boutonJoueur3 = new JButton("3");
-	public static JButton boutonJoueur4 = new JButton("4");;
-	public static JButton boutonActionSpe = new JButton("Action Speciale");
+	public Bouton boutonFinTour;
+	public Bouton[] boutonJoueur = bJrs();
+	public Bouton boutonActionSpe = new Bouton("", 0, 0, 0, 0);
 
 
 	public VueArtefact(Modele modele)
@@ -25,51 +23,44 @@ public class VueArtefact extends JPanel implements Observer
 
 		this.setPreferredSize(new Dimension(5*VueCartes.WIDTH, 8*VuePlateau.P - 4*VueCartes.HEIGHT));
 
-		initButton();
+		initBoutons();
 
 	}
 
-	public void initButton() {
+	private Bouton[] bJrs()
+	{
+		Bouton[] bts = new Bouton[Modele.NOMBRE_JOUEURS];
+		for(int i = 0; i < bts.length; i++)
+			bts[i] = new Bouton("", 0, 0, 0, 0);
+		return bts;
+	}
+
+	private void initBoutons() {
+		int width = 192;
+		int x = 32;
+
 		// TODO il faut pas faire 4 boutons quand il y a pas 4 joueurs
-		boutonFinTour.addActionListener(e -> modele.finDeTour());
-		boutonFinTour.setFocusable(false);
-		boutonFinTour.setSize(200,60);
-		boutonFinTour.setLocation(20,120);
-		add(boutonFinTour);
 
-		boutonJoueur1.setLocation(20,70);
-		boutonJoueur1.setSize(50,50);
-		boutonJoueur2.setLocation(70,70);
-		boutonJoueur2.setSize(50,50);
-		boutonJoueur3.setLocation(120,70);
-		boutonJoueur3.setSize(50,50);
-		boutonJoueur4.setLocation(170,70);
-		boutonJoueur4.setSize(50,50);
+		Bouton text = new Bouton("Helico", x, 50, width, 30);
+		add(text);
 
-		boutonJoueur1.setBackground(Color.RED);
-		boutonJoueur2.setBackground(Color.RED);
-		boutonJoueur3.setBackground(Color.RED);
-		boutonJoueur4.setBackground(Color.RED);
-
-		boutonJoueur1.setFocusable(false);
-		boutonJoueur2.setFocusable(false);
-		boutonJoueur3.setFocusable(false);
-		boutonJoueur4.setFocusable(false);
-
-		add(boutonJoueur1);
-		add(boutonJoueur2);
-		add(boutonJoueur3);
-		add(boutonJoueur4);
-
-		boutonActionSpe.setBounds(220,50,160,70);
-		boutonActionSpe.setFocusable(false);
+		boutonActionSpe = new Bouton("Action Speciale", x + width, 50, 192, 80);
 		boutonActionSpe.setBackground(Color.RED);
 		add(boutonActionSpe);
 
-		JButton text = new JButton("Helico");
-		text.setBounds(20,50,200,20);
-		text.setFocusable(false);
-		add(text);
+		boutonFinTour = new Bouton("Fin de tour", x + 2*width, 50, width, 80);
+		boutonFinTour.addActionListener(e -> modele.finDeTour());
+		add(boutonFinTour);
+
+		for(int i = 0; i < Modele.NOMBRE_JOUEURS; i++)
+		{
+			int dx = width/Modele.NOMBRE_JOUEURS;
+			boutonJoueur[i] = new Bouton(String.valueOf(i + 1), x, 80, dx, 50);
+			boutonJoueur[i].setBackground(Color.RED);
+			add(boutonJoueur[i]);
+			x += dx;
+		}
+
 		setLayout(new BorderLayout());
 	}
 

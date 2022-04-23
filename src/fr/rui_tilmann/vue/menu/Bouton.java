@@ -3,14 +3,14 @@ package fr.rui_tilmann.vue.menu;
 import javax.swing.*;
 import java.awt.*;
 
-class Bouton extends JButton
+public class Bouton extends JButton
 {
 
-	Bouton(String text, int y)
+	public Bouton(String text, int x, int y, int dx, int dy)
 	{
 		setText(text);
-		setSize(new Dimension(200, 50));
-		setLocation(500, y);
+		setLocation(x, y);
+		setSize(dx, dy);
 		setFocusable(false);
 	}
 

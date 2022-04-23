@@ -25,12 +25,16 @@ public class MainMenuFrame extends JFrame
 		MainMenu mainMenu = new MainMenu();
 		setContentPane(mainMenu);
 
-		Bouton boutonJouer = new Bouton("Jouer", 100);
-		Slider sliderDifficulte = new Slider(0, Difficulte.values().length - 1, difficulte.ordinal(), 168);
-		Bouton boutonDifficulte = new Bouton(sDif + difficulte.toString(), 200);
-		Slider sliderJoueurs = new Slider(2, 4, nbJoueurs, 268);
-		Bouton boutonJoueurs = new Bouton(sJrs + nbJoueurs, 300);
-		Bouton boutonQuitter = new Bouton("Quitter", 400);
+		int x = 500;
+		int dx = 200;
+		int dy = 50;
+
+		Bouton boutonJouer = new Bouton("Jouer", x, 100, dx, dy);
+		Slider sliderDifficulte = new Slider(0, Difficulte.values().length - 1, difficulte.ordinal(), x, 168, dx, dy);
+		Bouton boutonDifficulte = new Bouton(sDif + difficulte.toString(), x, 200, dx, dy);
+		Slider sliderJoueurs = new Slider(2, 4, nbJoueurs, x, 268, dx, dy);
+		Bouton boutonJoueurs = new Bouton(sJrs + nbJoueurs, x, 300, dx, dy);
+		Bouton boutonQuitter = new Bouton("Quitter", x, 400, dx, dy);
 
 		boutonJouer.addActionListener(e -> {
 			dispose();
