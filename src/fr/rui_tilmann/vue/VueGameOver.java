@@ -29,6 +29,14 @@ public class VueGameOver extends JPanel
 				if(y <= 0) cancel();
 			}
 		}, 0, 1);
+
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				JOptionPane.showMessageDialog(null, "Voulez vous quitter ?","Quitter", JOptionPane.QUESTION_MESSAGE);
+				System.exit(0);
+			}
+		}, 2000);
 	}
 
 	public void paintComponent(Graphics g)
@@ -38,7 +46,27 @@ public class VueGameOver extends JPanel
 		if(state != GameOver.GAGNE)
 		{
 			g.drawImage(eau, 0, y, null);
+
+			// TODO faire mieux
+			String s = "";
+			switch(state)
+			{
+				case GAGNE: s = "Gagné"; break;
+				case HELIPORT_SUBMERGE: s = "L'héliport a été submergé"; break;
+				case NOYADE: s = "Un joueur s'est noyé"; break;
+				case NIVEAU_EAU_TROP_HAUT: s = "Le niveau d'eau est trop haut"; break;
+				case TRESOR_IRRECUPERABLE: s = "Un trésor est irrécupérable"; break;
+			}
+			g.setFont(new Font("", Font.BOLD, 30));
+
+			g.setColor(Color.BLACK);
+			g.drawString(s, getWidth()/2 - 180 + 5, getHeight()/2 + 5);
+
+			g.setColor(Color.WHITE);
+			g.drawString(s, getWidth()/2 - 180, getHeight()/2);
 		}
+
+		// TODO quand on gagne
 	}
 
 }

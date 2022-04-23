@@ -6,7 +6,9 @@ import fr.rui_tilmann.vue.Observable;
 import fr.rui_tilmann.vue.VueGameOver;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.Timer;
 
 public class Modele extends Observable
@@ -236,7 +238,7 @@ public class Modele extends Observable
 	public void finDeTour()
 	{
 		if(!finDeTourPossible) return;
-		finDePartie(GameOver.HELIPORT_SUBMERGE);
+		//finDePartie(GameOver.NOYADE);
 		finDeTourPossible = false;
 		Joueur joueur = getCurrentJoueur();
 		joueur.piocheCartes();
@@ -260,12 +262,10 @@ public class Modele extends Observable
 
 	private void finDePartie(GameOver state)
 	{
-		nbActions = -1; // TODO faire en sorte que on peut plus rien faire
-		finDeTourPossible = false;
-		System.out.println(state);
 		JPanel vueGameOver = new VueGameOver(state);
 		gameFrame.setGlassPane(vueGameOver);
 		vueGameOver.setVisible(true);
+		gameFrame.getContentPane().setVisible(false);
 	}
 
 }
