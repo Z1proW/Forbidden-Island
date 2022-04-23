@@ -4,6 +4,7 @@ import fr.rui_tilmann.modele.enums.Etat;
 import fr.rui_tilmann.modele.enums.Zone;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 public class Plateau
@@ -12,7 +13,6 @@ public class Plateau
 	private final Modele modele;
 	public static final int LENGTH = 8;
 	private final Case[][] cases = new Case[LENGTH][LENGTH];
-	private final HashMap<Case, Zone> ZoneImportante = new HashMap<>();
 
 	public Plateau(Modele modele)
 	{
@@ -20,7 +20,6 @@ public class Plateau
 
 		initCases();
 		ileCirculaire();
-		//inonderSixCases();
 		placerZones();
 	}
 
@@ -38,12 +37,6 @@ public class Plateau
 			if(!c.dansIle())
 				c.setEtat(Etat.SUBMERGEE);
 		});
-	}
-
-	private void inonderSixCases()
-	{
-		for(int i = 0; i < 6; i++)
-			caseAleatoire(Etat.SECHE).setEtat(Etat.INONDEE);
 	}
 
 	private void placerZones()
@@ -77,7 +70,6 @@ public class Plateau
 		do c = caseAleatoire(Etat.SECHE, Etat.INONDEE);
 		while(c.getType() != Zone.NORMALE);
 		c.setType(type);
-		ZoneImportante.put(c, type);
 	}
 
 	protected Case caseAleatoire(Etat... etatsPossibles)
@@ -93,15 +85,13 @@ public class Plateau
 		return getCase(new Random().nextInt(LENGTH), new Random().nextInt(LENGTH));
 	}
 
-	public void removeZoneImportante(Case c) {
-		ZoneImportante.remove(c);
-	}
-
-	public int zoneImportantePasSubmergee(Zone zone) {
-		int nbType = 0;
-
-		for(Zone z : ZoneImportante.values())
-			if(zone == z) nbType++;
-		return nbType;
+	public int compte(Zone zone) {
+		AtomicInteger i = new AtomicInteger();
+		forEachCase(c ->
+		{
+			if(c.getType() == zone)
+				i.getAndIncrement();
+		});
+		return i.get();
 	}
 }

@@ -40,9 +40,8 @@ public class Joueur
 
 	public void deplace(Case c, boolean useAction)
 	{
-		if(modele.actionsRestantes()
-		&& c != position
-		&& c.getEtat() != Etat.SUBMERGEE)
+		if(modele.actionsRestantes() && c != position
+		&& (c.getEtat() != Etat.SUBMERGEE || role == Role.PLONGEUR))
 		{
 			position = c;
 			if(useAction) modele.useAction();
@@ -58,7 +57,10 @@ public class Joueur
 	public void deplace(Direction d, boolean useAction) {
 		Case adjacente = getPosition().adjacente(d);
 
-		if(adjacente.getEtat() != Etat.SECHE && getRole() == Role.PLONGEUR)
+		if(!adjacente.dansIle()) return;
+
+		if(getRole() == Role.PLONGEUR
+		&& adjacente.getEtat() != Etat.SECHE)
 		{
 			//adjacente = adjacente.adjacente(d);
 

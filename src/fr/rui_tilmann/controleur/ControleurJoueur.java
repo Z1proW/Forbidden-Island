@@ -100,10 +100,9 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 					if(c != caseHelico)
 					{
 						boolean aBienTransporte = false;
-						for(Joueur jh: caseHelico.getJoueurs()) {
-							for(int j=0; j < modele.getJoueurs().size(); j++) {
-								if (jh == modele.getJoueur(j)
-										&& jSelect[j]) {
+						for(Joueur jh : caseHelico.getJoueurs()) {
+							for(int j = 0; j < modele.getJoueurs().size(); j++) {
+								if(jh == modele.getJoueur(j) && jSelect[j]) {
 									jh.deplace(c, false);
 									aBienTransporte = true;
 								}

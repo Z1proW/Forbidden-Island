@@ -6,7 +6,6 @@ import fr.rui_tilmann.vue.Observable;
 import fr.rui_tilmann.vue.VueGameOver;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
@@ -54,7 +53,7 @@ public class Modele extends Observable
 	}
 	private void initInondation()
 	{
-		for(int i=0; i < 6 ; i++)
+		for(int i = 0; i < 6 ; i++)
 			inonderCase(pileCartes.caseAInonder());
 	}
 
@@ -173,6 +172,7 @@ public class Modele extends Observable
 
 			case INONDEE:
 				c.setEtat(Etat.SUBMERGEE);
+				c.setType(Zone.NORMALE);
 				pileCartes.removeCaseAInonder(c);
 
 				// perdu si un joueur est sur la case et il n'y a pas de case adjacente pas submergee
@@ -216,15 +216,12 @@ public class Modele extends Observable
 				// perdu si c'est l'heliport
 				if(c.getType() == Zone.HELIPORT)
 					finDePartie(GameOver.HELIPORT_SUBMERGE);
-
+				System.out.println(plateau.compte(c.getType()));
 				//Perdu si 2 zone du meme type tombe
-				if(c.getType() != Zone.NORMALE) {
-					plateau.removeZoneImportante(c);
-
-					if(plateau.zoneImportantePasSubmergee(c.getType()) == 0 && !tresorPris.getOrDefault(c.getType().toArtefact(), false))
-						finDePartie(GameOver.TRESOR_IRRECUPERABLE);
-
-				}
+				if(c.getType().toArtefact() != null
+				&& plateau.compte(c.getType()) == 0
+				&& !tresorPris.getOrDefault(c.getType().toArtefact(), false))
+					finDePartie(GameOver.TRESOR_IRRECUPERABLE);
 				break;
 		}
 	}
