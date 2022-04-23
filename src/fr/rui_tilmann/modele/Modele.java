@@ -236,7 +236,7 @@ public class Modele extends Observable
 	public void finDeTour()
 	{
 		if(!finDeTourPossible) return;
-		//finDePartie(GameOver.HELIPORT_SUBMERGE);
+		finDePartie(GameOver.HELIPORT_SUBMERGE);
 		finDeTourPossible = false;
 		Joueur joueur = getCurrentJoueur();
 		joueur.piocheCartes();

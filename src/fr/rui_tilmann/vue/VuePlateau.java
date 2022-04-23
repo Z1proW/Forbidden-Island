@@ -10,6 +10,9 @@ import fr.rui_tilmann.modele.Plateau;
 import fr.rui_tilmann.controleur.ControleurJoueur;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
 
 public class VuePlateau extends JPanel implements Observer
 {
@@ -42,6 +45,9 @@ public class VuePlateau extends JPanel implements Observer
 
 	private void paint(Graphics g, Case c, int x, int y)
 	{
+		if(c.getEtat() == Etat.INONDEE)
+			g.drawImage(Etat.SUBMERGEE.getImage(), x, y, null);
+
 		g.drawImage(c.getEtat().getImage(), x, y, null);
 
 		if(c.getEtat() != Etat.SUBMERGEE)
