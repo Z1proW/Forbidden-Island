@@ -1,9 +1,9 @@
-package fr.rui_tilmann.vue;
+package fr.rui_tilmann.vue.menu;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class MainMenu extends JPanel
+class MainMenu extends JPanel
 {
     private final ImageIcon bg = new ImageIcon("src/fr/rui_tilmann/images/menu/background.png");
 

@@ -124,12 +124,13 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			switch(clickedJoueur.getCartes().get(clickedCard))
 			{
 				case HELICOPTERE:
-					if(c != caseHelico
-					&& c.getEtat() != Etat.SUBMERGEE)
-					{
-						if(caseHelico == null)
-							caseHelico = clickedJoueur.getPosition();
+					if(c.getEtat() == Etat.SUBMERGEE) return;
 
+					if(caseHelico == null)
+						caseHelico = clickedJoueur.getPosition();
+
+					if(c != caseHelico)
+					{
 						for(Joueur j : caseHelico.getJoueurs()) {
 							if(j == modele.getJoueur(0) && j1)
 								j.deplace(c, false);
@@ -141,8 +142,8 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 								j.deplace(c, false);
 						}
 						joueur.defausseCarte(clickedCard);
-						caseHelico = null;
 					}
+					caseHelico = null;
 					break;
 
 				case SAC_DE_SABLE:

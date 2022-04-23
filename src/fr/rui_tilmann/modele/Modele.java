@@ -1,9 +1,13 @@
 package fr.rui_tilmann.modele;
 
 import fr.rui_tilmann.modele.enums.*;
+import fr.rui_tilmann.vue.GameFrame;
 import fr.rui_tilmann.vue.Observable;
+import fr.rui_tilmann.vue.VueGameOver;
 
+import javax.swing.*;
 import java.util.*;
+import java.util.Timer;
 
 public class Modele extends Observable
 {
@@ -14,6 +18,7 @@ public class Modele extends Observable
 	private final PileCartes pileCartes;
 
 	public static int NOMBRE_JOUEURS;
+	private final GameFrame gameFrame;
 
 	private int idJoueur = 0;
 	private int nbActions = 3;
@@ -22,11 +27,12 @@ public class Modele extends Observable
 
 	public boolean actionUtiliseePilote = false;
 	public boolean actionSpeIngenieur = false;
-	public boolean TrueEnd = true;
+	public boolean finDeTourPossible = true;
 
-	public Modele(Difficulte difficulte, int nbJoueurs)
+	public Modele(Difficulte difficulte, int nbJoueurs, GameFrame gameFrame)
 	{
 		NOMBRE_JOUEURS = nbJoueurs;
+		this.gameFrame = gameFrame;
 
 		plateau = new Plateau(this);
 
@@ -115,7 +121,6 @@ public class Modele extends Observable
 		return nbActions > 0;
 	}
 
-	// TODO méthode à appeler quand on pioche une Carte MONTEE_DES_EAUX
 	public void monteeEau()
 	{
 		niveauEau.monteeEau();
@@ -147,10 +152,10 @@ public class Modele extends Observable
 	public void inonderCases()
 	{
 		for(int i = 0; i < niveauEau.getNombreCartes(); i++)
-			monteeEauCase(pileCartes.caseAInonder());
+			inonderCase(pileCartes.caseAInonder());
 	}
 
-	private void monteeEauCase(Case c)
+	private void inonderCase(Case c)
 	{
 		switch(c.getEtat())
 		{
@@ -210,6 +215,7 @@ public class Modele extends Observable
 
 					if(plateau.zoneImportantePasSubmergee(c.getType()) == 0 && !tresorPris.getOrDefault(c.getType().toArtefact(), false))
 						finDePartie(GameOver.TRESOR_IRRECUPERABLE);
+
 				}
 				break;
 		}
@@ -223,55 +229,37 @@ public class Modele extends Observable
 
 	public void finDeTour()
 	{
-		if(TrueEnd) {
-			TrueEnd = false;
-			Joueur joueur = getCurrentJoueur();
-			joueur.piocheCartes();
+		if(!finDeTourPossible) return;
 
-			new Timer().schedule(new TimerTask() {
-				@Override
-				public void run() {
-					if (joueurs.stream().allMatch(j -> j.getCartes().size() <= 5)) {
-						actionUtiliseePilote = false;
-						actionSpeIngenieur = false;
+		finDeTourPossible = false;
+		Joueur joueur = getCurrentJoueur();
+		joueur.piocheCartes();
 
-						idJoueur = (idJoueur + 1) % NOMBRE_JOUEURS;
-						resetActions();
-						inonderCases();
-						TrueEnd = true;
-						cancel();
-					}
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				if(joueurs.stream().allMatch(j -> j.getCartes().size() <= 5)) {
+					actionUtiliseePilote = false;
+					actionSpeIngenieur = false;
+
+					idJoueur = (idJoueur + 1) % NOMBRE_JOUEURS;
+					resetActions();
+					inonderCases();
+					finDeTourPossible = true;
+					cancel();
 				}
-			}, 2000, 10);
-		}
+			}
+		}, 2000, 10);
 	}
 
 	private void finDePartie(GameOver state)
 	{
-		nbActions = 0;
-
-		switch(state)
-		{
-			case GAGNE:
-				System.exit(1); // TODO
-				break;
-
-			case NOYADE:
-				System.exit(2);
-				break;
-
-			case HELIPORT_SUBMERGE:
-				System.exit(3);
-				break;
-
-			case NIVEAU_EAU_TROP_HAUT:
-				System.exit(4);
-				break;
-
-			case TRESOR_IRRECUPERABLE:
-				System.exit(5);
-				break;
-		}
+		nbActions = -1; // TODO faire en sorte que on peut plus rien faire
+		finDeTourPossible = false;
+		System.out.println(state);
+		JPanel vueGameOver = new VueGameOver(state);
+		gameFrame.setGlassPane(vueGameOver);
+		vueGameOver.setVisible(true);
 	}
 
 }

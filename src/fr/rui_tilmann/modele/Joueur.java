@@ -142,12 +142,6 @@ public class Joueur
 		return false;
 	}
 
-	public Carte utiliseCarte(int n) {
-		modele.getPileCartes().defausser(cartes.get(n));
-		modele.useAction();
-		return cartes.remove(n);
-	}
-
 	public void defausseCarte(int n) {
 		if(0 <= n && n < cartes.size())
 			modele.getPileCartes().defausser(cartes.remove(n));

@@ -32,11 +32,11 @@ public class VueEau extends JPanel implements Observer
 	public void paint(Graphics g)
 	{
 		// eau
-		ImageIcon water = new ImageIcon("src/fr/rui_tilmann/images/water.png");
+		ImageIcon water = new ImageIcon("src/fr/rui_tilmann/images/jeu/water.png");
 		g.drawImage(water.getImage(), 0, (int)((10 - (modele.getniveauEau() + 1)) * P/2 + P - 9), null);
 
 		// overlay blanc pour effet rond
-		ImageIcon over = new ImageIcon("src/fr/rui_tilmann/images/water_overlay.png");
+		ImageIcon over = new ImageIcon("src/fr/rui_tilmann/images/jeu/water_overlay.png");
 		g.drawImage(over.getImage(), 0, 0, null);
 
 		// lignes
@@ -62,7 +62,7 @@ public class VueEau extends JPanel implements Observer
 		g.drawString("5", P + 20, P /2 + P + 10);
 
 		// dessine tete de mort
-		ImageIcon skull = new ImageIcon("src/fr/rui_tilmann/images/skull.png");
+		ImageIcon skull = new ImageIcon("src/fr/rui_tilmann/images/jeu/skull.png");
 		g.drawImage(skull.getImage(), P + 10, P - 13, null);
 	}
 
