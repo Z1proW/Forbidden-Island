@@ -99,12 +99,18 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 					if(c != caseHelico)
 					{
-						for(int i = 0; i < caseHelico.getJoueurs().size(); i++) {
-							if(caseHelico.getJoueurs().get(i) == modele.getJoueur(i)
-							&& jSelect[i])
-								caseHelico.getJoueurs().get(i).deplace(c, false);
+						boolean aBienTransporte = false;
+						for(Joueur jh: caseHelico.getJoueurs()) {
+							for(int j=0; j < modele.getJoueurs().size(); j++) {
+								if (jh == modele.getJoueur(j)
+										&& jSelect[j]) {
+									jh.deplace(c, false);
+									aBienTransporte = true;
+								}
+							}
 						}
-						joueur.defausseCarte(clickedCard);
+						if(aBienTransporte)
+							joueur.defausseCarte(clickedCard);
 					}
 					caseHelico = null;
 					break;
@@ -212,7 +218,9 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			//TODO Avec joueurClicked ca ne marche pas
 			for(int i = 0; i <= caseDeplace; i++) {
 				modele.getJoueur(joueurDeplace).deplace(d, actionSpeNavigateurOuPilote);
+				actionSpeNavigateurOuPilote = false;
 			}
+			actionSpeNavigateurOuPilote = true;
 		}
 		else modele.getCurrentJoueur().deplace(d);
 	}
