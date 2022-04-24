@@ -218,6 +218,7 @@ public class Modele extends Observable
 
 	public void finDeTour()
 	{
+		aGagne();
 		if(!finDeTourPossible) return;
 		//finDePartie(GameOver.NOYADE);
 		finDeTourPossible = false;
@@ -240,7 +241,8 @@ public class Modele extends Observable
 			}
 		}, 2000, 10);
 	}
-	private void agagne(){
+
+	private void aGagne() {
 		finDePartie(GameOver.GAGNE);
 	}
 

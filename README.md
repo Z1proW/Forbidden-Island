@@ -19,11 +19,11 @@
 
 ## Action Possible
 
-Appuie sur 1,2,3,4(ou le bouton correspondant) pour (dés)activer le fait qu'on transporte le joueur avec l'hélicot
+Appuie sur 1,2,3,4 (ou le bouton correspondant) pour (dés)activer le fait qu'on transporte le joueur avec l'hélicoptère
 
-Appuie sur n(ou le bouton correspondant) pour (dés)activer le pouvoir spécial du navigateur ou du pilote
+Appuie sur n (ou le bouton correspondant) pour (dés)activer le pouvoir spécial du navigateur ou du pilote
 
-Appuie sur m(ou le bouton correspondant) pour changer la distance auquel le navigateur déplace la personne
+Appuie sur m (ou le bouton correspondant) pour changer la distance auquel le navigateur déplace la personne
 
 Appuie sur espace(ou le bouton correspondant) pour changer le joueur qui est déplacé par le navigateur
 
@@ -49,9 +49,9 @@ On a la pile de carte trésor et inondation
 
 On a fait les actions spéciales des différents rôles et cartes
 
-On a aussi fait l'échange de carte
+On a aussi fait l'échange de cartes
 
-On a aussi des sprites et un main menu + tous les trucs basics du jeu
+On a aussi des sprites et un main menu + tous les trucs basiques du jeu
 
 On a aussi une animation quand on gagne ou on perd
 les perte qu'on a fait sont noyade, trésor plus récupérable et héliport qui
