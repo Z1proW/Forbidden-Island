@@ -253,7 +253,8 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 		if(modele.getCurrentJoueur().getRole() == Role.NAVIGATEUR
 		&& d != Direction.AUCUNE
-		&& actionSpeNavigateurOuPilote) {
+		&& actionSpeNavigateurOuPilote
+		&& modele.getJoueur(joueurDeplace).getRole() != Role.NAVIGATEUR) {
 
 			switch (caseDeplace){
 				case 0: modele.getJoueur(joueurDeplace).deplace(d);break;
