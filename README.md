@@ -53,6 +53,12 @@ On a aussi fait l'échange de carte
 
 On a aussi des sprites et un main menu + tous les trucs basics du jeu
 
+On a aussi une animation quand on gagne ou on perd
+les perte qu'on a fait sont noyade, trésor plus récupérable et héliport qui
+est submergé
+
+On a aussi rajouté des sons pour certaine action
+
 ## Quelques problèmes qu'on a pas résolue
 
 Lorsqu'un joueur est sur une case qui se fait submergé on le laisse 
