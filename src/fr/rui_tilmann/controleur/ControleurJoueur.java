@@ -229,12 +229,12 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		&& d != Direction.AUCUNE
 		&& actionSpeNavigateurOuPilote) {
 
-			//TODO Avec joueurClicked ca ne marche pas
-			for(int i = 0; i <= caseDeplace; i++) {
-				modele.getJoueur(joueurDeplace).deplace(d, actionSpeNavigateurOuPilote);
-				actionSpeNavigateurOuPilote = false;
+			switch (caseDeplace){
+				case 0: modele.getJoueur(joueurDeplace).deplace(d);break;
+				case 1:
+					modele.getJoueur(joueurDeplace).deplace(d, false);
+					modele.getJoueur(joueurDeplace).deplace(d);break;
 			}
-			actionSpeNavigateurOuPilote = true;
 		}
 		else modele.getCurrentJoueur().deplace(d);
 	}
