@@ -14,6 +14,7 @@ public class VueArtefact extends JPanel implements Observer
 	public Bouton boutonFinTour;
 	public Bouton[] boutonJoueur = bJrs();
 	public Bouton boutonActionSpe = new Bouton("", 0, 0, 0, 0);
+	public static Bouton boutonNbNombreRestant = new Bouton("",0 ,0, 0, 0);
 
 
 	public VueArtefact(Modele modele)
@@ -41,6 +42,8 @@ public class VueArtefact extends JPanel implements Observer
 
 		Bouton text = new Bouton("Helico", x, 50, width, 30);
 		add(text);
+		Bouton NBaction = new Bouton("Nombres actions restants:",x  , 130, width, 50);
+		add(NBaction);
 
 		boutonActionSpe = new Bouton("Action Speciale", x + width, 50, 192, 80);
 		boutonActionSpe.setBackground(Color.RED);
@@ -49,6 +52,9 @@ public class VueArtefact extends JPanel implements Observer
 		boutonFinTour = new Bouton("Fin de tour", x + 2*width, 50, width, 80);
 		boutonFinTour.addActionListener(e -> modele.finDeTour());
 		add(boutonFinTour);
+
+		boutonNbNombreRestant = new Bouton("3",x+width, 130, 50, 50);
+		add(boutonNbNombreRestant);
 
 		for(int i = 0; i < Modele.NOMBRE_JOUEURS; i++)
 		{

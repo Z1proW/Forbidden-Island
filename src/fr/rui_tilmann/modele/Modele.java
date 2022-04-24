@@ -4,6 +4,7 @@ import fr.rui_tilmann.modele.enums.*;
 import fr.rui_tilmann.vue.GameFrame;
 import fr.rui_tilmann.vue.Observable;
 import fr.rui_tilmann.vue.VueGameOver;
+import static fr.rui_tilmann.vue.VueArtefact.boutonNbNombreRestant;
 
 import javax.swing.*;
 import java.util.*;
@@ -118,6 +119,10 @@ public class Modele extends Observable
 		return pileCartes;
 	}
 
+	public int getNbActions(){
+		return nbActions;
+	}
+
 	private void resetActions()
 	{
 		nbActions = 3;
@@ -230,6 +235,8 @@ public class Modele extends Observable
 	{
 		nbActions--;
 		if(nbActions == 0) finDeTour();
+
+		boutonNbNombreRestant.setText("" + nbActions);
 	}
 
 	public void finDeTour()
@@ -251,6 +258,7 @@ public class Modele extends Observable
 					resetActions();
 					inonderCases();
 					finDeTourPossible = true;
+					boutonNbNombreRestant.setText("" + nbActions);
 					cancel();
 				}
 			}
