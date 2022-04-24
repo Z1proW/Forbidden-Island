@@ -183,7 +183,6 @@ public class Modele extends Observable
 				// perdu si un joueur est sur une case submergee et pas de cases autour
 				joueurs.forEach(joueur ->
 				{
-					System.out.println(joueur.getPosition().casesAdjacentes(joueur.getRole() == Role.EXPLORATEUR).size());
 					if(joueur.getPosition().getEtat() == Etat.SUBMERGEE
 					&& joueur.getPosition().casesAdjacentes(joueur.getRole() == Role.EXPLORATEUR)
 					.stream().allMatch(c2 -> c2.getEtat() == Etat.SUBMERGEE))
