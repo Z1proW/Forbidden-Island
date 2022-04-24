@@ -6,7 +6,13 @@
 </p>
 
 
-## a screen of gameplay
+## a glimpse of gameplay
 <p align="center">
     <img src="ImageReadme/GamePlayIleInterdite.PNG" width="700" title="Gameplay">
+</p>
+
+## Some explanation
+
+<p align="center">
+    <img src="ImageReadme/Gameplay explication.PNG" width="800" title="Gameplay">
 </p>
