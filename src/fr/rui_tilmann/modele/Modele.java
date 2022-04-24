@@ -1,9 +1,9 @@
 package fr.rui_tilmann.modele;
 
 import fr.rui_tilmann.modele.enums.*;
-import fr.rui_tilmann.vue.Vue;
 import fr.rui_tilmann.vue.Observable;
 import fr.rui_tilmann.vue.VueGameOver;
+import fr.rui_tilmann.vue.jeu.Vue;
 
 import javax.swing.*;
 import java.util.Timer;

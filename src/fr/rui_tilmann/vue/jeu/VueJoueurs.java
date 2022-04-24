@@ -1,4 +1,4 @@
-package fr.rui_tilmann.vue;
+package fr.rui_tilmann.vue.jeu;
 
 import fr.rui_tilmann.modele.Case;
 import fr.rui_tilmann.modele.Joueur;
@@ -7,7 +7,7 @@ import fr.rui_tilmann.modele.Modele;
 import java.awt.*;
 import java.util.List;
 
-import static fr.rui_tilmann.vue.VuePlateau.P;
+import static fr.rui_tilmann.vue.jeu.VuePlateau.P;
 
 public class VueJoueurs
 {

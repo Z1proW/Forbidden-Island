@@ -4,10 +4,9 @@ import fr.rui_tilmann.modele.Case;
 import fr.rui_tilmann.modele.Joueur;
 import fr.rui_tilmann.modele.Modele;
 import fr.rui_tilmann.modele.enums.*;
-import fr.rui_tilmann.vue.VueArtefact;
-import fr.rui_tilmann.vue.VuePlateau;
+import fr.rui_tilmann.vue.jeu.VueBoutons;
+import fr.rui_tilmann.vue.jeu.VuePlateau;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -16,7 +15,7 @@ import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static fr.rui_tilmann.vue.VuePlateau.P;
+import static fr.rui_tilmann.vue.jeu.VuePlateau.P;
 
 public class ControleurJoueur extends MouseAdapter implements KeyListener
 {
@@ -36,7 +35,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 	private int caseDeplace = 0;
 
-	public ControleurJoueur(Modele modele, VuePlateau vuePlateau, VueArtefact vueArtefact)
+	public ControleurJoueur(Modele modele, VuePlateau vuePlateau, VueBoutons vueArtefact)
 	{
 		this.modele = modele;
 		this.vuePlateau = vuePlateau;
@@ -46,10 +45,10 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			jSelect[i] = false;
 
 			int finalI = i;
-			vueArtefact.boutonJoueur[i].addActionListener(e -> {
-				jSelect[finalI] = !jSelect[finalI];
-			});
+			vueArtefact.boutonJoueur[i].addActionListener(e -> jSelect[finalI] = !jSelect[finalI]);
 		}
+
+		vueArtefact.boutonActionSpe.addActionListener(e -> actionSpeNavigateurOuPilote = !actionSpeNavigateurOuPilote);
 
 		vueArtefact.boutonActionSpe.addActionListener(e -> {
 			if(!actionSpeNavigateurOuPilote) {
@@ -83,10 +82,11 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 					vueArtefact.boutonActionSpe.setBackground(Color.RED);
 			}
 		}, 0, 100);
+		
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
-				for (int i=0; i < modele.NOMBRE_JOUEURS; i++){
+				for(int i = 0; i < Modele.NOMBRE_JOUEURS; i++) {
 					if(jSelect[i])
 						vueArtefact.boutonJoueur[i].setBackground(Color.GREEN);
 					else

@@ -1,7 +1,9 @@
 package fr.rui_tilmann.vue.menu;
 
+import fr.rui_tilmann.controleur.Bouton;
+import fr.rui_tilmann.controleur.Slider;
 import fr.rui_tilmann.modele.enums.Difficulte;
-import fr.rui_tilmann.vue.Vue;
+import fr.rui_tilmann.vue.jeu.Vue;
 
 import javax.swing.*;
 import java.awt.*;

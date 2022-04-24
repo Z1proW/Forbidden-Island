@@ -1,4 +1,4 @@
-package fr.rui_tilmann.vue;
+package fr.rui_tilmann.vue.jeu;
 
 import fr.rui_tilmann.controleur.ControleurCartes;
 import fr.rui_tilmann.controleur.ControleurJoueur;
@@ -26,7 +26,7 @@ public class Vue extends JFrame
 		VuePlateau vuePlateau = new VuePlateau(modele, vueJoueurs);
 		add(vuePlateau, BorderLayout.WEST);
 
-		VueArtefact vueArtefact = new VueArtefact(modele);
+		VueBoutons vueArtefact = new VueBoutons(modele);
 
 		ControleurJoueur controleurJoueur = new ControleurJoueur(modele, vuePlateau, vueArtefact);
 		addMouseListener(controleurJoueur);

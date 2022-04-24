@@ -1,17 +1,16 @@
 package fr.rui_tilmann.controleur;
 
-import fr.rui_tilmann.modele.enums.Carte;
-import fr.rui_tilmann.modele.enums.Role;
 import fr.rui_tilmann.modele.Joueur;
 import fr.rui_tilmann.modele.Modele;
+import fr.rui_tilmann.modele.enums.Carte;
+import fr.rui_tilmann.modele.enums.Role;
 import fr.rui_tilmann.modele.enums.Son;
-import fr.rui_tilmann.vue.VueCartes;
+import fr.rui_tilmann.vue.jeu.VueCartes;
 
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
-public class ControleurCartes implements MouseMotionListener, MouseListener
+public class ControleurCartes extends MouseAdapter
 {
 
 	private final Modele modele;

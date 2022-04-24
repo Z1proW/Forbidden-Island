@@ -1,16 +1,16 @@
-package fr.rui_tilmann.vue;
+package fr.rui_tilmann.vue.jeu;
 
 import fr.rui_tilmann.modele.enums.Artefact;
 import fr.rui_tilmann.modele.Modele;
-import fr.rui_tilmann.modele.enums.Role;
-import fr.rui_tilmann.vue.menu.Bouton;
+import fr.rui_tilmann.vue.Observer;
+import fr.rui_tilmann.controleur.Bouton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class VueArtefact extends JPanel implements Observer
+public class VueBoutons extends JPanel implements Observer
 {
 
 	private final Modele modele;
@@ -20,7 +20,7 @@ public class VueArtefact extends JPanel implements Observer
 	public Bouton MessagerJoueurAction;
 	public Bouton MessagerDeplaceCase;
 
-	public VueArtefact(Modele modele)
+	public VueBoutons(Modele modele)
 	{
 		this.modele = modele;
 		modele.addObserver(this);
@@ -78,7 +78,7 @@ public class VueArtefact extends JPanel implements Observer
 			@Override
 			public void run() {
 				String s = "";
-				switch (modele.getCurrentJoueur().getRole()){
+				switch(modele.getCurrentJoueur().getRole()) {
 					case INGENIEUR: s = "<font color='red'>";break;
 					case MESSAGER: s = "<font color='silver'>";break;
 					case PLONGEUR: s = "<font color='blue'>";break;

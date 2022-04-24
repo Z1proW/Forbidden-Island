@@ -1,9 +1,10 @@
-package fr.rui_tilmann.vue;
+package fr.rui_tilmann.vue.jeu;
 
 import fr.rui_tilmann.controleur.ControleurCartes;
 import fr.rui_tilmann.modele.enums.Carte;
 import fr.rui_tilmann.modele.Joueur;
 import fr.rui_tilmann.modele.Modele;
+import fr.rui_tilmann.vue.Observer;
 
 import javax.swing.*;
 import java.awt.*;

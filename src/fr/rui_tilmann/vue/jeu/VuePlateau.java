@@ -1,4 +1,4 @@
-package fr.rui_tilmann.vue;
+package fr.rui_tilmann.vue.jeu;
 
 import fr.rui_tilmann.controleur.ControleurCartes;
 import fr.rui_tilmann.modele.Case;
@@ -6,6 +6,7 @@ import fr.rui_tilmann.modele.enums.Carte;
 import fr.rui_tilmann.modele.enums.Etat;
 import fr.rui_tilmann.modele.Modele;
 import fr.rui_tilmann.modele.Plateau;
+import fr.rui_tilmann.vue.Observer;
 
 import javax.swing.*;
 import java.awt.*;

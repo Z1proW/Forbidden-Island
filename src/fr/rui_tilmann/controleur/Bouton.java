@@ -1,4 +1,4 @@
-package fr.rui_tilmann.vue.menu;
+package fr.rui_tilmann.controleur;
 
 import javax.swing.*;
 
