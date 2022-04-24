@@ -11,10 +11,5 @@ public enum Direction
 	SUD_OUEST,
 	OUEST,
 	NORD_OUEST,
-	AUCUNE;
-
-	public boolean estDiagonale()
-	{
-		return (ordinal() & 1) != 0;
-	}
+	AUCUNE
 }
