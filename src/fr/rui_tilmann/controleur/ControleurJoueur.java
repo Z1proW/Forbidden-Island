@@ -148,10 +148,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 						modele.useAction();
 						if(!modele.actionsRestantes()) return;
 					}
-					if(j.getRole() == Role.PLONGEUR && c.getEtat() != Etat.SECHE)
-						actionSpePlongeur = true;
-					else
-						actionSpePlongeur = false;
+					actionSpePlongeur = j.getRole() == Role.PLONGEUR && c.getEtat() != Etat.SECHE;
 					j.deplace(c,!actionSpePlongeur);
 					break;
 

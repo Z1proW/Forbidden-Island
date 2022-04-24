@@ -221,7 +221,7 @@ public class Modele extends Observable
 				// perdu si c'est l'heliport
 				if(c.getType() == Zone.HELIPORT)
 					finDePartie(GameOver.HELIPORT_SUBMERGE);
-				System.out.println(plateau.compte(c.getType()));
+				
 				//Perdu si 2 zone du meme type tombe
 				if(c.getType().toArtefact() != null
 				&& plateau.compte(c.getType()) == 0
