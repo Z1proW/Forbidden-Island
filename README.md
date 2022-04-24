@@ -1,4 +1,10 @@
-![alt text](https://gitlab.dsi.universite-paris-saclay.fr/tilmann.berland/projetpogl/-/blob/main/ImageReadme/MainMenuIleInterdite.PNG?raw=true)
 
 
-![alt text](https://gitlab.dsi.universite-paris-saclay.fr/tilmann.berland/projetpogl/-/blob/main/ImageReadme/GamePlayIleInterdite.PNG)
+
+<p align="center">
+  <img src="ImageReadme/MainMenuIleInterdite.PNG" width="700" title="Main Menu">
+</p>
+
+<p align="center">
+    <img src="ImageReadme/GamePlayIleInterdite.PNG" width="700" title="Gameplay">
+</p>
