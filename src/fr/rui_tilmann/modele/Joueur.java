@@ -40,6 +40,7 @@ public class Joueur
 
 	public void deplace(Case c, boolean useAction)
 	{
+		if(!c.dansIle()) return;
 		if(modele.actionsRestantes() && c != position
 		&& (c.getEtat() != Etat.SUBMERGEE || role == Role.PLONGEUR))
 		{

@@ -13,6 +13,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static fr.rui_tilmann.vue.VuePlateau.P;
 
@@ -45,30 +47,38 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 			int finalI = i;
 			vueArtefact.boutonJoueur[i].addActionListener(e -> {
-				AbstractButton button = (AbstractButton)e.getSource();
-				Color color = button.getBackground();
-
-				if(color == Color.RED) {
-					vueArtefact.boutonJoueur[finalI].setBackground(Color.GREEN);
-					jSelect[finalI] = true;
-				}
-				else {
-					vueArtefact.boutonJoueur[finalI].setBackground(Color.RED);
-					jSelect[finalI] = false;
-				}
+				jSelect[finalI] = !jSelect[finalI];
 			});
 		}
 
 		vueArtefact.boutonActionSpe.addActionListener(e -> {
 			if(!actionSpeNavigateurOuPilote) {
-				vueArtefact.boutonActionSpe.setBackground(Color.GREEN);
 				actionSpeNavigateurOuPilote = true;
 			}
 			else {
-				vueArtefact.boutonActionSpe.setBackground(Color.RED);
 				actionSpeNavigateurOuPilote = false;
 			}
 		});
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				if(actionSpeNavigateurOuPilote)
+					vueArtefact.boutonActionSpe.setBackground(Color.GREEN);
+				else
+					vueArtefact.boutonActionSpe.setBackground(Color.RED);
+			}
+		}, 0, 10);
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				for (int i=0; i < modele.NOMBRE_JOUEURS; i++){
+					if(jSelect[i])
+						vueArtefact.boutonJoueur[i].setBackground(Color.GREEN);
+					else
+						vueArtefact.boutonJoueur[i].setBackground(Color.RED);
+				}
+			}
+		}, 0, 50);
 	}
 
 	@Override
@@ -196,6 +206,10 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			case KeyEvent.VK_RIGHT: d = Direction.EST; 	 break;
 			case KeyEvent.VK_DOWN: 	d = Direction.SUD; 	 break;
 			case KeyEvent.VK_LEFT: 	d = Direction.OUEST; break;
+			case KeyEvent.VK_1: jSelect[0] = !jSelect[0];break;
+			case KeyEvent.VK_2:	jSelect[1] = !jSelect[1];break;
+			case KeyEvent.VK_3:	jSelect[2] = !jSelect[2];break;
+			case KeyEvent.VK_4:	jSelect[3] = !jSelect[3];break;
 
 			// TODO trouver d'autre moyen pour changer
 			case KeyEvent.VK_N:
