@@ -14,7 +14,7 @@ public class VueArtefact extends JPanel implements Observer
 	public Bouton boutonFinTour;
 	public Bouton[] boutonJoueur = bJrs();
 	public Bouton boutonActionSpe = new Bouton("", 0, 0, 0, 0);
-	public static Bouton boutonNbNombreRestant = new Bouton("",0 ,0, 0, 0);
+	public JLabel actionsRestantes = new JLabel("");
 
 
 	public VueArtefact(Modele modele)
@@ -38,28 +38,35 @@ public class VueArtefact extends JPanel implements Observer
 
 	private void initBoutons() {
 		int width = 192;
+		int height = 50;
 		int x = 32;
+		int y = 80;
 
-		Bouton text = new Bouton("Helico", x, 50, width, 30);
-		add(text);
-		Bouton NBaction = new Bouton("Nombres actions restants:",x  , 130, width, 50);
-		add(NBaction);
+		JLabel helicoText = new JLabel("Helico");
+		helicoText.setBounds(x, y - 30, width, 30);
+		helicoText.setForeground(Color.WHITE);
+		helicoText.setHorizontalAlignment(JLabel.CENTER);
+		add(helicoText);
 
-		boutonActionSpe = new Bouton("Action Speciale", x + width, 50, 192, 80);
+		actionsRestantes = new JLabel("Actions restantes: " + modele.getNbActions());
+		actionsRestantes.setBounds(x, y + height, width, 30);
+		actionsRestantes.setForeground(Color.WHITE);
+		actionsRestantes.setFont(new Font("", Font.PLAIN, 16));
+		actionsRestantes.setHorizontalAlignment(JLabel.CENTER);
+		add(actionsRestantes);
+
+		boutonActionSpe = new Bouton("Action Speciale", x + width, y, width, height);
 		boutonActionSpe.setBackground(Color.RED);
 		add(boutonActionSpe);
 
-		boutonFinTour = new Bouton("Fin de tour", x + 2*width, 50, width, 80);
+		boutonFinTour = new Bouton("Fin de tour", x + 2*width, y, width, height);
 		boutonFinTour.addActionListener(e -> modele.finDeTour());
 		add(boutonFinTour);
-
-		boutonNbNombreRestant = new Bouton("3",x+width, 130, 50, 50);
-		add(boutonNbNombreRestant);
 
 		for(int i = 0; i < Modele.NOMBRE_JOUEURS; i++)
 		{
 			int dx = width/Modele.NOMBRE_JOUEURS;
-			boutonJoueur[i] = new Bouton(String.valueOf(i + 1), x, 80, dx, 50);
+			boutonJoueur[i] = new Bouton(String.valueOf(i + 1), x, y, dx, height);
 			boutonJoueur[i].setBackground(Color.RED);
 			add(boutonJoueur[i]);
 			x += dx;
