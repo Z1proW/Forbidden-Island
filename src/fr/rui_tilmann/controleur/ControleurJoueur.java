@@ -59,6 +59,21 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 				actionSpeNavigateurOuPilote = false;
 			}
 		});
+		if(modele.getJoueurs().stream().anyMatch(e -> e.getRole() == Role.MESSAGER)){
+			vueArtefact.MessagerJoueurAction.addActionListener( e -> {
+				joueurDeplace = (joueurDeplace + 1) % 4;
+			});
+			vueArtefact.MessagerDeplaceCase.addActionListener( e -> {
+				caseDeplace = (caseDeplace + 1) % 2;
+			});
+			new Timer().schedule(new TimerTask() {
+				@Override
+				public void run() {
+					vueArtefact.MessagerJoueurAction.setText("Messager Joueur Action : " +  joueurDeplace);
+					vueArtefact.MessagerDeplaceCase.setText("Messager Deplace : " + (caseDeplace + 1) + " case");
+				}
+			}, 0, 100);
+		}
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -67,7 +82,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 				else
 					vueArtefact.boutonActionSpe.setBackground(Color.RED);
 			}
-		}, 0, 10);
+		}, 0, 100);
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -78,7 +93,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 						vueArtefact.boutonJoueur[i].setBackground(Color.RED);
 				}
 			}
-		}, 0, 50);
+		}, 0, 100);
 	}
 
 	@Override
@@ -208,8 +223,8 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			case KeyEvent.VK_LEFT: 	d = Direction.OUEST; break;
 			case KeyEvent.VK_1: jSelect[0] = !jSelect[0];break;
 			case KeyEvent.VK_2:	jSelect[1] = !jSelect[1];break;
-			case KeyEvent.VK_3:	jSelect[2] = !jSelect[2];break;
-			case KeyEvent.VK_4:	jSelect[3] = !jSelect[3];break;
+			case KeyEvent.VK_3:	if(3 <= jSelect.length)jSelect[2] = !jSelect[2];break;
+			case KeyEvent.VK_4: if(4 <= jSelect.length)jSelect[3] = !jSelect[3];break;
 
 			// TODO trouver d'autre moyen pour changer
 			case KeyEvent.VK_N:

@@ -2,6 +2,7 @@ package fr.rui_tilmann.vue;
 
 import fr.rui_tilmann.modele.enums.Artefact;
 import fr.rui_tilmann.modele.Modele;
+import fr.rui_tilmann.modele.enums.Role;
 import fr.rui_tilmann.vue.menu.Bouton;
 
 import javax.swing.*;
@@ -16,6 +17,8 @@ public class VueArtefact extends JPanel implements Observer
 	public Bouton boutonFinTour;
 	public Bouton[] boutonJoueur = bJrs();
 	public Bouton boutonActionSpe = new Bouton("", 0, 0, 0, 0);
+	public Bouton MessagerJoueurAction;
+	public Bouton MessagerDeplaceCase;
 
 	public VueArtefact(Modele modele)
 	{
@@ -53,6 +56,12 @@ public class VueArtefact extends JPanel implements Observer
 		actionsRestantes.setFont(new Font("", Font.BOLD, 16));
 		actionsRestantes.setHorizontalAlignment(JLabel.CENTER);
 		add(actionsRestantes);
+		if(modele.getJoueurs().stream().anyMatch(e -> e.getRole() == Role.MESSAGER)) {
+			MessagerJoueurAction = new Bouton("Messager Joueur Action : " + 0, x + width, y + height, width, height);
+			MessagerDeplaceCase = new Bouton("Messager Deplace : j" + 1, x + 2 * width, y + height, width, height);
+			add(MessagerJoueurAction);
+			add(MessagerDeplaceCase);
+		}
 
 		new Timer().schedule(new TimerTask() {
 			@Override
