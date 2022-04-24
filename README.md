@@ -6,12 +6,12 @@
 </p>
 
 
-## a petit overview du gameplay
+## Un petit overview du gameplay
 <p align="center">
     <img src="ImageReadme/GamePlayIleInterdite.PNG" width="700" title="Gameplay">
 </p>
 
-## quelque explication
+## Quelque explication
 
 <p align="center">
     <img src="ImageReadme/Gameplay explication.PNG" width="800" title="Gameplay">
@@ -53,3 +53,13 @@ On a aussi fait l'échange de carte
 
 On a aussi des sprites et un main menu + tous les trucs basics du jeu
 
+## Quelques problèmes qu'on a pas résolue
+
+Lorsqu'un joueur est sur une case qui se fait submergé on le laisse 
+à son endroit à la place de le déplacer sur une des cases adjacentes
+
+## Diagramme de classe
+
+<p align="center">
+  <img src="ImageReadme/Diagramme uml.PNG" width="900" title="Main Menu">
+</p>

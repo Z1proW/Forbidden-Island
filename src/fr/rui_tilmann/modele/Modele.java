@@ -48,6 +48,13 @@ public class Modele extends Observable
 		for(int i = 0; i < 5; i++)
 			joueurs.get(0).getCartes().add(Carte.TERRE);
 		*/
+		/*
+		tresorPris.put(Artefact.AIR,true);
+		tresorPris.put(Artefact.FEU,true);
+		tresorPris.put(Artefact.TERRE,true);
+		tresorPris.put(Artefact.EAU,true);
+		 */
+
 	}
 
 	private void initInondation()
