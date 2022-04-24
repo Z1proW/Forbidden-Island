@@ -68,7 +68,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			new Timer().schedule(new TimerTask() {
 				@Override
 				public void run() {
-					vueArtefact.MessagerJoueurAction.setText("Navigateur Joueur Action : " +  joueurDeplace);
+					vueArtefact.MessagerJoueurAction.setText("Navigateur Joueur Action: " +  joueurDeplace);
 					vueArtefact.MessagerDeplaceCase.setText("Navigateur Deplace : " + (caseDeplace + 1) + " case");
 				}
 			}, 0, 100);
