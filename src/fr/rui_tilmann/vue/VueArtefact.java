@@ -6,6 +6,9 @@ import fr.rui_tilmann.vue.menu.Bouton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class VueArtefact extends JPanel implements Observer
 {
@@ -14,7 +17,8 @@ public class VueArtefact extends JPanel implements Observer
 	public Bouton boutonFinTour;
 	public Bouton[] boutonJoueur = bJrs();
 	public Bouton boutonActionSpe = new Bouton("", 0, 0, 0, 0);
-	public JLabel actionsRestantes = new JLabel("");
+	//TODO Si tu trouve un meilleur moyen de changer le text à chaque action tu pourra enlever le static sinon evite
+	static public JLabel actionsRestantes = new JLabel("");
 
 
 	public VueArtefact(Modele modele)
@@ -25,6 +29,7 @@ public class VueArtefact extends JPanel implements Observer
 		this.setPreferredSize(new Dimension(5*VueCartes.WIDTH, 8*VuePlateau.P - 4*VueCartes.HEIGHT));
 
 		initBoutons();
+
 
 	}
 
@@ -53,6 +58,7 @@ public class VueArtefact extends JPanel implements Observer
 		actionsRestantes.setForeground(Color.WHITE);
 		actionsRestantes.setFont(new Font("", Font.PLAIN, 16));
 		actionsRestantes.setHorizontalAlignment(JLabel.CENTER);
+
 		add(actionsRestantes);
 
 		boutonActionSpe = new Bouton("Action Speciale", x + width, y, width, height);
@@ -81,6 +87,9 @@ public class VueArtefact extends JPanel implements Observer
 	public void paintComponent(Graphics g)
 	{
 		super.repaint();
+		//C pour changer le text
+		g.fillRect(55,120,150,45);
+
 
 		Artefact[] artefacts = Artefact.values();
 
@@ -100,5 +109,6 @@ public class VueArtefact extends JPanel implements Observer
 			}
 		}
 	}
+
 
 }
