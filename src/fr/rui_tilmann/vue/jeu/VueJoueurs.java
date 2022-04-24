@@ -26,7 +26,7 @@ public class VueJoueurs
 		if(js.size() == 1)
 		{
 			Joueur j = js.get(0);
-			g.setColor(j.getRole().getColor());
+			g.setColor(j.getRole().getCouleur());
 			Case pos = j.getPosition();
 			g.fillRect(pos.getX()*P + P/2 - P/8, pos.getY()*P + P/2 - P/8, P/4, P/4);
 		}
@@ -36,7 +36,7 @@ public class VueJoueurs
 
 			for(Joueur j : js)
 			{
-				g.setColor(j.getRole().getColor());
+				g.setColor(j.getRole().getCouleur());
 				Case pos = j.getPosition();
 
 				switch(i)

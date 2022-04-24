@@ -60,7 +60,7 @@ public class Modele extends Observable
 	private void initInondation()
 	{
 		for(int i = 0; i < 6 ; i++)
-			inonderCase(pileCartes.caseAInonder());
+			inonderCase(pileCartes.getCaseAInonder());
 	}
 
 	private void initJoueurs()
@@ -170,7 +170,7 @@ public class Modele extends Observable
 	public void inonderCases()
 	{
 		for(int i = 0; i < niveauEau.getNombreCartes(); i++)
-			inonderCase(pileCartes.caseAInonder());
+			inonderCase(pileCartes.getCaseAInonder());
 	}
 
 	private void inonderCase(Case c)
@@ -184,7 +184,7 @@ public class Modele extends Observable
 			case INONDEE:
 				c.setEtat(Etat.SUBMERGEE);
 				c.setZone(Zone.NORMALE);
-				pileCartes.removeCaseAInonder(c);
+				pileCartes.enleveCaseAInonder(c);
 
 				// perdu si un joueur est sur une case submergee et pas de cases autour
 				joueurs.forEach(joueur ->

@@ -1,6 +1,6 @@
 
 
-## Menu Principal du jeu
+## Menu principal
 <p align="center">
   <img src="ImageReadme/MainMenuIleInterdite.PNG" width="700" title="Main Menu">
 </p>
@@ -11,7 +11,7 @@
     <img src="ImageReadme/GamePlayIleInterdite.PNG" width="700" title="Gameplay">
 </p>
 
-## Quelque explication
+## Quelques explications
 
 <p align="center">
     <img src="ImageReadme/Gameplay explication.PNG" width="800" title="Gameplay">
@@ -59,7 +59,7 @@ est submergé
 
 On a aussi rajouté des sons pour certaine action
 
-## Quelques problèmes qu'on a pas résolue
+## Quelques problèmes qu'on a pas résolus
 
 Lorsqu'un joueur est sur une case qui se fait submergé on le laisse 
 à son endroit à la place de le déplacer sur une des cases adjacentes

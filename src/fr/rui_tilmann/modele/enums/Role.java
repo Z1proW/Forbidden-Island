@@ -12,15 +12,15 @@ public enum Role
 	PILOTE(Color.BLACK),
 	PLONGEUR(Color.BLUE);
 
-	private final Color color;
+	private final Color couleur;
 
 	Role(Color color)
 	{
-		this.color = color;
+		this.couleur = color;
 	}
 
-	public Color getColor() {
-		return color;
+	public Color getCouleur() {
+		return couleur;
 	}
 
 }

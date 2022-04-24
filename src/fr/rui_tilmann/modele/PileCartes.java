@@ -7,11 +7,11 @@ import java.util.*;
 public class PileCartes {
 	private final Modele modele;
 
-	private List<Carte> tresors = new ArrayList<>();
+	private List<Carte> cartes = new ArrayList<>();
 	private final List<Carte> defausse = new ArrayList<>();
 
 	private final List<Case> cartesInondation;
-	private final List<Case> cartesInondees = new ArrayList<>();
+	private final List<Case> defausseInondation = new ArrayList<>();
 
 	PileCartes(Modele modele) {
 		this.modele = modele;
@@ -24,23 +24,23 @@ public class PileCartes {
 
 	private void initTresors() {
 		for(int i = 0; i < 5; i++) {
-			tresors.add(Carte.TERRE);
-			tresors.add(Carte.AIR);
-			tresors.add(Carte.FEU);
-			tresors.add(Carte.EAU);
+			cartes.add(Carte.TERRE);
+			cartes.add(Carte.AIR);
+			cartes.add(Carte.FEU);
+			cartes.add(Carte.EAU);
 		}
 
 		for(int i = 0; i < 3; i++) {
-			tresors.add(Carte.HELICOPTERE);
+			cartes.add(Carte.HELICOPTERE);
 		}
 
 		for(int i = 0; i < 2; i++)
-			tresors.add(Carte.SAC_DE_SABLE);
+			cartes.add(Carte.SAC_DE_SABLE);
 
 		for(int i = 0; i < 3; i++) {
-			tresors.add(Carte.MONTEE_DES_EAUX);
+			cartes.add(Carte.MONTEE_DES_EAUX);
 		}
-		Collections.shuffle(tresors);
+		Collections.shuffle(cartes);
 	}
 
 	public ArrayList<Case> getCasesInondation() {
@@ -53,51 +53,51 @@ public class PileCartes {
 		return cases;
 	}
 
-	public void defausser(Carte t)
+	public void defausser(Carte c)
 	{
-		defausse.add(t);
+		defausse.add(c);
 	}
 
-	public Carte getTresor(boolean monteeEaux) {
-		Carte tresor = tresors.remove(0);
+	public Carte getCarte(boolean monteeEaux) {
+		Carte carte = cartes.remove(0);
 
 		if(!monteeEaux)
 		{
-			while(tresor == Carte.MONTEE_DES_EAUX)
+			while(carte == Carte.MONTEE_DES_EAUX)
 			{
-				tresors.add(tresor);
-				tresor = tresors.remove(0);
+				cartes.add(carte);
+				carte = cartes.remove(0);
 			}
 		}
 
-		if(tresors.isEmpty()) reset();
-		return tresor;
+		if(cartes.isEmpty()) reset();
+		return carte;
 	}
 
 	public void reset() {
-		tresors = new ArrayList<>(defausse);
-		Collections.shuffle(tresors);
+		cartes = new ArrayList<>(defausse);
+		Collections.shuffle(cartes);
 		defausse.clear();
 	}
 
-	public Case caseAInonder() {
+	public Case getCaseAInonder() {
 		Case c = cartesInondation.remove(0);
 
 		if(cartesInondation.isEmpty())
 			melangerCartesInondation();
 
-		cartesInondees.add(c);
+		defausseInondation.add(c);
 		return c;
 	}
 
 	public void melangerCartesInondation() {
-		Collections.shuffle(cartesInondees);
-		cartesInondation.addAll(0 , cartesInondees);
-		cartesInondees.clear();
+		Collections.shuffle(defausseInondation);
+		cartesInondation.addAll(0 , defausseInondation);
+		defausseInondation.clear();
 	}
 
-	public void removeCaseAInonder(Case c) {
-		cartesInondees.remove(c);
+	public void enleveCaseAInonder(Case c) {
+		defausseInondation.remove(c);
 	}
 
 }

@@ -45,7 +45,7 @@ public class VueCartes extends JPanel implements Observer
 
 		for(int i = 0; i < joueurs.size(); i++)
 		{
-			g.setColor(joueurs.get(i).getRole().getColor());
+			g.setColor(joueurs.get(i).getRole().getCouleur());
 			g.fillRect(0, i*HEIGHT, getWidth(), HEIGHT);
 		}
 

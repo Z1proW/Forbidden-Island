@@ -118,7 +118,7 @@ public class Joueur
 
 	private boolean piocheCarte(boolean monteeEaux, boolean melanger)
 	{
-		Carte carte = modele.getPileCartes().getTresor(monteeEaux);
+		Carte carte = modele.getPileCartes().getCarte(monteeEaux);
 		cartes.add(carte);
 
 		if(monteeEaux) Son.CARTE.jouerSon();
