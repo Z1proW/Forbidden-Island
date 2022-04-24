@@ -134,7 +134,7 @@ public class VueBoutons extends JPanel implements Observer
 			}
 			else
 			{
-				Image img = artefact.getContour();
+				Image img = artefact.getOmbre();
 				g.drawImage(img, i*(img.getWidth(null) + 5) + 5, 5, null);
 			}
 		}

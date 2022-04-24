@@ -35,7 +35,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 	private int caseDeplace = 0;
 
-	public ControleurJoueur(Modele modele, VuePlateau vuePlateau, VueBoutons vueArtefact)
+	public ControleurJoueur(Modele modele, VuePlateau vuePlateau, VueBoutons vueBoutons)
 	{
 		this.modele = modele;
 		this.vuePlateau = vuePlateau;
@@ -45,12 +45,12 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			jSelect[i] = false;
 
 			int finalI = i;
-			vueArtefact.boutonJoueur[i].addActionListener(e -> jSelect[finalI] = !jSelect[finalI]);
+			vueBoutons.boutonJoueur[i].addActionListener(e -> jSelect[finalI] = !jSelect[finalI]);
 		}
 
-		vueArtefact.boutonActionSpe.addActionListener(e -> actionSpeNavigateurOuPilote = !actionSpeNavigateurOuPilote);
+		vueBoutons.boutonActionSpe.addActionListener(e -> actionSpeNavigateurOuPilote = !actionSpeNavigateurOuPilote);
 
-		vueArtefact.boutonActionSpe.addActionListener(e -> {
+		vueBoutons.boutonActionSpe.addActionListener(e -> {
 			if(!actionSpeNavigateurOuPilote) {
 				actionSpeNavigateurOuPilote = true;
 			}
@@ -58,28 +58,35 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 				actionSpeNavigateurOuPilote = false;
 			}
 		});
+
 		if(modele.getJoueurs().stream().anyMatch(e -> e.getRole() == Role.MESSAGER)){
-			vueArtefact.MessagerJoueurAction.addActionListener( e -> {
+			vueBoutons.MessagerJoueurAction.addActionListener( e -> {
 				joueurDeplace = (joueurDeplace + 1) % 4;
 			});
-			vueArtefact.MessagerDeplaceCase.addActionListener( e -> {
+			vueBoutons.MessagerDeplaceCase.addActionListener( e -> {
 				caseDeplace = (caseDeplace + 1) % 2;
 			});
+
 			new Timer().schedule(new TimerTask() {
 				@Override
 				public void run() {
-					vueArtefact.MessagerJoueurAction.setText("Navigateur Joueur Action: " +  joueurDeplace);
-					vueArtefact.MessagerDeplaceCase.setText("Navigateur Deplace : " + (caseDeplace + 1) + " case");
+					boolean b = modele.getCurrentJoueur().getRole() == Role.NAVIGATEUR;
+					vueBoutons.MessagerJoueurAction.setVisible(b);
+					vueBoutons.MessagerDeplaceCase.setVisible(b);
+
+					vueBoutons.MessagerJoueurAction.setText("Déplacer: " +  modele.getJoueur(joueurDeplace).getRole());
+					vueBoutons.MessagerDeplaceCase.setText("Nombre de cases: " + (caseDeplace + 1));
 				}
 			}, 0, 100);
 		}
+
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
 				if(actionSpeNavigateurOuPilote)
-					vueArtefact.boutonActionSpe.setBackground(Color.GREEN);
+					vueBoutons.boutonActionSpe.setBackground(Color.GREEN);
 				else
-					vueArtefact.boutonActionSpe.setBackground(Color.RED);
+					vueBoutons.boutonActionSpe.setBackground(Color.RED);
 			}
 		}, 0, 100);
 		
@@ -88,9 +95,9 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			public void run() {
 				for(int i = 0; i < Modele.NOMBRE_JOUEURS; i++) {
 					if(jSelect[i])
-						vueArtefact.boutonJoueur[i].setBackground(Color.GREEN);
+						vueBoutons.boutonJoueur[i].setBackground(Color.GREEN);
 					else
-						vueArtefact.boutonJoueur[i].setBackground(Color.RED);
+						vueBoutons.boutonJoueur[i].setBackground(Color.RED);
 				}
 			}
 		}, 0, 100);

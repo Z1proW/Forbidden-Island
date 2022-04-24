@@ -11,13 +11,13 @@ public enum Artefact
 	FEU("feu.png");
 
 	private final ImageIcon img;
-	private final ImageIcon ctr;
+	private final ImageIcon ombre;
 
 	Artefact(String fileName)
 	{
 		String path = "src/fr/rui_tilmann/images/artefact/";
 		this.img = new ImageIcon(path + fileName);
-		this.ctr = new ImageIcon(path + "c_" + fileName);
+		this.ombre = new ImageIcon(path + "c_" + fileName);
 	}
 
 	public Image getImage()
@@ -25,8 +25,8 @@ public enum Artefact
 		return img.getImage();
 	}
 
-	public Image getContour()
+	public Image getOmbre()
 	{
-		return ctr.getImage();
+		return ombre.getImage();
 	}
 }
