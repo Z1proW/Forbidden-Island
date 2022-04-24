@@ -56,6 +56,10 @@ public class VueArtefact extends JPanel implements Observer
 		actionsRestantes.setFont(new Font("", Font.BOLD, 16));
 		actionsRestantes.setHorizontalAlignment(JLabel.CENTER);
 		add(actionsRestantes);
+
+		JLabel JoueurActuel = new JLabel();
+		JoueurActuel.setBounds(x + width, 30 , width, 30);
+		add(JoueurActuel);
 		if(modele.getJoueurs().stream().anyMatch(e -> e.getRole() == Role.MESSAGER)) {
 			MessagerJoueurAction = new Bouton("Messager Joueur Action : " + 0, x + width, y + height, width, height);
 			MessagerDeplaceCase = new Bouton("Messager Deplace : j" + 1, x + 2 * width, y + height, width, height);
@@ -69,6 +73,22 @@ public class VueArtefact extends JPanel implements Observer
 				actionsRestantes.setText("Actions restantes: " + modele.getNbActions());
 			}
 		}, 0, 10);
+
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				String s = "";
+				switch (modele.getCurrentJoueur().getRole()){
+					case INGENIEUR: s = "<font color='red'>";break;
+					case MESSAGER: s = "<font color='lightgray'>";break;
+					case PLONGEUR: s = "<font color='blue'>";break;
+					case EXPLORATEUR: s = "<font color='green'>";break;
+					case PILOTE: s = "<font color='black'>";break;
+					case NAVIGATEUR: s = "<font color='yellow'>";break;
+				}
+				JoueurActuel.setText("<html>Joueur actuel: " + s +  modele.getCurrentJoueur().getRole() + "</font></html>");
+			}
+		}, 0, 100);
 
 		boutonActionSpe = new Bouton("Action Speciale", x + width, y, width, height);
 		boutonActionSpe.setBackground(Color.RED);
