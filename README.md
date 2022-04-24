@@ -19,10 +19,37 @@
 
 ## Action Possible
 
-Appuie 1,2,3,4 pour (dés)activer le fait qu'on transporte le joueur avec l'hélicot
+Appuie sur 1,2,3,4(ou le bouton correspondant) pour (dés)activer le fait qu'on transporte le joueur avec l'hélicot
 
-Appuie sur n pour (dés)activer le pouvoir spécial du navigateur ou du pilote
+Appuie sur n(ou le bouton correspondant) pour (dés)activer le pouvoir spécial du navigateur ou du pilote
 
-Appuie sur m pour changer la distance auquel le navigateur déplace la personne
+Appuie sur m(ou le bouton correspondant) pour changer la distance auquel le navigateur déplace la personne
 
-Appuie sur espace pour changer le joueur qui est déplacé
+Appuie sur espace(ou le bouton correspondant) pour changer le joueur qui est déplacé par le navigateur
+
+Appuie sur r pour reset la case clicker en cas de problème
+
+On utilise les fleche pour se déplacer ou déplacer avec le navigateur
+
+On utilise clic gauche pour se déplacer et clic droit pour assécher une case
+
+Pour utiliser la carte hélicoptere faut clic gauche sur la carte 
+puis click droit sur la case où sont les joueurs à transporter
+puis click gauche sur la case où ils seront transporté
+
+Pour utiliser la carte sac de sable clic gauche sur la carte 
+puis clic gauche sur la case à assécher
+
+Pour échanger les cartes on drag la carte trésor qu'on veut donner
+vers la pile de carte du joueur 
+
+## Ce qu'on a fait
+
+On a la pile de carte trésor et inondation
+
+On a fait les actions spéciales des différents rôles et cartes
+
+On a aussi fait l'échange de carte
+
+On a aussi des sprites et un main menu + tous les trucs basics du jeu
+
