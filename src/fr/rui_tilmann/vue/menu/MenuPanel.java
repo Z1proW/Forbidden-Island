@@ -5,6 +5,7 @@ import java.awt.*;
 
 class MenuPanel extends JPanel
 {
+
     private final ImageIcon bg = new ImageIcon("src/fr/rui_tilmann/images/menu/background.png");
 
     MenuPanel()
@@ -27,4 +28,5 @@ class MenuPanel extends JPanel
         g.setColor(new Color(255,200,100));
         g.drawString("L'île interdite".toUpperCase(), getWidth()/2 - 200, 60);
     }
+
 }

@@ -5,7 +5,6 @@ import fr.rui_tilmann.modele.enums.Etat;
 import fr.rui_tilmann.modele.enums.Zone;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,22 +13,22 @@ public class Case
 
 	private final Modele modele;
 	private Etat etat;
-	private Zone type;
+	private Zone zone;
 	private final int x, y;
 
 	public Case(Modele modele, int x, int y)
 	{
 		this.modele = modele;
 		this.etat = Etat.SECHE;
-		this.type = Zone.NORMALE;
+		this.zone = Zone.NORMALE;
 		this.x = x; this.y = y;
 	}
 
 	public Etat getEtat() {return etat;}
 	public void setEtat(Etat etat) {this.etat = etat;}
 
-	public Zone getType() {return type;}
-	public void setType(Zone type) {this.type = type;}
+	public Zone getZone() {return zone;}
+	public void setZone(Zone zone) {this.zone = zone;}
 
 	public int getX() {return x;}
 	public int getY() {return y;}
@@ -90,7 +89,7 @@ public class Case
 
 	public String toString()
 	{
-		return "case " + x + ", " + y + ", " + etat + ", " + type;
+		return "case " + x + ", " + y + ", " + etat + ", " + zone;
 	}
 
 }

@@ -67,7 +67,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 				case FEU: case EAU: case TERRE: case AIR:
 
 				if(e.getButton() == MouseEvent.BUTTON1
-				&& j.getPosition().getType().toArtefact() == carte.toArtefact()
+				&& j.getPosition().getZone().toArtefact() == carte.toArtefact()
 				&& j.getCartes().stream().filter(t -> t == carte).count() >= 4)
 					j.recupereArtefact(carte);
 

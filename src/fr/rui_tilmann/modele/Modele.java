@@ -1,7 +1,7 @@
 package fr.rui_tilmann.modele;
 
 import fr.rui_tilmann.modele.enums.*;
-import fr.rui_tilmann.vue.GameFrame;
+import fr.rui_tilmann.vue.Vue;
 import fr.rui_tilmann.vue.Observable;
 import fr.rui_tilmann.vue.VueGameOver;
 
@@ -17,7 +17,7 @@ public class Modele extends Observable
 	private final PileCartes pileCartes;
 
 	public static int NOMBRE_JOUEURS;
-	private final GameFrame gameFrame;
+	private final Vue gameFrame;
 
 	private int idJoueur = 0;
 	private int nbActions = 3;
@@ -28,7 +28,7 @@ public class Modele extends Observable
 	public boolean actionSpeIngenieur = false;
 	public boolean finDeTourPossible = true;
 
-	public Modele(Difficulte difficulte, int nbJoueurs, GameFrame gameFrame)
+	public Modele(Difficulte difficulte, int nbJoueurs, Vue gameFrame)
 	{
 		NOMBRE_JOUEURS = nbJoueurs;
 		this.gameFrame = gameFrame;
@@ -150,8 +150,8 @@ public class Modele extends Observable
 	{
 		plateau.forEachCase(c ->
 		{
-			if(c.getType().toArtefact() == artefact)
-				c.setType(Zone.NORMALE);
+			if(c.getZone().toArtefact() == artefact)
+				c.setZone(Zone.NORMALE);
 		});
 	}
 
@@ -176,7 +176,7 @@ public class Modele extends Observable
 
 			case INONDEE:
 				c.setEtat(Etat.SUBMERGEE);
-				c.setType(Zone.NORMALE);
+				c.setZone(Zone.NORMALE);
 				pileCartes.removeCaseAInonder(c);
 
 				// perdu si un joueur est sur une case submergee et pas de cases autour
@@ -189,13 +189,13 @@ public class Modele extends Observable
 				});
 
 				// perdu si c'est l'heliport
-				if(c.getType() == Zone.HELIPORT)
+				if(c.getZone() == Zone.HELIPORT)
 					finDePartie(GameOver.HELIPORT_SUBMERGE);
 
 				//Perdu si 2 zone du meme type tombe
-				if(c.getType().toArtefact() != null
-				&& plateau.compte(c.getType()) == 0
-				&& !tresorPris.getOrDefault(c.getType().toArtefact(), false))
+				if(c.getZone().toArtefact() != null
+				&& plateau.compte(c.getZone()) == 0
+				&& !tresorPris.getOrDefault(c.getZone().toArtefact(), false))
 					finDePartie(GameOver.TRESOR_IRRECUPERABLE);
 				break;
 		}

@@ -68,8 +68,8 @@ public class Plateau
 	{
 		Case c;
 		do c = caseAleatoire(Etat.SECHE, Etat.INONDEE);
-		while(c.getType() != Zone.NORMALE);
-		c.setType(type);
+		while(c.getZone() != Zone.NORMALE);
+		c.setZone(type);
 	}
 
 	protected Case caseAleatoire(Etat... etatsPossibles)
@@ -89,7 +89,7 @@ public class Plateau
 		AtomicInteger i = new AtomicInteger();
 		forEachCase(c ->
 		{
-			if(c.getType() == zone)
+			if(c.getZone() == zone)
 				i.getAndIncrement();
 		});
 		return i.get();

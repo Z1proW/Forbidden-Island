@@ -178,11 +178,11 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		}
 
 		if(c == j.getPosition() && e.getButton() == MouseEvent.BUTTON1) {
-			long occurences = j.getCartes().stream().filter(carte -> carte.toArtefact() == c.getType().toArtefact()).count();
+			long occurences = j.getCartes().stream().filter(carte -> carte.toArtefact() == c.getZone().toArtefact()).count();
 
 			if(occurences > 3)
 				for(Carte carte : j.getCartes())
-					if(carte.toArtefact() == c.getType().toArtefact()) {
+					if(carte.toArtefact() == c.getZone().toArtefact()) {
 						if(j.getRole() == Role.INGENIEUR && modele.actionSpeIngenieur) {
 							modele.actionSpeIngenieur = false;
 							modele.useAction();

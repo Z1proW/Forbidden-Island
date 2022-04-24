@@ -4,15 +4,11 @@ import fr.rui_tilmann.controleur.ControleurCartes;
 import fr.rui_tilmann.modele.Case;
 import fr.rui_tilmann.modele.enums.Carte;
 import fr.rui_tilmann.modele.enums.Etat;
-import fr.rui_tilmann.modele.Joueur;
 import fr.rui_tilmann.modele.Modele;
 import fr.rui_tilmann.modele.Plateau;
-import fr.rui_tilmann.controleur.ControleurJoueur;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.net.URL;
 
 public class VuePlateau extends JPanel implements Observer
 {
@@ -54,7 +50,7 @@ public class VuePlateau extends JPanel implements Observer
 		g.drawImage(c.getEtat().getImage(), x, y, null);
 
 		if(c.getEtat() != Etat.SUBMERGEE)
-			g.drawImage(c.getType().getImage(), x, y, null);
+			g.drawImage(c.getZone().getImage(), x, y, null);
 
 		if(c == hoveredCase || c == modele.getCurrentJoueur().getPosition())
 		{
