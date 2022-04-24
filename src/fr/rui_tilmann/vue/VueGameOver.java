@@ -26,17 +26,9 @@ public class VueGameOver extends JPanel
 			@Override
 			public void run() {
 				y -= 3;
-				if(y <= 0) cancel();
+				if(y <= -100) cancel();
 			}
 		}, 0, 1);
-
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				JOptionPane.showMessageDialog(null, "Voulez vous quitter ?","Quitter", JOptionPane.QUESTION_MESSAGE);
-				System.exit(0);
-			}
-		}, 2000);
 	}
 
 	public void paintComponent(Graphics g)

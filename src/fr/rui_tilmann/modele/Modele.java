@@ -6,9 +6,8 @@ import fr.rui_tilmann.vue.Observable;
 import fr.rui_tilmann.vue.VueGameOver;
 
 import javax.swing.*;
-import java.util.*;
-import java.util.List;
 import java.util.Timer;
+import java.util.*;
 
 public class Modele extends Observable
 {
@@ -238,7 +237,15 @@ public class Modele extends Observable
 		JPanel vueGameOver = new VueGameOver(state);
 		gameFrame.setGlassPane(vueGameOver);
 		vueGameOver.setVisible(true);
-		gameFrame.getContentPane().setVisible(false);
+
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				if(gameFrame.isActive())
+					JOptionPane.showMessageDialog(null, "Voulez vous retourner au menu ?","Retour au menu", JOptionPane.QUESTION_MESSAGE);
+				gameFrame.dispose();
+			}
+		}, 3000);
 	}
 
 }

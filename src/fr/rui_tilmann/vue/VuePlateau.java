@@ -39,6 +39,9 @@ public class VuePlateau extends JPanel implements Observer
 	{
 		super.repaint();
 
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, getWidth(), getHeight());
+
 		modele.getPlateau().forEachCase(c ->
 				paint(g, c, c.getX() * P, c.getY() * P));
 	}

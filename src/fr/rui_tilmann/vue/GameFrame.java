@@ -1,14 +1,15 @@
 package fr.rui_tilmann.vue;
 
 import fr.rui_tilmann.controleur.ControleurCartes;
-import fr.rui_tilmann.controleur.ControleurFenetre;
 import fr.rui_tilmann.controleur.ControleurJoueur;
 import fr.rui_tilmann.modele.Modele;
 import fr.rui_tilmann.modele.enums.Difficulte;
-import fr.rui_tilmann.modele.enums.GameOver;
+import fr.rui_tilmann.vue.menu.MenuFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.geom.RoundRectangle2D;
 
 public class GameFrame extends JFrame
@@ -18,17 +19,10 @@ public class GameFrame extends JFrame
 	{
 		Modele modele = new Modele(difficulte, nbJoueurs, this);
 
+		setTitle("L'île Interdite");
 		setLayout(new BorderLayout());
-		setUndecorated(true);
-		setBackground(new Color(100, 200, 255, 100));
 
-		TitleBar titleBar = new TitleBar();
-		add(titleBar, BorderLayout.NORTH);
-		ControleurFenetre c = new ControleurFenetre(this, titleBar);
-		addMouseListener(c);
-		addMouseMotionListener(c);
-
-		VueJoueurs vueJoueurs = new VueJoueurs(modele, titleBar);
+		VueJoueurs vueJoueurs = new VueJoueurs(modele);
 
 		VuePlateau vuePlateau = new VuePlateau(modele, vueJoueurs);
 		add(vuePlateau, BorderLayout.WEST);
@@ -57,11 +51,26 @@ public class GameFrame extends JFrame
 
 		add(eastPanel, BorderLayout.EAST);
 
+		addWindowListener(new WindowListener()
+		{
+			@Override
+			public void windowClosed(WindowEvent e)
+			{
+				new MenuFrame();
+			}
+
+			public void windowOpened(WindowEvent e) {}
+			public void windowClosing(WindowEvent e) {}
+			public void windowIconified(WindowEvent e) {}
+			public void windowDeiconified(WindowEvent e) {}
+			public void windowActivated(WindowEvent e) {}
+			public void windowDeactivated(WindowEvent e) {}
+		});
+
 		setResizable(false);
 		pack();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
 		setVisible(true);
 	}
 

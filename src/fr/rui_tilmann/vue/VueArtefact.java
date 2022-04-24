@@ -43,15 +43,16 @@ public class VueArtefact extends JPanel implements Observer
 
 		JLabel helicoText = new JLabel("Helico");
 		helicoText.setBounds(x, y - 30, width, 30);
-		helicoText.setForeground(Color.WHITE);
+		helicoText.setForeground(Color.BLACK);
 		helicoText.setHorizontalAlignment(JLabel.CENTER);
 		add(helicoText);
 
 		JLabel actionsRestantes = new JLabel();
 		actionsRestantes.setBounds(x, y + height, width, 30);
-		actionsRestantes.setForeground(Color.WHITE);
-		actionsRestantes.setFont(new Font("", Font.PLAIN, 16));
+		actionsRestantes.setForeground(Color.BLACK);
+		actionsRestantes.setFont(new Font("", Font.BOLD, 16));
 		actionsRestantes.setHorizontalAlignment(JLabel.CENTER);
+		add(actionsRestantes);
 
 		new Timer().schedule(new TimerTask() {
 			@Override
@@ -59,8 +60,6 @@ public class VueArtefact extends JPanel implements Observer
 				actionsRestantes.setText("Actions restantes: " + modele.getNbActions());
 			}
 		}, 0, 10);
-
-		add(actionsRestantes);
 
 		boutonActionSpe = new Bouton("Action Speciale", x + width, y, width, height);
 		boutonActionSpe.setBackground(Color.RED);
@@ -89,7 +88,7 @@ public class VueArtefact extends JPanel implements Observer
 	{
 		super.repaint();
 
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		Artefact[] artefacts = Artefact.values();
