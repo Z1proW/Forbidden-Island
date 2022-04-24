@@ -67,5 +67,5 @@ Lorsqu'un joueur est sur une case qui se fait submergé on le laisse
 ## Diagramme de classe
 
 <p align="center">
-  <img src="ImageReadme/Diagramme uml .PNG" width="900" title="Main Menu">
+  <img src="ImageReadme/diagramme_de_classe.png" width="900" title="Main Menu">
 </p>
