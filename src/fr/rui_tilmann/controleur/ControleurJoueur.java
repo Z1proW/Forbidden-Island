@@ -59,13 +59,9 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 			}
 		});
 
-		if(modele.getJoueurs().stream().anyMatch(e -> e.getRole() == Role.MESSAGER)){
-			vueBoutons.MessagerJoueurAction.addActionListener( e -> {
-				joueurDeplace = (joueurDeplace + 1) % 4;
-			});
-			vueBoutons.MessagerDeplaceCase.addActionListener( e -> {
-				caseDeplace = (caseDeplace + 1) % 2;
-			});
+		if(modele.getJoueurs().stream().anyMatch(e -> e.getRole() == Role.MESSAGER)) {
+			vueBoutons.MessagerJoueurAction.addActionListener( e -> joueurDeplace = (joueurDeplace + 1) % 4);
+			vueBoutons.MessagerDeplaceCase.addActionListener( e -> caseDeplace = (caseDeplace + 1) % 2);
 
 			new Timer().schedule(new TimerTask() {
 				@Override
@@ -83,6 +79,11 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
+				Role role = modele.getCurrentJoueur().getRole();
+				boolean b = role == Role.PILOTE || role == Role.NAVIGATEUR;
+				vueBoutons.boutonActionSpe.setVisible(b);
+				vueBoutons.boutonActionSpe.setVisible(b);
+
 				if(actionSpeNavigateurOuPilote)
 					vueBoutons.boutonActionSpe.setBackground(Color.GREEN);
 				else
