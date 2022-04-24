@@ -50,14 +50,6 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 		vueBoutons.boutonActionSpe.addActionListener(e -> actionSpeNavigateurOuPilote = !actionSpeNavigateurOuPilote);
 
-		vueBoutons.boutonActionSpe.addActionListener(e -> {
-			if(!actionSpeNavigateurOuPilote) {
-				actionSpeNavigateurOuPilote = true;
-			}
-			else {
-				actionSpeNavigateurOuPilote = false;
-			}
-		});
 
 		if(modele.getJoueurs().stream().anyMatch(e -> e.getRole() == Role.MESSAGER)) {
 			vueBoutons.MessagerJoueurAction.addActionListener( e -> joueurDeplace = (joueurDeplace + 1) % 4);
