@@ -2,6 +2,7 @@ package fr.rui_tilmann.vue.jeu;
 
 import fr.rui_tilmann.modele.enums.Artefact;
 import fr.rui_tilmann.modele.Modele;
+import fr.rui_tilmann.modele.enums.Role;
 import fr.rui_tilmann.vue.Observer;
 import fr.rui_tilmann.controleur.Bouton;
 
