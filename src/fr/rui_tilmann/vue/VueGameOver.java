@@ -13,7 +13,6 @@ public class VueGameOver extends JPanel
 
 	private final GameOver state;
 	private final Image eau = new ImageIcon("src/fr/rui_tilmann/images/game_over/eau.png").getImage();
-	private final Image gagne = new ImageIcon("src/fr/rui_tilmann/images/game_over/gagne.png").getImage();
 	private int y = 620;
 
 	public VueGameOver(GameOver state)
@@ -30,42 +29,39 @@ public class VueGameOver extends JPanel
 				if(y <= -100) cancel();
 			}
 		}, 0, 1);
+
+		if(state == GameOver.GAGNE)
+		{
+			ImageIcon gagne = new ImageIcon("src/fr/rui_tilmann/images/game_over/gagne.png");
+			JLabel trophee = new JLabel(gagne, SwingConstants.CENTER);
+			add(trophee);
+		}
+
+		setLayout(new GridLayout(8, 1));
 	}
 
 	public void paintComponent(Graphics g)
 	{
 		super.repaint();
+
+		g.drawImage(eau, 0, y, null);
+
 		g.setFont(new Font("", Font.BOLD, 30));
-		if(state != GameOver.GAGNE)
+
+		String s = "";
+		switch(state)
 		{
-			g.drawImage(eau, 0, y, null);
-
-			// TODO faire mieux
-			String s = "";
-			switch(state)
-			{
-				case GAGNE: s = "Gagné"; break;
-				case HELIPORT_SUBMERGE: s = "L'héliport a été submergé"; break;
-				case NOYADE: s = "Un joueur s'est noyé"; break;
-				case NIVEAU_EAU_TROP_HAUT: s = "Le niveau d'eau est trop haut"; break;
-				case TRESOR_IRRECUPERABLE: s = "Un trésor est irrécupérable"; break;
-			}
-
-			g.setColor(Color.BLACK);
-			g.drawString(s, getWidth()/2 - 180 + 5, getHeight()/2 + 5);
-
-			g.setColor(Color.WHITE);
-			g.drawString(s, getWidth()/2 - 180, getHeight()/2);
-		}else {
-
-			String s = "Gagné";
-			g.drawImage(gagne, getWidth()/2 - 180 + 25, getHeight()/2, null);
-			g.drawImage(gagne, getWidth()/2 - 180 - 25, getHeight()/2, null);
-			g.setColor(Color.BLACK);
-			g.drawString(s, getWidth()/2 - 180 + 5, getHeight()/2 + 5);
-			g.setColor(Color.WHITE);
-			g.drawString(s, getWidth()/2 - 180, getHeight()/2);
+			case GAGNE: s = "Gagné"; break;
+			case HELIPORT_SUBMERGE: s = "L'héliport a été submergé"; break;
+			case NOYADE: s = "Un joueur s'est noyé"; break;
+			case NIVEAU_EAU_TROP_HAUT: s = "Le niveau d'eau est trop haut"; break;
+			case TRESOR_IRRECUPERABLE: s = "Un trésor est irrécupérable"; break;
 		}
+
+		g.setColor(Color.BLACK);
+		g.drawString(s, getWidth()/2 - 8*s.length() + 5, getHeight()/2 + 5);
+		g.setColor(Color.WHITE);
+		g.drawString(s, getWidth()/2 - 8*s.length(), getHeight()/2);
 	}
 
 }

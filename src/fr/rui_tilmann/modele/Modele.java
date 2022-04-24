@@ -218,9 +218,8 @@ public class Modele extends Observable
 
 	public void finDeTour()
 	{
-		aGagne();
 		if(!finDeTourPossible) return;
-		//finDePartie(GameOver.NOYADE);
+
 		finDeTourPossible = false;
 		Joueur joueur = getCurrentJoueur();
 		joueur.piocheCartes();
@@ -246,13 +245,15 @@ public class Modele extends Observable
 		finDePartie(GameOver.GAGNE);
 	}
 
-	private boolean gagnePartie(){
-		for(int i=0; i<NOMBRE_JOUEURS;i++){
+	private boolean gagnePartie() {
+		for(int i = 0; i < NOMBRE_JOUEURS; i++)
 			if(getJoueur(i).getPosition().getZone() != Zone.HELIPORT)
 				return false;
-		}
-		return tresorPris.values().stream().allMatch(e -> e) && joueurs.stream().anyMatch(
-				e -> e.getCartes().stream().anyMatch(c -> c == Carte.HELICOPTERE));
+
+		return tresorPris.values().stream().allMatch(e -> e)
+		&& joueurs.stream().anyMatch(e ->
+				e.getCartes().stream().anyMatch(c ->
+						c == Carte.HELICOPTERE));
 	}
 
 	private void finDePartie(GameOver state)
@@ -268,7 +269,7 @@ public class Modele extends Observable
 					JOptionPane.showMessageDialog(null, "Voulez vous retourner au menu ?","Retour au menu", JOptionPane.QUESTION_MESSAGE);
 				gameFrame.dispose();
 			}
-		}, 3000);
+		}, 6000);
 	}
 
 }
