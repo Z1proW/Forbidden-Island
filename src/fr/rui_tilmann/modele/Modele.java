@@ -205,6 +205,8 @@ public class Modele extends Observable
 	{
 		nbActions--;
 		if(nbActions == 0) finDeTour();
+		if(gagnePartie())
+			finDePartie(GameOver.GAGNE);
 	}
 
 	public void finDeTour()
@@ -233,6 +235,15 @@ public class Modele extends Observable
 	}
 	private void agagne(){
 		finDePartie(GameOver.GAGNE);
+	}
+
+	private boolean gagnePartie(){
+		for(int i=0; i<NOMBRE_JOUEURS;i++){
+			if(getJoueur(i).getPosition().getZone() != Zone.HELIPORT)
+				return false;
+		}
+		return tresorPris.values().stream().allMatch(e -> e) && joueurs.stream().anyMatch(
+				e -> e.getCartes().stream().anyMatch(c -> c == Carte.HELICOPTERE));
 	}
 
 	private void finDePartie(GameOver state)
