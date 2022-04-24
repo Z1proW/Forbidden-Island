@@ -6,9 +6,8 @@ import fr.rui_tilmann.vue.menu.Bouton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class VueArtefact extends JPanel implements Observer
 {
@@ -17,9 +16,6 @@ public class VueArtefact extends JPanel implements Observer
 	public Bouton boutonFinTour;
 	public Bouton[] boutonJoueur = bJrs();
 	public Bouton boutonActionSpe = new Bouton("", 0, 0, 0, 0);
-	//TODO Si tu trouve un meilleur moyen de changer le text à chaque action tu pourra enlever le static sinon evite
-	static public JLabel actionsRestantes = new JLabel("");
-
 
 	public VueArtefact(Modele modele)
 	{
@@ -29,8 +25,6 @@ public class VueArtefact extends JPanel implements Observer
 		this.setPreferredSize(new Dimension(5*VueCartes.WIDTH, 8*VuePlateau.P - 4*VueCartes.HEIGHT));
 
 		initBoutons();
-
-
 	}
 
 	private Bouton[] bJrs()
@@ -53,11 +47,18 @@ public class VueArtefact extends JPanel implements Observer
 		helicoText.setHorizontalAlignment(JLabel.CENTER);
 		add(helicoText);
 
-		actionsRestantes = new JLabel("Actions restantes: " + modele.getNbActions());
+		JLabel actionsRestantes = new JLabel();
 		actionsRestantes.setBounds(x, y + height, width, 30);
 		actionsRestantes.setForeground(Color.WHITE);
 		actionsRestantes.setFont(new Font("", Font.PLAIN, 16));
 		actionsRestantes.setHorizontalAlignment(JLabel.CENTER);
+
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				actionsRestantes.setText("Actions restantes: " + modele.getNbActions());
+			}
+		}, 0, 10);
 
 		add(actionsRestantes);
 
@@ -87,9 +88,9 @@ public class VueArtefact extends JPanel implements Observer
 	public void paintComponent(Graphics g)
 	{
 		super.repaint();
-		//C pour changer le text
-		g.fillRect(55,120,150,45);
 
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, getWidth(), getHeight());
 
 		Artefact[] artefacts = Artefact.values();
 
@@ -109,6 +110,5 @@ public class VueArtefact extends JPanel implements Observer
 			}
 		}
 	}
-
 
 }

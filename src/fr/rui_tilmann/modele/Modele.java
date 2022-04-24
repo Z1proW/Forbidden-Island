@@ -14,7 +14,6 @@ import java.util.Timer;
 
 public class Modele extends Observable
 {
-
 	private final Plateau plateau;
 	private final List<Joueur> joueurs = new ArrayList<>();
 	private final NiveauEau niveauEau;
@@ -53,6 +52,7 @@ public class Modele extends Observable
 			joueurs.get(0).getCartes().add(Carte.TERRE);
 		*/
 	}
+
 	private void initInondation()
 	{
 		for(int i = 0; i < 6 ; i++)
