@@ -1,13 +1,13 @@
 package fr.rui_tilmann.vue;
 
-import fr.rui_tilmann.vue.menu.MainMenuFrame;
+import fr.rui_tilmann.vue.menu.MenuFrame;
 
 public class Vue
 {
 
 	public Vue()
 	{
-		new MainMenuFrame();
+		new MenuFrame();
 	}
 
 }

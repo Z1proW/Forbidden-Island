@@ -4,6 +4,7 @@ import fr.rui_tilmann.modele.enums.Carte;
 import fr.rui_tilmann.modele.enums.Role;
 import fr.rui_tilmann.modele.Joueur;
 import fr.rui_tilmann.modele.Modele;
+import fr.rui_tilmann.modele.enums.Son;
 import fr.rui_tilmann.vue.VueCartes;
 
 import java.awt.event.MouseEvent;
@@ -39,6 +40,8 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 			case MouseEvent.BUTTON1:
 				controleurJoueur.clickedCard = numCarte;
 				controleurJoueur.clickedJoueur = j;
+				vueCartes.clickedCard = numCarte;
+				vueCartes.clickedJoueur = j;
 				vueCartes.repaint();
 				break;
 
@@ -47,6 +50,7 @@ public class ControleurCartes implements MouseMotionListener, MouseListener
 				{
 					j.defausseCarte(numCarte);
 					vueCartes.repaint();
+					Son.CARTE2.jouerSon();
 				}
 				break;
 		}

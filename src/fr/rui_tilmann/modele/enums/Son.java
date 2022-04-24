@@ -8,7 +8,9 @@ public enum Son
 {
 
 	EAU("eau.wav"),
-	CARTE("carte.wav");
+	CARTE("carte.wav"),
+	CARTE2("carte_reverse.wav"),
+	HELICOPTERE("helico.wav");
 
 	private final String fileName;
 

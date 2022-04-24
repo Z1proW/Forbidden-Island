@@ -3,11 +3,11 @@ package fr.rui_tilmann.vue.menu;
 import javax.swing.*;
 import java.awt.*;
 
-class MainMenu extends JPanel
+class MenuPanel extends JPanel
 {
     private final ImageIcon bg = new ImageIcon("src/fr/rui_tilmann/images/menu/background.png");
 
-    MainMenu()
+    MenuPanel()
     {
         setPreferredSize(new Dimension(bg.getIconWidth(), bg.getIconHeight()));
     }

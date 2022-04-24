@@ -1,7 +1,6 @@
 package fr.rui_tilmann.vue.menu;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Bouton extends JButton
 {

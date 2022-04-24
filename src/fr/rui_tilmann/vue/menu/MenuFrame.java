@@ -1,13 +1,12 @@
 package fr.rui_tilmann.vue.menu;
 
-import fr.rui_tilmann.modele.Modele;
 import fr.rui_tilmann.modele.enums.Difficulte;
 import fr.rui_tilmann.vue.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class MainMenuFrame extends JFrame
+public class MenuFrame extends JFrame
 {
 
 	private Difficulte difficulte = Difficulte.NOVICE;
@@ -16,13 +15,13 @@ public class MainMenuFrame extends JFrame
 	private final String sDif = "Difficulté: ";
 	private final String sJrs = "Joueurs: ";
 
-	public MainMenuFrame()
+	public MenuFrame()
 	{
 		setTitle("L'île Interdite");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		MainMenu mainMenu = new MainMenu();
+		MenuPanel mainMenu = new MenuPanel();
 		setContentPane(mainMenu);
 
 		int x = 500;

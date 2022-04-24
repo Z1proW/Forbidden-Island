@@ -3,10 +3,7 @@ package fr.rui_tilmann.controleur;
 import fr.rui_tilmann.modele.Case;
 import fr.rui_tilmann.modele.Joueur;
 import fr.rui_tilmann.modele.Modele;
-import fr.rui_tilmann.modele.enums.Carte;
-import fr.rui_tilmann.modele.enums.Direction;
-import fr.rui_tilmann.modele.enums.Etat;
-import fr.rui_tilmann.modele.enums.Role;
+import fr.rui_tilmann.modele.enums.*;
 import fr.rui_tilmann.vue.VueArtefact;
 import fr.rui_tilmann.vue.VuePlateau;
 
@@ -109,7 +106,10 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 							}
 						}
 						if(aBienTransporte)
+						{
 							joueur.defausseCarte(clickedCard);
+							Son.HELICOPTERE.jouerSon();
+						}
 						clickedJoueur = null;
 						clickedCard = -1;
 					}

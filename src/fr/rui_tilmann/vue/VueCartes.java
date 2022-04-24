@@ -20,6 +20,9 @@ public class VueCartes extends JPanel implements Observer
 	public Joueur hoveredJoueur = null;
 	public int hoveredCard = -1;
 
+	public Joueur clickedJoueur = null;
+	public int clickedCard = -1;
+
 	public int draggedX, draggedY;
 
 	public VueCartes(Modele modele)
@@ -73,7 +76,8 @@ public class VueCartes extends JPanel implements Observer
 	{
 		if(ControleurCartes.joueurEnfonce == modele.getJoueur(y) && ControleurCartes.carteEnfoncee == x)
 			g.drawImage(carte.getImage(), draggedX - WIDTH/2, draggedY - HEIGHT/2, null);
-		else if(hoveredJoueur == modele.getJoueur(y) && hoveredCard == x)
+		else if(hoveredJoueur == modele.getJoueur(y) && hoveredCard == x
+		|| (clickedJoueur != null && clickedCard != -1 && clickedJoueur.getId() == y && clickedCard == x))
 			g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16 - 5, y*HEIGHT + HEIGHT/16 - 5, null);
 		else g.drawImage(carte.getImage(), x*WIDTH + WIDTH/16, y*HEIGHT + HEIGHT/16, null);
 	}
