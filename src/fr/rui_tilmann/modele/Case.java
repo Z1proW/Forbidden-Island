@@ -4,6 +4,8 @@ import fr.rui_tilmann.modele.enums.Direction;
 import fr.rui_tilmann.modele.enums.Etat;
 import fr.rui_tilmann.modele.enums.Zone;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +36,8 @@ public class Case
 
 	public List<Joueur> getJoueurs()
 	{
-		return modele.getJoueurs().stream().filter(j -> j.getPosition() == this).collect(Collectors.toList());
+		return modele.getJoueurs().stream().filter(j -> j.getPosition() == this)
+		.collect(Collectors.toList());
 	}
 
 	public Case adjacente(Direction direction)
@@ -63,6 +66,19 @@ public class Case
 		return (this.x == x || this.x == x-1 || this.x == x+1)
 			&& (this.y == y || this.y == y-1 || this.y == y+1)
 			&& (diago || this.x == x || this.y == y);
+	}
+
+	public List<Case> casesAdjacentes(boolean diago)
+	{
+		List<Case> cases = new ArrayList<>();
+
+		modele.getPlateau().forEachCase(c ->
+		{
+			if(estAdjacente(c, diago) && c != this)
+				cases.add(c);
+		});
+
+		return cases;
 	}
 
 	public boolean dansIle()

@@ -2,6 +2,7 @@ package fr.rui_tilmann.modele.enums;
 
 public enum Direction
 {
+	//!\\ Ordre important, intervertir pas diagonale et diagonale
 	NORD,
 	NORD_EST,
 	EST,
@@ -10,5 +11,10 @@ public enum Direction
 	SUD_OUEST,
 	OUEST,
 	NORD_OUEST,
-	AUCUNE
+	AUCUNE;
+
+	public boolean estDiagonale()
+	{
+		return (ordinal() & 1) != 0;
+	}
 }

@@ -140,7 +140,7 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 		Joueur j = modele.getCurrentJoueur();
 
 		if(c.estAdjacente(j.getPosition(), diago)) {
-			switch (e.getButton())
+			switch(e.getButton())
 			{
 				case 1: // gauche
 					if(j.getRole() == Role.INGENIEUR && modele.actionSpeIngenieur) {

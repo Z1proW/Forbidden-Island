@@ -180,48 +180,20 @@ public class Modele extends Observable
 				c.setType(Zone.NORMALE);
 				pileCartes.removeCaseAInonder(c);
 
-				// perdu si un joueur est sur la case et il n'y a pas de case adjacente pas submergee
-				if(!c.getJoueurs().isEmpty())
+				// perdu si un joueur est sur une case submergee et pas de cases autour
+				joueurs.forEach(joueur ->
 				{
-					boolean adjSub = true;
-
-					for(Direction d : Direction.values())
-						if(c.adjacente(d).getEtat() != Etat.SUBMERGEE)
-							adjSub = false;
-
-					if(adjSub)
+					System.out.println(joueur.getPosition().casesAdjacentes(joueur.getRole() == Role.EXPLORATEUR).size());
+					if(joueur.getPosition().getEtat() == Etat.SUBMERGEE
+					&& joueur.getPosition().casesAdjacentes(joueur.getRole() == Role.EXPLORATEUR)
+					.stream().allMatch(c2 -> c2.getEtat() == Etat.SUBMERGEE))
 						finDePartie(GameOver.NOYADE);
-
-					// TODO le joueur peut se sauver si il est dans l'eau
-					// si ça fonc pas pas grave car à son tour il pourra sortir mais faudra rajouter une action du coup
-					/*
-					int currentId = idJoueur;
-					List<Joueur> joueursCase = c.getJoueurs();
-					new Timer().schedule(new TimerTask()
-					{
-						int jId = 0;
-
-						@Override
-						public void run()
-						{
-							if(jId == joueursCase.size()) {cancel(); return;}
-
-							idJoueur = joueursCase.get(jId).getId();
-							for(int i = 0; i < 2; i++)
-								useAction();
-
-							if(actionsRestantes()) return;
-							jId++;
-						}
-					}, 0, 10);
-					idJoueur = currentId;
-					 */
-				}
+				});
 
 				// perdu si c'est l'heliport
 				if(c.getType() == Zone.HELIPORT)
 					finDePartie(GameOver.HELIPORT_SUBMERGE);
-				
+
 				//Perdu si 2 zone du meme type tombe
 				if(c.getType().toArtefact() != null
 				&& plateau.compte(c.getType()) == 0
