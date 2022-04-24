@@ -13,6 +13,7 @@ public class VueGameOver extends JPanel
 
 	private final GameOver state;
 	private final Image eau = new ImageIcon("src/fr/rui_tilmann/images/game_over/eau.png").getImage();
+	private final Image gagne = new ImageIcon("src/fr/rui_tilmann/images/game_over/gagne.png").getImage();
 	private int y = 620;
 
 	public VueGameOver(GameOver state)
@@ -34,7 +35,7 @@ public class VueGameOver extends JPanel
 	public void paintComponent(Graphics g)
 	{
 		super.repaint();
-
+		g.setFont(new Font("", Font.BOLD, 30));
 		if(state != GameOver.GAGNE)
 		{
 			g.drawImage(eau, 0, y, null);
@@ -49,16 +50,22 @@ public class VueGameOver extends JPanel
 				case NIVEAU_EAU_TROP_HAUT: s = "Le niveau d'eau est trop haut"; break;
 				case TRESOR_IRRECUPERABLE: s = "Un trésor est irrécupérable"; break;
 			}
-			g.setFont(new Font("", Font.BOLD, 30));
 
 			g.setColor(Color.BLACK);
 			g.drawString(s, getWidth()/2 - 180 + 5, getHeight()/2 + 5);
 
 			g.setColor(Color.WHITE);
 			g.drawString(s, getWidth()/2 - 180, getHeight()/2);
-		}
+		}else {
 
-		// TODO quand on gagne
+			String s = "Gagné";
+			g.drawImage(gagne, getWidth()/2 - 180 + 25, getHeight()/2, null);
+			g.drawImage(gagne, getWidth()/2 - 180 - 25, getHeight()/2, null);
+			g.setColor(Color.BLACK);
+			g.drawString(s, getWidth()/2 - 180 + 5, getHeight()/2 + 5);
+			g.setColor(Color.WHITE);
+			g.drawString(s, getWidth()/2 - 180, getHeight()/2);
+		}
 	}
 
 }

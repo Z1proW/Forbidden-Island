@@ -231,6 +231,9 @@ public class Modele extends Observable
 			}
 		}, 2000, 10);
 	}
+	private void agagne(){
+		finDePartie(GameOver.GAGNE);
+	}
 
 	private void finDePartie(GameOver state)
 	{
