@@ -5,8 +5,6 @@ import fr.rui_tilmann.vue.GameFrame;
 import fr.rui_tilmann.vue.Observable;
 import fr.rui_tilmann.vue.VueGameOver;
 
-import static fr.rui_tilmann.vue.VueArtefact.actionsRestantes;
-
 import javax.swing.*;
 import java.util.*;
 import java.util.List;
@@ -208,8 +206,6 @@ public class Modele extends Observable
 	{
 		nbActions--;
 		if(nbActions == 0) finDeTour();
-		actionsRestantes.setText("Actions restants: " + nbActions);
-
 	}
 
 	public void finDeTour()
@@ -231,7 +227,6 @@ public class Modele extends Observable
 					resetActions();
 					inonderCases();
 					finDeTourPossible = true;
-					actionsRestantes.setText("Actions restants: " + nbActions);
 					cancel();
 				}
 			}
