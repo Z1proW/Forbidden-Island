@@ -294,8 +294,8 @@ public class ControleurJoueur extends MouseAdapter implements KeyListener
 
 	private Case getCase(MouseEvent e)
 	{
-		int x = (e.getX() - vuePlateau.getX());
-		int y = (e.getY() - vuePlateau.getY());
+		int x = (e.getX() - 8);
+		int y = (e.getY() - 31);
 
 		if(0 <= x && x < vuePlateau.getWidth()
 		&& 0 <= y && y < vuePlateau.getHeight())
